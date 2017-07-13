@@ -87,19 +87,17 @@ public class Mpu6050Controller {
 					/*
 								 for(int i=0;i<6;i++){
 								 System.out.print(accelData[i]);
-								 
 								 }
 								 System.out.println("--");
 								 Thread.sleep(1000);
 */
-					
 					//byte value1=Mpu6050Controller.readRegister(Mpu6050.Mpu6050Registers.MPU6050_RA_GYRO_XOUT_H);
 					//double value=readWord2C(Mpu6050.Mpu6050Registers.MPU6050_RA_ACCEL_XOUT_H) / 16384;
 							//	System.out.println(value);
 							//	Thread.sleep(500);
 								
 								double accelX=readWord2C(gyroAccelSensor.Mpu6050.Mpu6050Registers.MPU6050_RA_ACCEL_XOUT_H) / 16384.0;
-								System.out.println("accelX"+accelX);
+							//	System.out.println("accelX"+accelX);
 								
 								double accelY=readWord2C(gyroAccelSensor.Mpu6050.Mpu6050Registers.MPU6050_RA_ACCEL_YOUT_H) / 16384.0;
 							//	System.out.println("accelY"+accelY);
@@ -111,19 +109,64 @@ public class Mpu6050Controller {
 								double gyroX=readWord2C(gyroAccelSensor.Mpu6050.Mpu6050Registers.MPU6050_RA_GYRO_XOUT_H) / 131.0;
 								double gyroY=readWord2C(gyroAccelSensor.Mpu6050.Mpu6050Registers.MPU6050_RA_GYRO_YOUT_H) / 131.0;
 								double gyroZ=readWord2C(gyroAccelSensor.Mpu6050.Mpu6050Registers.MPU6050_RA_GYRO_ZOUT_H) / 131.0;
-								//System.out.println("gyroX: "+gyroX+"\t" + "gyroY: "+gyroY+ "\t" + "gyroZ: "+gyroZ);
-								Thread.sleep(200);
+								System.out.println("gyroX: "+(int)gyroX*100+"\t" + "gyroY: "+(int)gyroY*100+ "\t" + "gyroZ: "+(int)gyroZ*100);
+							
 					           
 								
 								double rotationX=get_x_rotation(accelX,accelY,accelZ);
-								System.out.println("rotationX:  "+rotationX);
+							//	System.out.println("rotationX:  "+rotationX);
 								double rotationY=get_y_rotation(accelX,accelY,accelZ);
-								System.out.println("rotationY:  "+rotationY);
+							//	System.out.println("rotationY:  "+rotationY);
+								
+								double angle=0;
+								double deg;
+								
+								deg=Math.atan2(accelX, accelZ)*180/Math.PI;
+								angle=(0.95 * (angle + (gyroY * 0.001))) + (0.05 * deg) ;
+							//	System.out.println((int)((angle+9)*20));
+									Thread.sleep(200);
+							//deg=Math.atan2(accelX, accelY)*180/Math.PI;
+							//	angle=(0.95 * (angle + (gyroZ * 0.001))) + (0.05 * deg) ;
+						//		System.out.println((angle+9)*20);
+							//		Thread.sleep(200);
+							
+							//deg=Math.atan2(accelX, accelZ)*180/Math.PI;
+							//	angle=(0.95 * (angle + (gyroY * 0.001))) + (0.05 * deg) ;
+							//	System.out.println((angle+9)*20);
+							//		Thread.sleep(200);
+									
+							
+
+
 		}
 
         System.exit(0);
     }
     
+	
+    public void readXGyroscope(){
+        
+    }
+    
+    public void readYGyroscope(){
+       
+    }
+    
+    public void readZGyroscope(){
+        
+    }
+    
+    public void readXAccelerometer(){
+      
+    }
+    
+    public void readYAccelerometer(){
+     
+    }
+    
+    public void readZAccelerometer(){
+       
+    }
     
     
     private static void writeRegister(byte register, byte data) throws IOException {
