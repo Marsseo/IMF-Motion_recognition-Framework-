@@ -1,6 +1,6 @@
-package hardware.sensor;
+package sensor;
 
-import hardware.converter.PCF8591;
+import converter.PCF8591;
 
 public class IRSensor {
 
