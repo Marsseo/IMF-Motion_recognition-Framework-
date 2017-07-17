@@ -16,7 +16,8 @@ public class GyroAccelSensor {
 	private double Xaccl, Yaccl, Zaccl;
 	private double Xgyro, Ygyro, Zgyro;
 	
-	private byte[] addr={0x3B, 0x3D, 0x3F, 0x43, 0x45, 0x47};
+	//레지스터의 주소를 담고 있는 바이트배열
+	private byte[] addr={59, 61, 63, 67, 69, 71};
 	public double getXaccl() throws IOException {
 		Xaccl = readWord2C(addr[0])/16384.0;
 		return Xaccl;
@@ -54,7 +55,11 @@ public class GyroAccelSensor {
 		bus = I2CFactory.getInstance(I2CBus.BUS_1);
 		mpu6050 = bus.getDevice(0x68);
 		System.out.println("Create GyroAccelSensor");
-
+		
+		//디바이스 깨우기
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_1, Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_1);
+		//글로벌 세팅
+		//mpu6050
 	}
 	
 	
@@ -135,20 +140,20 @@ public class GyroAccelSensor {
 				System.out.println("acclx : "+acclx);
 				System.out.println("accly : "+accly);
 				System.out.println("acclz : "+acclz);
-				System.out.println("");
+				System.out.println("|");
 				
 				System.out.println("gyrox : "+gyrox);
 				System.out.println("gyroy : "+gyroy);
-				System.out.println("gyroz : "+gyroz+"\tEnd");
-				System.out.println("");
-				System.out.println("");
-				System.out.println("");
+				System.out.println("gyroz : "+gyroz);
+				System.out.println("|");
+				System.out.println("|");
 				
 				System.out.println("x rotation : "+ test.x_rotation(acclx, accly, acclz));
-				System.out.println("x rotation : "+ test.y_rotation(acclx, accly, acclz));
-				System.out.println("x rotation : "+ test.z_rotation(acclx, accly, acclz));
-				System.out.println("");
-				System.out.println("");
+				System.out.println("y rotation : "+ test.y_rotation(acclx, accly, acclz));
+				System.out.println("z rotation : "+ test.z_rotation(acclx, accly, acclz));
+				System.out.println("|");
+				System.out.println("|");
+				System.out.println("| End");
 				
 				try {Thread.sleep(1000);	} catch (InterruptedException ex) {	}
 			}
