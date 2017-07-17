@@ -19,17 +19,17 @@ public class GyroAccelSensor {
 	//레지스터의 주소를 담고 있는 바이트배열
 	private byte[] addr={59, 61, 63, 67, 69, 71};
 	public double getXaccl() throws IOException {
-		Xaccl = readWord2C(addr[0])/16384.0;
+		Xaccl = readWord2C(addr[0]);
 		return Xaccl;
 	}
 
 	public double getYaccl() throws IOException {
-		Yaccl = readWord2C(addr[1])/16384.0;
+		Yaccl = readWord2C(addr[1]);
 		return Yaccl;
 	}
 
 	public double getZaccl() throws IOException {
-		Zaccl = readWord2C(addr[2])/16384.0;
+		Zaccl = readWord2C(addr[2]);
 		return Zaccl;
 	}
 
