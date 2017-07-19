@@ -70,7 +70,6 @@ public class GyroAccelSensor {
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_1,
 					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_1);
 		
-		//글로벌 세팅
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_SMPLRT_DIV,
 					Mpu6050RegisterValues.MPU6050_RA_SMPLRT_DIV);
 		
@@ -160,17 +159,23 @@ public class GyroAccelSensor {
 				
 				double preAcclx, preAccly, preAcclz;
 
-
+				double preGyrox, preGyroy, preGyroz;
 				
 				preAcclx = acclx;
 				preAccly = accly;
 				preAcclz = acclz;
+				preGyrox = gyrox;
+				preGyroy = gyroy;
+				preGyroz = gyroz;
 								
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
 				acclx = test.getXaccl();
 				accly = test.getYaccl();
 				acclz = test.getZaccl();
+				gyrox = test.getXgyro();
+				gyroy = test.getYgyro();
+				gyroz = test.getZgyro();
 				
 				int deltaX = (int)((acclx-preAcclx)*1);
 				int deltaY = (int)((accly-preAccly)*1);
@@ -180,15 +185,25 @@ public class GyroAccelSensor {
 				double vecY1 = 0 + preAccly+ (accly-preAccly)/2.0;
 				double vecZ1 = 0 + preAcclz+ (acclz-preAcclz)/2.0;
 				
+				double degX1 = 0 + preGyrox +(gyrox-preGyrox)/2.0;
+				double degY1 = 0 + preGyroy +(gyroy-preGyroy)/2.0;
+				double degZ1 = 0 + preGyroz +(gyroz-preGyroz)/2.0;
+				
 				preAcclx = acclx;
 				preAccly = accly;
 				preAcclz = acclz;
+				preGyrox = gyrox;
+				preGyroy = gyroy;
+				preGyroz = gyroz;
 				
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
 				acclx = test.getXaccl();
 				accly = test.getYaccl();
 				acclz = test.getZaccl();
+				gyrox = test.getXgyro();
+				gyroy = test.getYgyro();
+				gyroz = test.getZgyro();
 				
 				double vecX2 = vecX1+ preAcclx + (acclx-preAcclx)/2.0;
 				double vecY2 = vecY1+ preAccly + (accly-preAccly)/2.0;
@@ -198,15 +213,25 @@ public class GyroAccelSensor {
 				double posY1 = 0 +vecY1+ (vecY2-vecY1)/2.0;
 				double posZ1 = 0 +vecZ1+ (vecZ2-vecZ1)/2.0;
 				
+				double degX2 = 0+ preGyrox +(gyrox-preGyrox)/2.0;
+				double degY2 = 0 + preGyroy +(gyroy-preGyroy)/2.0;
+				double degZ2 = 0 + preGyroz +(gyroz-preGyroz)/2.0;
+				
 				preAcclx = acclx;
 				preAccly = accly;
 				preAcclz = acclz;
+				preGyrox = gyrox;
+				preGyroy = gyroy;
+				preGyroz = gyroz;
 				
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
 				acclx = test.getXaccl();
 				accly = test.getYaccl();
 				acclz = test.getZaccl();
+				gyrox = test.getXgyro();
+				gyroy = test.getYgyro();
+				gyroz = test.getZgyro();
 				
 				double vecX3 = vecX2+ preAcclx + (acclx-preAcclx)/2.0;
 				double vecY3 = vecY2+ preAccly + (accly-preAccly)/2.0;
@@ -220,21 +245,23 @@ public class GyroAccelSensor {
 				int deltaPosY = (int)(posY2-posY1);
 				int deltaPosZ = (int)(posZ2-posZ1);
 				
+				double degX3 = (0+ preGyrox +(gyrox-preGyrox)/2.0);
+				double degY3 = (0 + preGyroy +(gyroy-preGyroy)/2.0);
+				double degZ3 = (0 + preGyroz +(gyroz-preGyroz)/2.0);
+				
+				double deltaDegX1 = gyrox-preGyrox;
+				double deltaDegY1 = gyroy-preGyroy;
+				double deltaDegZ1 = (gyroz-preGyroz)*10;
+				
+				double angle =0;
+				angle=(0.95 * (angle + (deltaDegZ1 * 0.001))) + (0.05 * test.z_rotation(acclx, accly, acclz)) ;
+				int fineAngle = (int)(angle+9)*20;
+				
 				System.out.println("acclx : "+acclx);
 				System.out.println("accly : "+accly);
 				System.out.println("acclz : "+acclz);
 				System.out.println("|");				
-				
-				System.out.println("gyrox : "+gyrox);
-				System.out.println("gyroy : "+gyroy);
-				System.out.println("gyroz : "+gyroz);
-				System.out.println("|");
-				
-				System.out.println("x rotation : "+ test.x_rotation(acclx, accly, acclz));
-				System.out.println("y rotation : "+ test.y_rotation(acclx, accly, acclz));
-				System.out.println("z rotation : "+ test.z_rotation(acclx, accly, acclz));
-				System.out.println("|");				
-				
+								
 				System.out.println("acclx-prevAcclx : "+ deltaX);
 				System.out.println("accly-prevAccly : "+ deltaY);
 				System.out.println("acclz-prevAcclz : "+ deltaZ);
@@ -264,6 +291,39 @@ public class GyroAccelSensor {
 				System.out.println("deltaPositionY : "+ deltaPosY);
 				System.out.println("deltaPositionZ : "+ deltaPosZ);
 				System.out.println("|");
+				
+				System.out.println("gyrox : "+gyrox);
+				System.out.println("gyroy : "+gyroy);
+				System.out.println("gyroz : "+gyroz);
+				System.out.println("|");
+				
+				System.out.println("x rotation : "+ test.x_rotation(acclx, accly, acclz));
+				System.out.println("y rotation : "+ test.y_rotation(acclx, accly, acclz));
+				System.out.println("z rotation : "+ test.z_rotation(acclx, accly, acclz));
+				System.out.println("|");
+				
+				System.out.println("degX1 : "+degX1);
+				System.out.println("degY1 : "+degY1);
+				System.out.println("degZ1 : "+degZ1);
+				System.out.println("|");
+				
+				System.out.println("degX2 : "+degX2);
+				System.out.println("degY2 : "+degY2);
+				System.out.println("degZ2 : "+degZ2);
+				System.out.println("|");
+				
+				System.out.println("degX3 : "+degX3);
+				System.out.println("degY3 : "+degY3);
+				System.out.println("degZ3 : "+degZ3);
+				System.out.println("|");
+				
+				System.out.println("deltaDegX1 : "+deltaDegX1);
+				System.out.println("deltaDegY1 : "+deltaDegY1);
+				System.out.println("deltaDegZ1 : "+deltaDegZ1);
+				System.out.println("|");				
+				
+				System.out.println("fineAngle : "+fineAngle);
+
 				System.out.println("|- End");
 				
 				try {Thread.sleep(1000);	} catch (InterruptedException ex) {	}
