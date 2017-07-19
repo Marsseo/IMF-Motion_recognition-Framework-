@@ -13,53 +13,116 @@ public class GyroAccelSensor {
 	private I2CBus bus;
 	private I2CDevice mpu6050;
 	
-	private double Xaccl, Yaccl, Zaccl;
-
+	private double acclX, acclY, acclZ;
 	
-	private double Xgyro, Ygyro, Zgyro;
+	private double gyroX, gyroY, gyroZ;
+	private double gyroAngleXcollect, gyroAngleYcollect, gyroAngleZcollect;
+		
+	private double gyroAngularSpeedOffsetX ,gyroAngularSpeedOffsetY, gyroAngularSpeedOffsetZ;
 	
-	private double temp;
+	private double filteredAngleX = 0.;
+	private double filteredAngleY = 0.;
+	private double filteredAngleZ = 0.;
+	
+	private Thread updatingThread = null;
+	private boolean updatingThreadStopped = true;
+	private long lastUpdateTimeX = 0;
+	private long lastUpdateTimeY = 0;
+	private long lastUpdateTimeZ = 0;
 	
 	
-	//레지스터의 주소를 담고 있는 바이트배열
-	private byte[] addr={59, 61, 63, 67, 69, 71, 65};
-	
-	
-	public double getTemp() throws IOException {
-		temp = readWord2C(addr[6]);
-		return temp;
-	}
-	public double getXaccl() throws IOException {
-		Xaccl = readWord2C(addr[0])*5/16384.0;
-		return Xaccl;
-	}
-
-	public double getYaccl() throws IOException {
-		Yaccl = readWord2C(addr[1])*5/16384.0;
-		return Yaccl;
+	public double getAcclX() throws IOException {
+		acclX = readWord2C(Mpu6050Registers.MPU6050_RA_ACCEL_XOUT_H)/16384.0;
+		return acclX;
 	}
 
-	public double getZaccl() throws IOException {
-		Zaccl = readWord2C(addr[2])*5/16384.0;
-		return Zaccl;
+	public double getAcclY() throws IOException {
+		acclY = readWord2C(Mpu6050Registers.MPU6050_RA_ACCEL_YOUT_H)/16384.0;
+		return acclY;
 	}
 
-	public double getXgyro() throws IOException {
-		Xgyro = readWord2C(addr[3])/131.0;
-		return Xgyro;
+	public double getAcclZ() throws IOException {
+		acclZ = readWord2C(Mpu6050Registers.MPU6050_RA_ACCEL_ZOUT_H)/16384.0;
+		return acclZ;
 	}
 
-	public double getYgyro() throws IOException {
-		Ygyro = readWord2C(addr[4])/131.0;
-		return Ygyro;
+	public double getGyroX() throws IOException {
+		double dt = Math.abs(System.currentTimeMillis() - lastUpdateTimeX) / 1000.;
+		gyroX = readWord2C(Mpu6050Registers.MPU6050_RA_GYRO_XOUT_H)/131.0;
+		gyroX -= gyroAngularSpeedOffsetX;
+		gyroX = gyroX*dt;
+		lastUpdateTimeX = System.currentTimeMillis();
+		return gyroX;
 	}
 
-	public double getZgyro() throws IOException {
-		Zgyro = readWord2C(addr[5])/131.0;
-		return Zgyro;
+	public double getGyroY() throws IOException {
+		double dt = Math.abs(System.currentTimeMillis() - lastUpdateTimeY) / 1000.;
+		gyroY = readWord2C(Mpu6050Registers.MPU6050_RA_GYRO_YOUT_H)/131.0;
+		gyroY -= gyroAngularSpeedOffsetY;
+		gyroY = gyroY*dt;
+		lastUpdateTimeY = System.currentTimeMillis();
+		return gyroY;
+	}
+
+	public double getGyroZ() throws IOException {
+		double dt = Math.abs(System.currentTimeMillis() - lastUpdateTimeZ) / 1000.;
+		gyroZ = readWord2C(Mpu6050Registers.MPU6050_RA_GYRO_ZOUT_H)/131.0;
+		gyroZ -= gyroAngularSpeedOffsetZ;
+		gyroZ = gyroZ*dt;
+		lastUpdateTimeZ = System.currentTimeMillis();
+		return gyroZ;
+	}
+
+	public double getGyroAngleXcollect() {
+		return gyroAngleXcollect+gyroX;
+	}
+
+	public double getGyroAngleYcollect() {
+		return gyroAngleYcollect+gyroY;
+	}
+
+	public double getGyroAngleZcollect() {
+		return gyroAngleZcollect+gyroZ;
 	}
 	
+	
 
+	public double getFilteredAngleX() {
+		double alpha = 0.96;
+		filteredAngleX = alpha * (filteredAngleX + gyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
+		return filteredAngleX;
+	}
+
+	public double getFilteredAngleY() {
+		double alpha = 0.96;
+		filteredAngleY = alpha * (filteredAngleX + gyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
+		return filteredAngleY;
+	}
+
+	public double getFilteredAngleZ() {
+		return filteredAngleZ;
+	}
+	
+	
+	public void updateValues() throws IOException{
+		
+		getAcclX();
+		getAcclY();
+		getAcclZ();
+		
+		getGyroX();
+		getGyroY();
+		getGyroZ();
+		
+		getGyroAngleXcollect();
+		getGyroAngleYcollect();
+		getGyroAngleZcollect();
+		
+		getFilteredAngleX();
+		getFilteredAngleY();
+		getFilteredAngleZ();
+		
+	}
 	
 	public GyroAccelSensor() throws I2CFactory.UnsupportedBusNumberException, IOException {
 				bus = I2CFactory.getInstance(I2CBus.BUS_1);
@@ -84,6 +147,29 @@ public class GyroAccelSensor {
 		
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_2,
 					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_2);
+		
+		System.out.println("Calibration started (3초간 움직이지 마세요)");
+		
+		// Gyroscope offsets
+		gyroAngularSpeedOffsetX = 0.;
+		gyroAngularSpeedOffsetY = 0.;
+		gyroAngularSpeedOffsetZ = 0.;
+		
+		int nbReadings = 300;
+		for(int i = 0; i < nbReadings; i++) {
+			
+			gyroAngularSpeedOffsetX += getGyroX();
+			gyroAngularSpeedOffsetY += getGyroY();
+			gyroAngularSpeedOffsetZ += getGyroZ();
+			
+			try {Thread.sleep((long) 10);	} catch (InterruptedException ex) {	}
+		}
+		
+		gyroAngularSpeedOffsetX /= nbReadings;
+		gyroAngularSpeedOffsetY /= nbReadings;
+		gyroAngularSpeedOffsetZ /= nbReadings;
+		
+		System.out.println("Calibration이 끝났습니다.");
 	}
 	
 	
@@ -126,12 +212,49 @@ public class GyroAccelSensor {
 	// 회전값을 구하기 위한 코드 ( 점사이의 거리와 x, y, z의 좌표값을 이용해 구함)
 	public double x_rotation(double x, double y, double z){
 		double radians = Math.atan2(x, dist(y,z));
-		return radians*(180.0/Math.PI);
+		double delta = 0.;
+		if (y >= 0) {
+			if (z >= 0) {
+				// pass
+			} else {
+				radians *= -1;
+				delta = 180.;
+			}
+		} else {
+			if (z <= 0) {
+				radians *= -1;
+				delta = 180.;
+			} else {
+				delta = 360.;
+			}
+		}
+		return radians * (180.0/Math.PI) + delta;
 	}
 	
 	public double y_rotation(double x, double y, double z){
-		double radians = Math.atan2(y, dist(z,x));
-		return -radians*(180.0/Math.PI);
+		double tan = -1 * x / dist(y, z);
+		double delta = 0.;
+		if (x <= 0) {
+			if (z >= 0) {
+				// q1
+				// nothing to do
+			} else {
+				// q2
+				tan *= -1;
+				delta = 180.;
+			}
+		} else {
+			if (z <= 0) {
+				// q3
+				tan *= -1;
+				delta = 180.;
+			} else {
+				// q4
+				delta = 360.;
+			}
+		}
+
+		return Math.atan(tan)*(180.0/Math.PI) + delta;
 	}
 	
 	public double z_rotation(double x, double y, double z){
@@ -139,7 +262,35 @@ public class GyroAccelSensor {
 		return radians*(180.0/Math.PI);
 	}
 	
+	public void startUpdatingThread() {
+        if(updatingThread == null || !updatingThread.isAlive()) {
+		updatingThreadStopped = false;
+		lastUpdateTimeX = System.currentTimeMillis();
+		lastUpdateTimeY = System.currentTimeMillis();
+		lastUpdateTimeZ = System.currentTimeMillis();
+            updatingThread = new Thread(() -> {
+                while(!updatingThreadStopped) {
+			try {
+				updateValues();
+			} catch (IOException ex) {}
+                }
+            });
+            updatingThread.start();
+        } else {
+			System.out.println("Updating thread of the MPU6050 is already started.(이미 시작 됐네요)");
+		}
+	}
 	
+	public void stopUpdatingThread() throws InterruptedException {
+        updatingThreadStopped = true;
+		try {
+			updatingThread.join();
+		} catch (InterruptedException e) {
+			System.out.println("Exception when joining the updating thread.");
+		throw e;
+		}
+		updatingThread = null;
+	}
 		
 	public static void main(String[] args) {
 		
@@ -148,19 +299,23 @@ public class GyroAccelSensor {
 			
 			GyroAccelSensor test = new GyroAccelSensor();
 			
+			test.startUpdatingThread();
 			while(true){
 				
-				double acclx = test.getXaccl();
-				double accly = test.getYaccl();
-				double acclz = test.getZaccl();
-				double gyrox = test.getXgyro();
-				double gyroy = test.getYgyro();
-				double gyroz = test.getZgyro();
+				double acclx = test.getAcclX();
+				double accly = test.getAcclY();
+				double acclz = test.getAcclZ();
+				double gyrox = test.getGyroX();
+				double gyroy = test.getGyroY();
+				double gyroz = test.getGyroZ();
 				
 				double preAcclx, preAccly, preAcclz;
 
 				double preGyrox, preGyroy, preGyroz;
+		
+			
 				
+								
 				preAcclx = acclx;
 				preAccly = accly;
 				preAcclz = acclz;
@@ -170,12 +325,12 @@ public class GyroAccelSensor {
 								
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
-				acclx = test.getXaccl();
-				accly = test.getYaccl();
-				acclz = test.getZaccl();
-				gyrox = test.getXgyro();
-				gyroy = test.getYgyro();
-				gyroz = test.getZgyro();
+				acclx = test.getAcclX();
+				accly = test.getAcclY();
+				acclz = test.getAcclZ();
+				gyrox = test.getGyroX();
+				gyroy = test.getGyroY();
+				gyroz = test.getGyroZ();
 				
 				int deltaX = (int)((acclx-preAcclx)*1);
 				int deltaY = (int)((accly-preAccly)*1);
@@ -198,12 +353,12 @@ public class GyroAccelSensor {
 				
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
-				acclx = test.getXaccl();
-				accly = test.getYaccl();
-				acclz = test.getZaccl();
-				gyrox = test.getXgyro();
-				gyroy = test.getYgyro();
-				gyroz = test.getZgyro();
+				acclx = test.getAcclX();
+				accly = test.getAcclY();
+				acclz = test.getAcclZ();
+				gyrox = test.getGyroX();
+				gyroy = test.getGyroY();
+				gyroz = test.getGyroZ();
 				
 				double vecX2 = vecX1+ preAcclx + (acclx-preAcclx)/2.0;
 				double vecY2 = vecY1+ preAccly + (accly-preAccly)/2.0;
@@ -226,12 +381,12 @@ public class GyroAccelSensor {
 				
 				try {Thread.sleep((long) 0.1);	} catch (InterruptedException ex) {	}
 				
-				acclx = test.getXaccl();
-				accly = test.getYaccl();
-				acclz = test.getZaccl();
-				gyrox = test.getXgyro();
-				gyroy = test.getYgyro();
-				gyroz = test.getZgyro();
+				acclx = test.getAcclX();
+				accly = test.getAcclY();
+				acclz = test.getAcclZ();
+				gyrox = test.getGyroX();
+				gyroy = test.getGyroY();
+				gyroz = test.getGyroZ();
 				
 				double vecX3 = vecX2+ preAcclx + (acclx-preAcclx)/2.0;
 				double vecY3 = vecY2+ preAccly + (accly-preAccly)/2.0;
@@ -251,11 +406,9 @@ public class GyroAccelSensor {
 				
 				double deltaDegX1 = gyrox-preGyrox;
 				double deltaDegY1 = gyroy-preGyroy;
-				double deltaDegZ1 = (gyroz-preGyroz)*10;
+				double deltaDegZ1 = (gyroz-preGyroz);
 				
-				double angle =0;
-				angle=(0.95 * (angle + (deltaDegZ1 * 0.001))) + (0.05 * test.z_rotation(acclx, accly, acclz)) ;
-				int fineAngle = (int)(angle+9)*20;
+				
 				
 				System.out.println("acclx : "+acclx);
 				System.out.println("accly : "+accly);
@@ -322,9 +475,17 @@ public class GyroAccelSensor {
 				System.out.println("deltaDegZ1 : "+deltaDegZ1);
 				System.out.println("|");				
 				
-				System.out.println("fineAngle : "+fineAngle);
-
+				System.out.println("filteredAngleX : "+test.getFilteredAngleX());
+				System.out.println("filteredAngleY : "+test.getFilteredAngleY());
+				System.out.println("filteredAngleZ : "+test.getFilteredAngleZ());
+				System.out.println("|");
+				
+				System.out.println("AngleX : "+test.getGyroAngleXcollect());
+				System.out.println("AngleY : "+test.getGyroAngleYcollect());
+				System.out.println("AngleZ : "+test.getGyroAngleZcollect());
 				System.out.println("|- End");
+				
+				
 				
 				try {Thread.sleep(1000);	} catch (InterruptedException ex) {	}
 			}
