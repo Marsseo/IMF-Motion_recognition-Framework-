@@ -3,6 +3,10 @@ package com.raspoid;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
+import org.eclipse.californium.core.CoapClient;
+import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.californium.core.coap.MediaTypeRegistry;
+import org.json.JSONObject;
 
 /**
  * Example of use of an MPU6050.
@@ -13,6 +17,12 @@ import com.raspoid.MPU6050;
  * @version 1.0
  */
 public class MPU6050Example {
+	
+	public static String ipAdress = "192.168.3.133";
+	public static CoapClient coapClient;
+	public static CoapResponse coapResponse;
+	public static JSONObject jsonObject;
+	public static String json;
     
     /**
      * Private constructor to hide the implicit public one.
@@ -57,7 +67,12 @@ public class MPU6050Example {
             Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]), 
                     MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
             
-            Tools.sleepMilliseconds(1000);
+						
+            Tools.sleepMilliseconds(100);
         }
     }
+		
+
+		
+		
 }
