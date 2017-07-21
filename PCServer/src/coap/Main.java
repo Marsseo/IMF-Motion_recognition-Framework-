@@ -18,12 +18,12 @@ public class Main {
 	public void start(){
 		logger.info("실행");
 		coapResourceServer.start();
-		System.out.println("SensingCar start.....");
+		System.out.println("start.....");
 	}
 	public void stop(){
 		logger.info("실행");
 		coapResourceServer.stop();
-		System.out.println("SensingCar stop");
+		System.out.println("stop");
 	}
 	public static void main(String[] args) throws Exception {
 		Main sensingCar=new Main();
