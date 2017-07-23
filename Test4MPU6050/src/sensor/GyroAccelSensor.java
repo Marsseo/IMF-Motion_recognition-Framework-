@@ -83,13 +83,13 @@ public class GyroAccelSensor {
 	
 	// 필터된 값을 리턴하는 함수
 	public double getFilteredAngleX() {
-		double alpha = 0.96;
+		double alpha = 1;
 		filteredAngleX = alpha * (filteredAngleX + gyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
 		return filteredAngleX;
 	}
 
 	public double getFilteredAngleY() {
-		double alpha = 0.96;
+		double alpha = 1;
 		filteredAngleY = alpha * (filteredAngleX + gyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
 		return filteredAngleY;
 	}
@@ -544,8 +544,8 @@ public class GyroAccelSensor {
 				System.out.println("|");
 				
 				System.out.println("SimpleAngleX : "+test.getSplAngleX());
-				System.out.println("SimpleAngleX : "+test.getSplAngleY());
-				System.out.println("SimpleAngleX : "+test.getSplAngleZ());
+				System.out.println("SimpleAngleY : "+test.getSplAngleY());
+				System.out.println("SimpleAngleZ : "+test.getSplAngleZ());
 				System.out.println("|");
 				System.out.println("|- End");
 				
