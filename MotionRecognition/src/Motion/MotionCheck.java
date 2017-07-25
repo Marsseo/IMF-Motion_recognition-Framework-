@@ -12,6 +12,7 @@ public class MotionCheck {
 	public static String buttonStatus = "";
 	public static double irDistance;
 	public static double ultrasonicDistance;
+	public static boolean motionOn=false;
 
 	private GyroMotionList gyroMotionList;
 
@@ -36,28 +37,44 @@ public class MotionCheck {
 	public static void ultrasonicAddData(double distance) {
 		ultrasonicDistance = distance;
 	}
+	
+	public static void MotionRecognitionStatus(boolean status){
+		motionOn=status;
+	}
 
 
 
 	private void gyroCheckThreadStart() {
+		
 		gyroCheckThread = new Thread() {
 			@Override
 			public void run() {
-
+              	
 				while (true) {
-					gyroMotionList.yawCircle();
+					if(motionOn==false){
 					gyroMotionList.pitchCircle();
-					gyroMotionList.rollCircle();
-					
-
 					try {
+						Thread.sleep(200);
+					} catch (Exception e) {
+				}
+					}
+				
+					if(motionOn==true){
+						try {
 						Thread.sleep(1000);
 					} catch (Exception e) {
 					}
+					gyroMotionList.yawCircle();
+					gyroMotionList.rollCircle();
+					
+					}
+
+					
 				}
 			}
 		};
 		gyroCheckThread.start();
+		
 	}
 
 	private void ultraCheckThreadStart() {

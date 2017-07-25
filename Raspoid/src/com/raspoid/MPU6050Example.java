@@ -28,6 +28,7 @@ public class MPU6050Example {
 	 * Private constructor to hide the implicit public one.
 	 */
 	private MPU6050Example() {
+		coapClient = new CoapClient();
 	}
 
 	/**
@@ -65,6 +66,10 @@ public class MPU6050Example {
 			// Filtered angles
 			Tools.log("Filtered angles:");
 			double[] filteredAngles = mpu6050.getFilteredAngles();
+			if(filteredAngles[2]<0){
+				filteredAngles[2]=360+filteredAngles[2];
+			}
+			
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
@@ -78,7 +83,11 @@ public class MPU6050Example {
 		double roll = x;
 		double pitch = y;
 		double yaw = z;
-        
+//		
+//		if(yaw<0){
+//			yaw=360+yaw;
+//		}
+//        
 		jsonObject = new JSONObject();
 		jsonObject.put("sensor", "gyroscope");
 		jsonObject.put("yawAngle", String.valueOf(yaw));
@@ -89,7 +98,7 @@ public class MPU6050Example {
 		coapClient = new CoapClient();
 		coapClient.setURI("coap://" + ipAdress + "/gyroscope");
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
-		coapClient.shutdown();
+		//coapClient.shutdown();
 	}
 
 }
