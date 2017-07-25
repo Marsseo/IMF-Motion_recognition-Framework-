@@ -1,5 +1,6 @@
 package Motion.server;
 
+import Motion.MotionCheck;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ public class ButtonResource extends CoapResource {
 		if (sensor.equals("button")) {
 			String status= requestJsonObject.getString("status");
 			currStatus=status;
+			MotionCheck.buttonAddData(currStatus);
 			
 		}else if (sensor.equals("status")) {
 

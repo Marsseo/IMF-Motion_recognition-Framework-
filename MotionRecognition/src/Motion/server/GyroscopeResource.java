@@ -44,13 +44,13 @@ public class GyroscopeResource extends CoapResource {
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
 		if (sensor.equals("gyroscope")) {
-			double yawAngle= Integer.parseInt(requestJsonObject.getString("yawAngle"));
-			double pitchAngle= Integer.parseInt(requestJsonObject.getString("pitchAngle"));
-			double rollAngle= Integer.parseInt(requestJsonObject.getString("rollAngle"));
+			double yawAngle= Double.parseDouble(requestJsonObject.getString("yawAngle"));
+			double pitchAngle= Double.parseDouble(requestJsonObject.getString("pitchAngle"));
+			double rollAngle= Double.parseDouble(requestJsonObject.getString("rollAngle"));
 			currYawAngle=yawAngle;
 			currPitchAngle=pitchAngle;
 			currRollAngle=rollAngle;
-			MotionCheck.addData(currYawAngle, currPitchAngle, currRollAngle);
+			MotionCheck.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
 		}else if (sensor.equals("status")) {
 
 		}

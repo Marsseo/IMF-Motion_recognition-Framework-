@@ -1,5 +1,6 @@
 package Motion.server;
 
+import Motion.MotionCheck;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.json.JSONObject;
@@ -12,7 +13,7 @@ public class UltrasonicResource extends CoapResource {
 	
 	
 	private static UltrasonicResource instance;
-	public static int currDistance;
+	public static double currDistance;
 	
 	public UltrasonicResource() throws Exception {
 		super("ultrasonic");
@@ -40,8 +41,9 @@ public class UltrasonicResource extends CoapResource {
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
 		if (sensor.equals("ultrasonic")) {
-			int distance= Integer.parseInt(requestJsonObject.getString("distance"));
+			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
 			currDistance=distance;
+			MotionCheck.ultrasonicAddData(distance);
 			
 		}else if (sensor.equals("status")) {
 

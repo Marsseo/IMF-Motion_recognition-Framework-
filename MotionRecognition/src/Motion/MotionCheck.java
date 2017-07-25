@@ -9,7 +9,12 @@ public class MotionCheck {
 	public static Thread ultraCheckThread;
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
-	private static List<String> list = new ArrayList<>();
+	public static String buttonStatus="";
+	public static double irDistance;
+	public static double ultrasonicDistance;
+	private static List<Double> listYawAngle = new ArrayList<>();
+	private static List<Double> listRollAngle = new ArrayList<>();
+	private static List<Double> listPitchAngle = new ArrayList<>();
 
 	public MotionCheck(){
 		gyroCheckThreadStart();
@@ -17,12 +22,22 @@ public class MotionCheck {
 		irCheckThreadStart();
 		buttonCheckThreadStart();
 	}
+	public static void buttonAddData(String status){
+		buttonStatus=status;
+	}
+	public static void irAddData(double distance){
+		irDistance=distance;
+	}
+	public static void ultrasonicAddData(double distance){
+		ultrasonicDistance=distance;
+	}
 	
-	
-	public static void addData(double y, double p, double r) {
+	public static void gyroAddData(double yaw, double pitch, double roll) {
 		//list.add(y + " " + p + " " + r);
-		String strData = y + " " + p + " " + r;
+		//String strData = y + " " + p + " " + r;
 		//processFile(strData);
+		
+		
 	}
 	
 	private void gyroCheckThreadStart(){

@@ -1,5 +1,6 @@
 package Motion.server;
 
+import Motion.MotionCheck;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.json.JSONObject;
@@ -12,7 +13,7 @@ public class IRResource extends CoapResource {
 	
 	
 	private static IRResource instance;
-	public static int currDistance;
+	public static double currDistance;
 	
 	public IRResource() throws Exception {
 		super("ifraredray");
@@ -40,9 +41,9 @@ public class IRResource extends CoapResource {
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
 		if (sensor.equals("infraredray")) {
-			int distance= Integer.parseInt(requestJsonObject.getString("distance"));
+			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
 			currDistance=distance;
-			
+			MotionCheck.irAddData(currDistance);
 		}else if (sensor.equals("status")) {
 
 		}

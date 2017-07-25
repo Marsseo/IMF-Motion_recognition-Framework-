@@ -36,6 +36,7 @@ public class CoapResourceServer {
 		coapServer.add(new GyroscopeResource());
 		coapServer.add(new UltrasonicResource());
 		coapServer.add(new IRResource());
+		coapServer.add(new ButtonResource());
 	}
 
 	public void start() {
