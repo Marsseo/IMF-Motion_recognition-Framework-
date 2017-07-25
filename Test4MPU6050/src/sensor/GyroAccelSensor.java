@@ -14,14 +14,16 @@ public class GyroAccelSensor {
 	private I2CDevice mpu6050;
 	
 	private double acclX, acclY, acclZ;
-	
 	private double gyroX, gyroY, gyroZ;
+	
 	private double gyroAngleXcollect=0, gyroAngleYcollect=0, gyroAngleZcollect=0;
 		
 	private double gyroAngularSpeedOffsetX ,gyroAngularSpeedOffsetY, gyroAngularSpeedOffsetZ;
 	
 	private double deltaGyroX, deltaGyroY, deltaGyroZ;
 	private double splAngleX, splAngleY, splAngleZ;
+	
+	private double temp;
 	
 	private double filteredAngleX = 0.;
 	private double filteredAngleY = 0.;
@@ -32,6 +34,12 @@ public class GyroAccelSensor {
 	private long lastUpdateTimeX = 0;
 	private long lastUpdateTimeY = 0;
 	private long lastUpdateTimeZ = 0;
+
+	public double getTemp() throws IOException {
+		temp = readWord2C(Mpu6050Registers.MPU6050_RA_TEMP_OUT_H)/340.00+36.53;
+		return temp;
+	}
+	
 	
 	
 	public double getAcclX() throws IOException {
@@ -546,6 +554,9 @@ public class GyroAccelSensor {
 				System.out.println("SimpleAngleX : "+test.getSplAngleX());
 				System.out.println("SimpleAngleY : "+test.getSplAngleY());
 				System.out.println("SimpleAngleZ : "+test.getSplAngleZ());
+				System.out.println("|");
+				
+				System.out.println("Temperature : "+test.getTemp());
 				System.out.println("|");
 				System.out.println("|- End");
 				
