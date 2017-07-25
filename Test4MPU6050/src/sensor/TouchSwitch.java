@@ -27,7 +27,7 @@ public class TouchSwitch {
 
 	//Method
 	public static void main(String[] args) throws IOException {
-		TouchSwitch button = new TouchSwitch(RaspiPin.GPIO_01);
+		TouchSwitch button = new TouchSwitch(RaspiPin.GPIO_05);
 		button.setGpioPinListenerDigital(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {

@@ -64,7 +64,7 @@ public class UltrasonicSensor {
         int distance = (int) (seconds * SOUND_VALOCITY);
 
         //100이상 튀는 값이 있을 경우 다시 측정
-        if (again == false && Math.abs(previousDistance - distance) > 7) {
+        if (again == false && Math.abs(previousDistance - distance) > 100) {
             again = true;
             getDistance(); //dummy read
             distance = getDistance();
@@ -88,7 +88,7 @@ public class UltrasonicSensor {
         while (true) {
             int distance = test.getDistance();
             System.out.print("거리(cm): " + distance);
-            Thread.sleep(100);
+            Thread.sleep(1000);
         }
     }
 }

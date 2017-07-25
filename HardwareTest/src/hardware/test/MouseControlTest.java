@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class MouseControlTest {
 
-    private String ipAddress = "192.168.3.113";
+    private String ipAddress = "192.168.3.133";
     private CoapClient coapClient;
     private JSONObject jsonObject;
     private String json;

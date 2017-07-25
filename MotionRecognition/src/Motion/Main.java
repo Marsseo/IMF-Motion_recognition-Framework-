@@ -1,18 +1,19 @@
 
-package coap;
+package Motion;
 
-import coap.server.CoapResourceServer;
+import Motion.server.CoapResourceServer;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Main {
-	
-	private static final Logger logger=LoggerFactory.getLogger(Main.class);
+private static final Logger logger=LoggerFactory.getLogger(Main.class);
 	public CoapResourceServer coapResourceServer;
+	public MotionCheck motionCheck;
 	
 	public Main() throws Exception {
 		coapResourceServer=new CoapResourceServer();
+		motionCheck=new MotionCheck();
 	}
 					
 	public void start(){
@@ -35,5 +36,5 @@ public class Main {
 			main.stop();
 		}
 	}
-
+	
 }
