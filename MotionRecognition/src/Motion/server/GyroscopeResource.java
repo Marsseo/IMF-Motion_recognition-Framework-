@@ -1,6 +1,6 @@
 package Motion.server;
 
-import Motion.MotionCheck;
+import Motion.GyroMotionList;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.json.JSONObject;
@@ -38,7 +38,9 @@ public class GyroscopeResource extends CoapResource {
 	public void handlePOST(CoapExchange exchange) {
 		//{"sensor":"change","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
 	//{"sensor":"status"} 이런식으로 요청
-
+	
+	
+	
 		try{
 		String requestJson = exchange.getRequestText();
 		JSONObject requestJsonObject = new JSONObject(requestJson);
@@ -50,7 +52,7 @@ public class GyroscopeResource extends CoapResource {
 			currYawAngle=yawAngle;
 			currPitchAngle=pitchAngle;
 			currRollAngle=rollAngle;
-			MotionCheck.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
+			GyroMotionList.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
 		}else if (sensor.equals("status")) {
 
 		}

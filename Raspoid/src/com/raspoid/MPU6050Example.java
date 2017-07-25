@@ -67,25 +67,27 @@ public class MPU6050Example {
 			double[] filteredAngles = mpu6050.getFilteredAngles();
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
-			mouseMove((int) filteredAngles[0], (int) filteredAngles[2]);
+			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 
 			Tools.sleepMilliseconds(100);
 		}
 
 	}
 
-	public static void mouseMove(int x, int y) {
-		int axisX = x;
-		int axisY = y;
+	public static void mouseMove(double x, double y,double z) {
+		double roll = x;
+		double pitch = y;
+		double yaw = z;
         
 		jsonObject = new JSONObject();
-		jsonObject.put("command", "change");
-		jsonObject.put("axisX", String.valueOf(axisX));
-		jsonObject.put("axisY", String.valueOf(axisY));
+		jsonObject.put("sensor", "gyroscope");
+		jsonObject.put("yawAngle", String.valueOf(yaw));
+		jsonObject.put("rollAngle", String.valueOf(roll));
+		jsonObject.put("pitchAngle", String.valueOf(pitch));
 		json = jsonObject.toString();
 
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://" + ipAdress + "/mouse");
+		coapClient.setURI("coap://" + ipAdress + "/gyroscope");
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
 		coapClient.shutdown();
 	}
