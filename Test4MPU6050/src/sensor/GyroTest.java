@@ -41,33 +41,35 @@ public class GyroTest {
 	
 	public void send() throws IOException{
 		
-			x = test.getSplAngleX();
-			y = test.getSplAngleY();
-			z = test.getSplAngleZ();
+			x = test.getFilteredAngleX();
+			y = test.getFilteredAngleY();
+			z = (z<0) ?360-test.getFilteredAngleZ():test.getFilteredAngleZ();
 			
 			jsonObject = new JSONObject();
 			jsonObject.put("command", "change");
-			jsonObject.put("X", String.valueOf(x));
-			jsonObject.put("Y", String.valueOf(y));
-			jsonObject.put("Z", String.valueOf(z));
+			jsonObject.put("rollAngle", String.valueOf(x));
+			jsonObject.put("pitchAngle", String.valueOf(y));
+			jsonObject.put("yawAngle", String.valueOf(z));
 			json = jsonObject.toString();
 
 			coapClient = new CoapClient();
-			coapClient.setURI("coap://" + ipAddress + "/gesture");
+			coapClient.setURI("coap://" + ipAddress + "/gyroscope");
 			CoapResponse a = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
-			System.out.println(a);
+			//System.out.println(a);
 			coapClient.shutdown();
 		}
 	
 	
 	
 	public static void main(String[] args) {
+		
 		GyroTest test = new GyroTest();
 		
 		
 		while(true){
 			try {
 				test.send();
+				System.out.println("각도 :"+test.x+"\t"+test.y+"\t"+test.z);
 			} catch (IOException ex) {
 				Logger.getLogger(GyroTest.class.getName()).log(Level.SEVERE, null, ex);
 			}
