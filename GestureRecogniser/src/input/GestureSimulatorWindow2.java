@@ -287,8 +287,6 @@ public class GestureSimulatorWindow2 extends JFrame {
 		
 		//last = coapC;
 		
-
-		
 		return coapC;
 	}
 	
