@@ -31,27 +31,34 @@ public class GyroMotionList {
 	}
 
 	public static void yawCircle() {
+		System.out.println("yawCircle실행");//삭제각
 		int leftCount = 0;
 		int rightCount = 0;
 		if (listYawAngle.size() >= 10) {
 			for (int i = 0; i < listYawAngle.size() - 1; i++) {
-				double prevalue = listYawAngle.get(i);
-				double currvalue = listYawAngle.get(i + 1);
+				double rollPrevalue = listRollAngle.get(i + 1);
+				double yawPrevalue = listYawAngle.get(i);
+				double yawCurrvalue = listYawAngle.get(i + 1);
+				double yawGap = Math.abs(yawCurrvalue - yawPrevalue);
+				if (170 < rollPrevalue && rollPrevalue < 220) {
+					if (yawGap > 0.5) {
 
-				if (prevalue < currvalue) {
-					leftCount++;
-				}
+						if (yawPrevalue < yawCurrvalue) {
+							leftCount++;
+						}
 
-				if (prevalue > currvalue) {
-					rightCount++;
+						if (yawPrevalue > yawCurrvalue) {
+							rightCount++;
+						}
+					}
 				}
 
 			}
-			if (leftCount > 5) {
+			if (leftCount > 6) {
 				System.out.println("yaw Dirention :  <---");
 				MotionCheck.MotionRecognitionStatus(false);
 				System.out.println("Motion Off");
-			} else if (rightCount > 5) {
+			} else if (rightCount > 6) {
 				System.out.println("yaw Dirention :  --->");
 				MotionCheck.MotionRecognitionStatus(false);
 				System.out.println("Motion Off");
@@ -79,7 +86,7 @@ public class GyroMotionList {
 		};
 	}
 
-	public static void pitchCircle() {
+	public synchronized static void pitchCircle() {
 		boolean step1 = false;
 		boolean step2 = false;
 		int count = 0;
@@ -88,20 +95,23 @@ public class GyroMotionList {
 				double prevalue = listPitchAngle.get(i);
 				if (MotionCheck.motionOn == false) {
 
-				if (prevalue < 130) {
-					step1 = true;
-				}
-				if (step1 == true) {
-					if (prevalue > 170) {
-						step2 = true;
+					if (prevalue < 130 && step1 == false) {
+						step1 = true;
+						System.out.println("Step1 On");
 					}
-				}
+					if (step1 == true) {
+						if (prevalue > 170) {
+							step2 = true;
+							System.out.println("Step2 On");
+						}
+					}
 
-				if (step1 == true && step2 == true) {
-					System.out.println("Motion On");
-					MotionCheck.MotionRecognitionStatus(true);
-				}
-					
+					if (step1 == true && step2 == true) {
+						System.out.println("Motion On");
+						MotionCheck.MotionRecognitionStatus(true);
+						i = listPitchAngle.size();
+					}
+
 				}
 
 			}
