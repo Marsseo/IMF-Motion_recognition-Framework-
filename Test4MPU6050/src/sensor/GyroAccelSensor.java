@@ -188,7 +188,7 @@ public class GyroAccelSensor {
 	}
 	
 	public GyroAccelSensor() throws I2CFactory.UnsupportedBusNumberException, IOException {
-				bus = I2CFactory.getInstance(I2CBus.BUS_1);
+		bus = I2CFactory.getInstance(I2CBus.BUS_1);
 		mpu6050 = bus.getDevice(0x68);
 		System.out.println("Create GyroAccelSensor");
 		

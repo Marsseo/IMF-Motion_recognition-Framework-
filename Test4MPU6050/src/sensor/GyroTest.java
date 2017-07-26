@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class GyroTest {
 	
-	double x, y, z;
+	private double x, y, z;
 	private String ipAddress = "192.168.3.109";
 	private JSONObject jsonObject;
 	private String json;
@@ -23,12 +23,10 @@ public class GyroTest {
 		
 		
 		try {
-			GyroAccelSensor test = new GyroAccelSensor();
+			test = new GyroAccelSensor();
 			
 			test.startUpdatingThread();
-			x = test.getSplAngleX();
-			y = test.getSplAngleY();
-			z = test.getSplAngleZ();
+			
 						
 			
 		} catch (I2CFactory.UnsupportedBusNumberException ex) {

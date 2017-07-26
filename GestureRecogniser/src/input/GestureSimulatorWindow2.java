@@ -51,7 +51,7 @@ public class GestureSimulatorWindow2 extends JFrame {
 	private List<LimitTogestureListener> listeners = new LinkedList<LimitTogestureListener>();
 	private List<JButton> buttons = new LinkedList<JButton>();
 	
-	public static Coordinate coapC;
+	public static Coordinate coapC=new Coordinate(0,0,0);
 	/**
 	 * Create the frame.
 	 */
@@ -276,15 +276,6 @@ public class GestureSimulatorWindow2 extends JFrame {
 	
 	private Coordinate offsetLast() {
 		
-		double x, y, z;
-		
-//		x = getGX();
-//		y = getGY();
-//		z = getGZ();
-//		
-//		System.out.println("X2 :"+x);
-//		System.out.println("Y2 :"+y);
-//		System.out.println("Z2 :"+z));
 		
 		
 		Coordinate c = new Coordinate(
@@ -294,9 +285,9 @@ public class GestureSimulatorWindow2 extends JFrame {
 		);
 		//last = c;
 		
-		last = coapC;
+		//last = coapC;
 		
-		System.out.println(coapC);
+
 		
 		return coapC;
 	}

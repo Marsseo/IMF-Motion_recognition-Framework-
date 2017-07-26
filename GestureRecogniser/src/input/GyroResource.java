@@ -37,7 +37,7 @@ public class GyroResource extends CoapResource {
 			z=Double.parseDouble(requestJsonObject.getString("Z"));
 			
 			coapC = new Coordinate(x,y,z);
-			System.out.println(coapC);
+			
 		} else if (command.equals("status")) {
 		}
 		JSONObject responseJsonObject = new JSONObject();
