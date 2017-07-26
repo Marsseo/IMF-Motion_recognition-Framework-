@@ -5,9 +5,9 @@ import java.util.List;
 
 public class GyroMotionList {
 
-	private static List<Double> listYawAngle = new ArrayList<>();
-	private static List<Double> listRollAngle = new ArrayList<>();
-	private static List<Double> listPitchAngle = new ArrayList<>();
+	public static List<Double> listYawAngle = new ArrayList<>();
+	public static List<Double> listRollAngle = new ArrayList<>();
+	public static List<Double> listPitchAngle = new ArrayList<>();
 
 	//Gyro3축 값을 받음
 	public static void gyroAddData(double yaw, double pitch, double roll) {
