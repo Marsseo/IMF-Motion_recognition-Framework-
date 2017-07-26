@@ -42,28 +42,28 @@ public class MPU6050Example {
 
 		while (true) {
 			Tools.log("-----------------------------------------------------");
-
-			// Accelerometer
-			Tools.log("Accelerometer:");
-			double[] accelAngles = mpu6050.getAccelAngles();
-			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(accelAngles[0]),
-							MPU6050.angleToString(accelAngles[1]), MPU6050.angleToString(accelAngles[2])));
-
-			double[] accelAccelerations = mpu6050.getAccelAccelerations();
-			Tools.log("\tAccelerations: " + MPU6050.xyzValuesToString(MPU6050.accelToString(accelAccelerations[0]),
-							MPU6050.accelToString(accelAccelerations[1]), MPU6050.accelToString(accelAccelerations[2])));
-
-			// Gyroscope
-			Tools.log("Gyroscope:");
-			double[] gyroAngles = mpu6050.getGyroAngles();
-			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(gyroAngles[0]),
-							MPU6050.angleToString(gyroAngles[1]), MPU6050.angleToString(gyroAngles[2])));
-
-			double[] gyroAngularSpeeds = mpu6050.getGyroAngularSpeeds();
-			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angularSpeedToString(gyroAngularSpeeds[0]),
-							MPU6050.angularSpeedToString(gyroAngularSpeeds[1]), MPU6050.angularSpeedToString(gyroAngularSpeeds[2])));
-
-			// Filtered angles
+//
+//			// Accelerometer
+//			Tools.log("Accelerometer:");
+//			double[] accelAngles = mpu6050.getAccelAngles();
+//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(accelAngles[0]),
+//							MPU6050.angleToString(accelAngles[1]), MPU6050.angleToString(accelAngles[2])));
+//
+//			double[] accelAccelerations = mpu6050.getAccelAccelerations();
+//			Tools.log("\tAccelerations: " + MPU6050.xyzValuesToString(MPU6050.accelToString(accelAccelerations[0]),
+//							MPU6050.accelToString(accelAccelerations[1]), MPU6050.accelToString(accelAccelerations[2])));
+//
+//			// Gyroscope
+//			Tools.log("Gyroscope:");
+//			double[] gyroAngles = mpu6050.getGyroAngles();
+//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(gyroAngles[0]),
+//							MPU6050.angleToString(gyroAngles[1]), MPU6050.angleToString(gyroAngles[2])));
+//
+//			double[] gyroAngularSpeeds = mpu6050.getGyroAngularSpeeds();
+//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angularSpeedToString(gyroAngularSpeeds[0]),
+//							MPU6050.angularSpeedToString(gyroAngularSpeeds[1]), MPU6050.angularSpeedToString(gyroAngularSpeeds[2])));
+//
+//			// Filtered angles
 			Tools.log("Filtered angles:");
 			double[] filteredAngles = mpu6050.getFilteredAngles();
 			if(filteredAngles[2]<0){

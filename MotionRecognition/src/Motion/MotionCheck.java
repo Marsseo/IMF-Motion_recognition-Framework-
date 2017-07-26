@@ -53,13 +53,13 @@ public class MotionCheck {
 				while (true) {
 					if(motionOn==false){
 					gyroMotionList.pitchCircle();
+					System.out.println("pitchCircle 실행 while문");
 					try {
 						Thread.sleep(200);
 					} catch (Exception e) {
 				}
-					}
-				
-					if(motionOn==true){
+					}else{
+						System.out.println("yaw roll 실행 while문");
 						try {
 						Thread.sleep(1000);
 					} catch (Exception e) {
