@@ -21,8 +21,17 @@ import gestures.*;
 import input.FileInput;
 import input.GestureSimulator;
 import input.GestureSimulator2;
+import input.GyroResource;
 import input.InputInterface;
 import input.InputManager;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.eclipse.californium.core.CoapServer;
+import org.eclipse.californium.core.coap.CoAP;
+import org.eclipse.californium.core.network.CoapEndpoint;
+import org.eclipse.californium.core.network.EndpointManager;
 
 /**
  * The main class of the gestureRecogniser project
@@ -30,15 +39,20 @@ import input.InputManager;
  *
  */
 public class GestureRecogniser {
-
+	
+	private CoapServer coapServer;
 	/**
 	 * Run the application
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		GestureRecogniser gr = new GestureRecogniser();
-		gr.start();
+		try {
+			GestureRecogniser gr = new GestureRecogniser();
+			gr.start();
+		} catch (Exception ex) {
+			Logger.getLogger(GestureRecogniser.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 	
 	private FiniteStateMachineManager fsmm = new FiniteStateMachineManager();
@@ -50,12 +64,23 @@ public class GestureRecogniser {
 	/**
 	 * Create a new instance of GestureRecogniser
 	 */
-	public GestureRecogniser() {}
+	public GestureRecogniser() throws Exception {
+		coapServer = new CoapServer();
+		for (InetAddress addr : EndpointManager.getEndpointManager().getNetworkInterfaces()) {
+			if (!addr.isLinkLocalAddress()) {
+                coapServer.addEndpoint(new CoapEndpoint(new InetSocketAddress(addr, CoAP.DEFAULT_COAP_PORT)));
+			}
+		}
+		coapServer.add(new GyroResource());
+		
+	}
 	
 	/**
 	 * Start the execution of the instance
 	 */
-	public void start() {
+	public void start() throws Exception {
+		
+		coapServer.start();
 		// Add FiniteStateMachines to the FSM manager
 		addGestures();
 		
@@ -120,6 +145,9 @@ public class GestureRecogniser {
 				analysisManager.handleAcceptingStateEvent(e);
 			}
 		});
+		
+		
+		
 	}
 	
 	private void addGestures() {

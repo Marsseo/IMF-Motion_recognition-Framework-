@@ -1,6 +1,5 @@
 package input;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,15 +17,22 @@ import coordinates.Coordinate;
 import events.event.LimitToGestureEvent;
 import events.listeners.LimitTogestureListener;
 
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.JCheckBox;
+import org.eclipse.californium.core.CoapServer;
+import org.eclipse.californium.core.coap.CoAP;
+import org.eclipse.californium.core.network.CoapEndpoint;
+import org.eclipse.californium.core.network.EndpointManager;
 
 public class GestureSimulatorWindow2 extends JFrame {
 
@@ -44,11 +50,12 @@ public class GestureSimulatorWindow2 extends JFrame {
 	
 	private List<LimitTogestureListener> listeners = new LinkedList<LimitTogestureListener>();
 	private List<JButton> buttons = new LinkedList<JButton>();
-
+	
+	public static Coordinate coapC;
 	/**
 	 * Create the frame.
 	 */
-	public GestureSimulatorWindow2() {
+	public GestureSimulatorWindow2() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 320, 474);
 		contentPane = new JPanel();
@@ -249,6 +256,8 @@ public class GestureSimulatorWindow2 extends JFrame {
 					.addContainerGap(17, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+		
+		
 	}
 	
 	public Coordinate getCoordinate() {
@@ -266,13 +275,30 @@ public class GestureSimulatorWindow2 extends JFrame {
 	}
 	
 	private Coordinate offsetLast() {
+		
+		double x, y, z;
+		
+//		x = getGX();
+//		y = getGY();
+//		z = getGZ();
+//		
+//		System.out.println("X2 :"+x);
+//		System.out.println("Y2 :"+y);
+//		System.out.println("Z2 :"+z));
+		
+		
 		Coordinate c = new Coordinate(
-				last.getX() + Math.random() * maxOffset * 2 - maxOffset,
-				last.getY() + Math.random() * maxOffset * 2 - maxOffset,
-				last.getZ() + Math.random() * maxOffset * 2 - maxOffset
+				last.getX() + 0 - maxOffset,
+				last.getY() + 0 - maxOffset,
+				last.getZ() + 0 - maxOffset
 		);
-		last = c;
-		return c;
+		//last = c;
+		
+		last = coapC;
+		
+		System.out.println(coapC);
+		
+		return coapC;
 	}
 	
 	private void processFile() {

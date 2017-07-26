@@ -24,7 +24,7 @@ public class GestureSimulator2 extends InputInterface {
 	 * Create an instance of FileInput
 	 * @param filePath File from which coordinate data will be retrieved
 	 */
-	public GestureSimulator2() {
+	public GestureSimulator2() throws Exception {
 		window = new GestureSimulatorWindow2();
 		window.setVisible(true);
 	}
