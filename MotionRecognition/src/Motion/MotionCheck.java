@@ -1,75 +1,101 @@
-
 package Motion;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MotionCheck {
+
 	public static Thread gyroCheckThread;
 	public static Thread ultraCheckThread;
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
-	public static String buttonStatus="";
+	public static String buttonStatus = "";
 	public static double irDistance;
 	public static double ultrasonicDistance;
-	private static List<Double> listYawAngle = new ArrayList<>();
-	private static List<Double> listRollAngle = new ArrayList<>();
-	private static List<Double> listPitchAngle = new ArrayList<>();
+	public static boolean motionOn=false;
 
-	public MotionCheck(){
+	private GyroMotionList gyroMotionList;
+
+	public MotionCheck() {
+		
 		gyroCheckThreadStart();
 		ultraCheckThreadStart();
 		irCheckThreadStart();
 		buttonCheckThreadStart();
+		
+		gyroMotionList=new GyroMotionList();
 	}
-	public static void buttonAddData(String status){
-		buttonStatus=status;
+
+	public static void buttonAddData(String status) {
+		buttonStatus = status;
 	}
-	public static void irAddData(double distance){
-		irDistance=distance;
+
+	public static void irAddData(double distance) {
+		irDistance = distance;
 	}
-	public static void ultrasonicAddData(double distance){
-		ultrasonicDistance=distance;
+
+	public static void ultrasonicAddData(double distance) {
+		ultrasonicDistance = distance;
 	}
 	
-	public static void gyroAddData(double yaw, double pitch, double roll) {
-		//list.add(y + " " + p + " " + r);
-		//String strData = y + " " + p + " " + r;
-		//processFile(strData);
-		
-		
+	public static void MotionRecognitionStatus(boolean status){
+		motionOn=status;
 	}
-	
-	private void gyroCheckThreadStart(){
+
+
+
+	private void gyroCheckThreadStart() {
+		
 		gyroCheckThread = new Thread() {
-            @Override
+			@Override
 			public void run() {
+              	
+				while (true) {
+					if(motionOn==false){
+					gyroMotionList.pitchCircle();
+					try {
+						Thread.sleep(200);
+					} catch (Exception e) {
+				}
+					}
 				
-				while(true){
+					if(motionOn==true){
+						try {
+						Thread.sleep(1000);
+					} catch (Exception e) {
+					}
+					gyroMotionList.yawCircle();
+					gyroMotionList.rollCircle();
 					
-					try {Thread.sleep(1000);} catch (Exception e) {}
+					}
+
+					
 				}
 			}
-        };
-        gyroCheckThread.start();
+		};
+		gyroCheckThread.start();
+		
 	}
-	
-	private void ultraCheckThreadStart(){
-		ultraCheckThread= new Thread() {
-            
-        };
-        ultraCheckThread.start();
+
+	private void ultraCheckThreadStart() {
+		ultraCheckThread = new Thread() {
+			
+
+		};
+		ultraCheckThread.start();
 	}
-	private void irCheckThreadStart(){
-		irCheckThread= new Thread() {
-            
-        };
-        ultraCheckThread.start();
+
+	private void irCheckThreadStart() {
+		irCheckThread = new Thread() {
+
+		};
+		irCheckThread.start();
 	}
-	private void buttonCheckThreadStart(){
-	     buttonCheckThread= new Thread() {
-            
-        };
-        ultraCheckThread.start();
+
+	private void buttonCheckThreadStart() {
+		buttonCheckThread = new Thread() {
+
+		};
+		buttonCheckThread.start();
 	}
 }
