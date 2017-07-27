@@ -13,6 +13,10 @@ public class MotionCheck {
 	public static double irDistance;
 	public static double ultrasonicDistance;
 	public static boolean motionOn=false;
+	
+	public static List yawRollPitchRangeList = new ArrayList<>();
+	public static List differenceResultList = new ArrayList<>();
+	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌
 
 	private GyroMotionList gyroMotionList;
 
@@ -42,8 +46,7 @@ public class MotionCheck {
 		motionOn=status;
 	}
 
-
-
+	
 	private void gyroCheckThreadStart() {
 		
 		gyroCheckThread = new Thread() {
@@ -64,13 +67,16 @@ public class MotionCheck {
 						Thread.sleep(1000);
 					} catch (Exception e) {
 					}
-					gyroMotionList.yawCircle();
-					gyroMotionList.rollCircle();
+						if(!yawRollPitchRangeList.isEmpty()){
+					differenceResultList=gyroMotionList.Range(yawRollPitchRangeList);
 					
+					if(!differenceResultList.isEmpty()){
+						
 					}
-
-					
-				}
+							}
+						}
+					}
+				
 			}
 		};
 		gyroCheckThread.start();
