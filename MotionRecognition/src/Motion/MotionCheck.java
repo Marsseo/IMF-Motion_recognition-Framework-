@@ -9,7 +9,7 @@ public class MotionCheck {
 	public static Thread ultraCheckThread;
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
-	public static String buttonStatus = "";
+	public static String buttonStatus = "off";
 	public static double irDistance;
 	public static double ultrasonicDistance;
 	public static boolean motionOn=false;
