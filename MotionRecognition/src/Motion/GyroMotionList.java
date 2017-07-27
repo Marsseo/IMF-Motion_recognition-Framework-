@@ -30,8 +30,8 @@ public class GyroMotionList {
 
 	}
 
-	public static void yawCircle() {
-		System.out.println("yawCircle실행");//삭제각
+	public static void yawLeftRight() {
+		System.out.println("yawLeftRight실행");//삭제각
 		int leftCount = 0;
 		int rightCount = 0;
 		if (listYawAngle.size() >= 10) {
@@ -40,8 +40,8 @@ public class GyroMotionList {
 				double yawPrevalue = listYawAngle.get(i);
 				double yawCurrvalue = listYawAngle.get(i + 1);
 				double yawGap = Math.abs(yawCurrvalue - yawPrevalue);
-				if (170 < rollPrevalue && rollPrevalue < 220) {
-					if (yawGap > 0.5) {
+				if (160 < rollPrevalue && rollPrevalue < 220) {
+					if (yawGap > 0.3) {
 
 						if (yawPrevalue < yawCurrvalue) {
 							leftCount++;
@@ -65,10 +65,48 @@ public class GyroMotionList {
 			}
 		};
 	}
+	
+	public static void rollUpDown() {
+		System.out.println("rollUpDown실행");//삭제각
+		int upCount = 0;
+		int downCount = 0;
+		
+		if (listRollAngle.size() >= 10) {
+			for (int i = 0; i < listRollAngle.size() - 1; i++) {
+				double yawValue = listYawAngle.get(i + 1);
+				double rollPrevalue = listRollAngle.get(i);
+				double rollCurrvalue = listRollAngle.get(i + 1);
+				double rollGap = Math.abs(rollCurrvalue - rollPrevalue);
+				if (300 < yawValue || yawValue < 40) {
+					if (rollGap > 0.3) {
+
+						if (rollPrevalue < rollCurrvalue) {
+							downCount++;
+						}
+
+						if (rollPrevalue > rollCurrvalue) {
+							upCount++;
+						}
+					}
+				}
+
+			}
+			if (downCount > 6) {
+				System.out.println("roll Dirention :  Down↓");
+				MotionCheck.MotionRecognitionStatus(false);
+				System.out.println("Motion Off");
+			} else if (upCount > 6) {
+				System.out.println("roll Dirention :  Up ↑");
+				MotionCheck.MotionRecognitionStatus(false);
+				System.out.println("Motion Off");
+			}
+		};
+	
+	}
 
 	public static void rollCircle() {
 		int count = 0;
-		if (listRollAngle.size() >= 2) {
+		if (listRollAngle.size() >= 8) {
 			for (int i = 0; i < listRollAngle.size() - 1; i++) {
 				double prevalue = listRollAngle.get(i);
 				double currvalue = listRollAngle.get(i + 1);

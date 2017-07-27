@@ -42,8 +42,6 @@ public class MotionCheck {
 		motionOn=status;
 	}
 
-
-
 	private void gyroCheckThreadStart() {
 		
 		gyroCheckThread = new Thread() {
@@ -64,8 +62,9 @@ public class MotionCheck {
 						Thread.sleep(1000);
 					} catch (Exception e) {
 					}
-					gyroMotionList.yawCircle();
+					gyroMotionList.yawLeftRight();
 					gyroMotionList.rollCircle();
+					gyroMotionList.rollUpDown();
 					
 					}
 
