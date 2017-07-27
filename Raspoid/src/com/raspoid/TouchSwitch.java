@@ -1,4 +1,4 @@
-package sensor;
+package com.raspoid;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;

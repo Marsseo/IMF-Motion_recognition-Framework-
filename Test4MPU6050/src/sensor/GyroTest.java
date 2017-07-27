@@ -1,5 +1,6 @@
 package sensor;
 
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,15 +18,16 @@ public class GyroTest {
 	private JSONObject jsonObject;
 	private String json;
 	private CoapClient coapClient;
-	private GyroAccelSensor test;
+	private GyroAccelSensor test1;
+	private TouchSwitch test2;
 
 	public GyroTest() {		
 		
 		
 		try {
-			test = new GyroAccelSensor();
-			
-			test.startUpdatingThread();
+			test1 = new GyroAccelSensor();
+			test2 = new TouchSwitch(RaspiPin.GPIO_01);
+			test1.startUpdatingThread();
 			
 						
 			
@@ -41,9 +43,9 @@ public class GyroTest {
 	
 	public void send() throws IOException{
 		
-			x = test.getFilteredAngleX();
-			y = test.getFilteredAngleY();
-			z = (z<0) ?360-test.getFilteredAngleZ():test.getFilteredAngleZ();
+			x = test1.getFilteredAngleX();
+			y = test1.getFilteredAngleY();
+			z = (z<0) ?360+test1.getFilteredAngleZ():test1.getFilteredAngleZ();
 			
 			jsonObject = new JSONObject();
 			jsonObject.put("command", "change");
@@ -58,6 +60,20 @@ public class GyroTest {
 			//System.out.println(a);
 			coapClient.shutdown();
 		}
+	
+	public void sendButton(){
+		
+		jsonObject = new JSONObject();
+		jsonObject.put("sensor", "button");
+		jsonObject.put("yawAngle", test2.getStatus());
+		json = jsonObject.toString();
+
+		coapClient = new CoapClient();
+		coapClient.setURI("coap://" + ipAddress + "/gyroscope");
+		coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
+		coapClient.shutdown();
+		
+	}
 	
 	
 	

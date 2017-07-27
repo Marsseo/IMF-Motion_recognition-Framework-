@@ -16,7 +16,7 @@ public class ButtonResource extends CoapResource {
 	public static String currStatus;
 	
 	public ButtonResource() throws Exception {
-		super("ifraredray");
+		super("button");
 		instance = this;
 		
 	}
@@ -40,7 +40,7 @@ public class ButtonResource extends CoapResource {
 		String requestJson = exchange.getRequestText();
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
-		if (sensor.equals("button")) {
+		if (sensor.equals("touch")) {
 			String status= requestJsonObject.getString("status");
 			currStatus=status;
 			MotionCheck.buttonAddData(currStatus);

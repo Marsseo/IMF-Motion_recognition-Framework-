@@ -1,5 +1,6 @@
 package com.raspoid;
 
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
@@ -18,17 +19,19 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.133";
+	public static String ipAdress = "192.168.3.109";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
 	public static String json;
+	public static TouchSwitch ts;
 
 	/**
 	 * Private constructor to hide the implicit public one.
 	 */
 	private MPU6050Example() {
 		coapClient = new CoapClient();
+		
 	}
 
 	/**
@@ -38,6 +41,8 @@ public class MPU6050Example {
 	 */
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 		MPU6050 mpu6050 = new MPU6050();
+		ts = new TouchSwitch(RaspiPin.GPIO_01);
+		
 		mpu6050.startUpdatingThread();
 
 		while (true) {
@@ -73,6 +78,8 @@ public class MPU6050Example {
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
+			
+			button();
 
 			Tools.sleepMilliseconds(100);
 		}
@@ -98,7 +105,20 @@ public class MPU6050Example {
 		coapClient = new CoapClient();
 		coapClient.setURI("coap://" + ipAdress + "/gyroscope");
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
-		//coapClient.shutdown();
+		coapClient.shutdown();
+	}
+	
+	public static void button(){
+		
+		jsonObject = new JSONObject();
+		jsonObject.put("sensor", "touch");
+		jsonObject.put("status", ts.getStatus());
+		json = jsonObject.toString();
+
+		coapClient = new CoapClient();
+		coapClient.setURI("coap://" + ipAdress + "/button");
+		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
+		coapClient.shutdown();
 	}
 
 }

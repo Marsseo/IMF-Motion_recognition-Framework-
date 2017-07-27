@@ -16,6 +16,8 @@ public class GyroAccelSensor {
 	private double acclX, acclY, acclZ;
 	private double gyroX, gyroY, gyroZ;
 	
+	private double tempGyroX, tempGyroY, tempGyroZ;
+	
 	private double gyroAngleXcollect=0, gyroAngleYcollect=0, gyroAngleZcollect=0;
 		
 	private double gyroAngularSpeedOffsetX ,gyroAngularSpeedOffsetY, gyroAngularSpeedOffsetZ;
@@ -92,13 +94,13 @@ public class GyroAccelSensor {
 	// 필터된 값을 리턴하는 함수
 	public double getFilteredAngleX() {
 		double alpha = 0.96;
-		filteredAngleX = alpha * (filteredAngleX + deltaGyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
+		filteredAngleX = alpha * (filteredAngleX + tempGyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
 		return filteredAngleX;
 	}
 
 	public double getFilteredAngleY() {
 		double alpha = 0.96;
-		filteredAngleY = alpha * (filteredAngleX + deltaGyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
+		filteredAngleY = alpha * (filteredAngleY + tempGyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
 		return filteredAngleY;
 	}
 
@@ -165,18 +167,18 @@ public class GyroAccelSensor {
 		getGyroY();
 		getGyroZ();
 		
-		gyroX -= gyroAngularSpeedOffsetX;
-		gyroY -= gyroAngularSpeedOffsetY;
-		gyroZ -= gyroAngularSpeedOffsetZ;
+		tempGyroX = gyroX - gyroAngularSpeedOffsetX;
+		tempGyroY = gyroY - gyroAngularSpeedOffsetY;
+		tempGyroZ = gyroZ - gyroAngularSpeedOffsetZ;
 		
-		getDeltaAngleX();
-		getDeltaAngleY();
-		getDeltaAngleZ();
+//		getDeltaAngleX();
+//		getDeltaAngleY();
+//		getDeltaAngleZ();
 		
-		double dt = Math.abs(System.currentTimeMillis() - (lastUpdateTimeX+lastUpdateTimeY+lastUpdateTimeZ)/3.0) / 1000.;
-		gyroX = gyroX*dt;
-		gyroY = gyroY*dt;
-		gyroZ = gyroZ*dt;
+		double dt = Math.abs(System.currentTimeMillis() - lastUpdateTimeX) / 1000.;
+		tempGyroX = tempGyroX*dt;
+		tempGyroY = tempGyroY*dt;
+		tempGyroZ = tempGyroZ*dt;
 		lastUpdateTimeX = System.currentTimeMillis();
 		lastUpdateTimeY = System.currentTimeMillis();
 		lastUpdateTimeZ = System.currentTimeMillis();
