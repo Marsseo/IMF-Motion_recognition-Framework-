@@ -14,7 +14,7 @@ public class GyroMotionList {
 	public static int listLength = 10;
 
 	public GyroMotionList() {
-		double initialValue = 0;
+		double initialValue = 0.0;
 		listYawDifference.add(initialValue);
 		listRollDifference.add(initialValue);
 		listPitchDifference.add(initialValue);
@@ -35,22 +35,44 @@ public class GyroMotionList {
 			listPitchAngle.add(pitch);
 		}
 		if (listYawAngle.size() >= 2) {
-			double nextValue = listYawAngle.get(listYawAngle.size());
-			double preValue = listYawAngle.get(listYawAngle.size() - 1);
+			double nextValue = listYawAngle.get(listYawAngle.size()-1);
+			double preValue = listYawAngle.get(listYawAngle.size() - 2);
 			listYawDifference.add(nextValue - preValue);
-			nextValue = listRollAngle.get(listRollAngle.size());
-			preValue = listRollAngle.get(listRollAngle.size() - 1);
+			nextValue = listRollAngle.get(listRollAngle.size()-1);
+			preValue = listRollAngle.get(listRollAngle.size() - 2);
 			listRollDifference.add(nextValue - preValue);
-			nextValue = listPitchAngle.get(listPitchAngle.size());
-			preValue = listPitchAngle.get(listPitchAngle.size() - 1);
+			nextValue = listPitchAngle.get(listPitchAngle.size()-1);
+			preValue = listPitchAngle.get(listPitchAngle.size() - 2);
 			listPitchDifference.add(nextValue - preValue);
+			if(listYawDifference.size()>=listLength+1){
+				listYawDifference.remove(0);
+			listPitchDifference.remove(0);
+			listRollDifference.remove(0);
+		}	
 		}
-
+	}
+	
+	
+	public static void yawLine(List<double[]> differenceResultList){
+		System.out.println(differenceResultList.size());
+						
+						for(int i=0;i<differenceResultList.size();i++){
+							double[] count=differenceResultList.get(i);
+							if(count[0]==0){
+							
+								if(count[1]>=0){
+									System.out.println(count[1]);
+									System.out.println("left");
+							}else{
+									System.out.println("right");
+								}
+							}
+							
+					}
 	}
 
-	public static List Range(List<double[]> yawRollPitchRange) {
-
-		double[] difference = {0,0,0}; //해당 범위{yaw,roll,pitch}
+	public static List Range(List<double[]> yawRollPitchRangeList) {
+		double[] difference = {0,0,0,0}; //해당 범위{범위지정번호,yaw,roll,pitch}
 		List differenceInRangeList = new ArrayList<>();
 		if (listYawAngle.size() >= listLength) {
 			for (int i = 0; i < listYawAngle.size(); i++) {
@@ -60,14 +82,14 @@ public class GyroMotionList {
 				double yawDifference = listYawDifference.get(i);
 				double rollDifference = listRollDifference.get(i);
 				double pitchDifference = listPitchDifference.get(i);
-				for (int j = 0; j < yawRollPitchRange.size(); j++) {
+				for (int j = 0; j < yawRollPitchRangeList.size(); j++) {
 					boolean yawEnable=true;
 					boolean rollEnable=true;
 					boolean pitchEnable=true;
 					boolean yawSatisfaction=false;
 					boolean rollSatisfaction=false;
 					boolean pitchSatisfaction=false;
-					double[] range = yawRollPitchRange.get(j);
+					double[] range = yawRollPitchRangeList.get(j);
 					double yawMinRange = range[0];
 					double yawMaxRange = range[1];
 					double rollMinRange = range[2];
@@ -102,22 +124,17 @@ public class GyroMotionList {
 						pitchSatisfaction=true;
 					}
 					
-					
 					if (yawSatisfaction==true&&rollSatisfaction==true&&pitchSatisfaction==true) {
-						difference[0] = yawDifference;
-						difference[1] = rollDifference;
-						difference[2]= pitchDifference;
+						difference[0]=j;
+						difference[1] = yawDifference;
+						difference[2] = rollDifference;
+						difference[3]= pitchDifference;
 						differenceInRangeList.add(difference);
 					}
-
 				}
-
 			}
-
 		}
 		return differenceInRangeList;
-	 
-
 	}
 
 	public static int yawLeftRight() {

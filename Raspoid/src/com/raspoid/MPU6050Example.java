@@ -19,7 +19,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.109";
+	public static String ipAdress = "192.168.3.133";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -72,7 +72,11 @@ public class MPU6050Example {
 			Tools.log("Filtered angles:");
 			double[] filteredAngles = mpu6050.getFilteredAngles();
 			if(filteredAngles[2]<0){
-				filteredAngles[2]=360+filteredAngles[2];
+				filteredAngles[2]=180+filteredAngles[2];
+			}else if(filteredAngles[2]==0){
+				filteredAngles[2]=180;
+			}else{
+				filteredAngles[2]=180+filteredAngles[2];
 			}
 			
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
