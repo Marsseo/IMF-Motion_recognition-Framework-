@@ -13,7 +13,7 @@ public class UltrasonicResource extends CoapResource {
 	
 	
 	private static UltrasonicResource instance;
-	public static double currDistance;
+	public static double ultraDistance;
 	
 	public UltrasonicResource() throws Exception {
 		super("ultrasonic");
@@ -42,7 +42,7 @@ public class UltrasonicResource extends CoapResource {
 		String sensor = requestJsonObject.getString("sensor");
 		if (sensor.equals("ultrasonic")) {
 			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
-			currDistance=distance;
+			ultraDistance=distance;
 			MotionCheck.ultrasonicAddData(distance);
 			
 		}else if (sensor.equals("status")) {
@@ -50,7 +50,7 @@ public class UltrasonicResource extends CoapResource {
 		}
 		JSONObject responseJsonObject = new JSONObject();
 		responseJsonObject.put("result", "success");
-		responseJsonObject.put("distance", String.valueOf(currDistance));
+		responseJsonObject.put("distance", String.valueOf(ultraDistance));
 		String responseJson = responseJsonObject.toString();
 		exchange.respond(responseJson);
 		}catch(Exception e){

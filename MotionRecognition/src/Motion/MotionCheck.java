@@ -28,8 +28,9 @@ public class MotionCheck {
 		buttonCheckThreadStart();
 		
 		gyroMotionList=new GyroMotionList();
-		double[] line={90,280,160,220,0,0};
-		yawRollPitchRangeList.add(line);
+		double[] yawLine={90,280,160,220,0,0};
+		double[] rollLine={170,190,90,270,0,0};
+		yawRollPitchRangeList.add(yawLine);
 	}
 
 	public static void buttonAddData(String status) {

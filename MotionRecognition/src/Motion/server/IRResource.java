@@ -13,7 +13,7 @@ public class IRResource extends CoapResource {
 	
 	
 	private static IRResource instance;
-	public static double currDistance;
+	public static double irDistance;
 	
 	public IRResource() throws Exception {
 		super("ifraredray");
@@ -42,14 +42,14 @@ public class IRResource extends CoapResource {
 		String sensor = requestJsonObject.getString("sensor");
 		if (sensor.equals("infraredray")) {
 			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
-			currDistance=distance;
-			MotionCheck.irAddData(currDistance);
+			irDistance=distance;
+			MotionCheck.irAddData(irDistance);
 		}else if (sensor.equals("status")) {
 
 		}
 		JSONObject responseJsonObject = new JSONObject();
 		responseJsonObject.put("result", "success");
-		responseJsonObject.put("distance", String.valueOf(currDistance));
+		responseJsonObject.put("distance", String.valueOf(irDistance));
 		String responseJson = responseJsonObject.toString();
 		exchange.respond(responseJson);
 		}catch(Exception e){
