@@ -25,7 +25,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.133";
+	public static String ipAdress = "192.168.3.109";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -51,7 +51,7 @@ public class MPU6050Example {
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 		MPU6050 mpu6050 = new MPU6050();
 		
-		ts= new TouchSwitch(RaspiPin.GPIO_01);
+		ts= new TouchSwitch(RaspiPin.GPIO_06);
 		
 		ultrasonic = new UltrasonicSensor(RaspiPin.GPIO_04, RaspiPin.GPIO_05);
 		pcf8591 = new PCF8591(0x48, PCF8591.AIN0);
@@ -93,9 +93,9 @@ public class MPU6050Example {
 				filteredAngles[2]=180+filteredAngles[2];
 			}
 			
-			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
-							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
-			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
+//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
+//							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
+//			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 			
 			button();
 			
@@ -151,12 +151,12 @@ public class MPU6050Example {
 		
 		if(sensor.equals("ultrasonic")){
 			
-			jsonObject.put("status", String.valueOf(ultrasonic.getDistance()));
+			jsonObject.put("distance", String.valueOf(ultrasonic.getDistance()));
 			json = jsonObject.toString();
 			
 		}else if(sensor.equals("ifraredray")){
 			
-			jsonObject.put("status", String.valueOf(iRSensor.getValue()));
+			jsonObject.put("distance", String.valueOf(iRSensor.getValue()));
 			json = jsonObject.toString();
 			
 		}				

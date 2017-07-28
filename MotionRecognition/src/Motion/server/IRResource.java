@@ -40,10 +40,11 @@ public class IRResource extends CoapResource {
 		String requestJson = exchange.getRequestText();
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
-		if (sensor.equals("infraredray")) {
+		if (sensor.equals("ifraredray")) {
 			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
 			irDistance=distance;
 			MotionCheck.irAddData(irDistance);
+			
 		}else if (sensor.equals("status")) {
 
 		}

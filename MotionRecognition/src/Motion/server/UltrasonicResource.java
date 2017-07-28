@@ -44,7 +44,7 @@ public class UltrasonicResource extends CoapResource {
 			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
 			ultraDistance=distance;
 			MotionCheck.ultrasonicAddData(distance);
-			
+	
 		}else if (sensor.equals("status")) {
 
 		}

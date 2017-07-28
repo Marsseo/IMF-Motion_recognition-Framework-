@@ -84,13 +84,18 @@ public class MotionCheck {
 				
 			}
 		};
-		gyroCheckThread.start();
+//		gyroCheckThread.start();
 		
 	}
 
 	private void ultraCheckThreadStart() {
 		ultraCheckThread = new Thread() {
-			
+			@Override
+			public void run() {
+				while(true){
+					System.out.println("ultra-ditance : "+ultrasonicDistance);
+				}
+			}
 
 		};
 		ultraCheckThread.start();
@@ -98,15 +103,28 @@ public class MotionCheck {
 
 	private void irCheckThreadStart() {
 		irCheckThread = new Thread() {
-
+			
+			@Override
+			public void run() {
+				while(true){
+					System.out.println("ir-ditance : "+irDistance);
+				}
+			}
+			
 		};
 		irCheckThread.start();
 	}
 
 	private void buttonCheckThreadStart() {
 		buttonCheckThread = new Thread() {
-
+			@Override
+			public void run() {
+				while(true){
+					System.out.println("button-status : "+buttonStatus);
+				}				
+			}
+			
 		};
-		buttonCheckThread.start();
+		//buttonCheckThread.start();
 	}
 }
