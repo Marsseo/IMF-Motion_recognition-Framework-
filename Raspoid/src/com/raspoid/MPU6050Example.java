@@ -1,9 +1,15 @@
 package com.raspoid;
 
+import com.raspoid.sensors.TouchSwitch;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
+import com.raspoid.sensors.IRSensor;
+import com.raspoid.sensors.UltrasonicSensor;
+import converter.PCF8591;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
@@ -25,6 +31,9 @@ public class MPU6050Example {
 	public static JSONObject jsonObject;
 	public static String json;
 	public static TouchSwitch ts;
+	public static UltrasonicSensor ultrasonic;
+	public static PCF8591 pcf8591;
+	public static IRSensor iRSensor;
 
 	/**
 	 * Private constructor to hide the implicit public one.
@@ -41,7 +50,12 @@ public class MPU6050Example {
 	 */
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 		MPU6050 mpu6050 = new MPU6050();
-		ts = new TouchSwitch(RaspiPin.GPIO_01);
+		
+		ts= new TouchSwitch(RaspiPin.GPIO_01);
+		
+		ultrasonic = new UltrasonicSensor(RaspiPin.GPIO_04, RaspiPin.GPIO_05);
+		pcf8591 = new PCF8591(0x48, PCF8591.AIN0);
+		iRSensor = new IRSensor(pcf8591);
 		
 		mpu6050.startUpdatingThread();
 
@@ -80,7 +94,12 @@ public class MPU6050Example {
 			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 			
 			button();
-
+			
+			try {
+				distance("ultrasonic");
+				distance("ifraredray");
+			} catch (Exception ex) {	ex.printStackTrace();}
+			
 			Tools.sleepMilliseconds(100);
 		}
 
@@ -117,6 +136,29 @@ public class MPU6050Example {
 
 		coapClient = new CoapClient();
 		coapClient.setURI("coap://" + ipAdress + "/button");
+		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
+		coapClient.shutdown();
+	}
+	
+	public static void distance(String sensor) throws Exception{
+		
+		jsonObject = new JSONObject();
+		jsonObject.put("sensor", sensor);
+		
+		if(sensor.equals("ultrasonic")){
+			
+			jsonObject.put("status", String.valueOf(ultrasonic.getDistance()));
+			json = jsonObject.toString();
+			
+		}else if(sensor.equals("ifraredray")){
+			
+			jsonObject.put("status", String.valueOf(iRSensor.getValue()));
+			json = jsonObject.toString();
+			
+		}				
+
+		coapClient = new CoapClient();
+		coapClient.setURI("coap://" + ipAdress +"/"+sensor);
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
 		coapClient.shutdown();
 	}
