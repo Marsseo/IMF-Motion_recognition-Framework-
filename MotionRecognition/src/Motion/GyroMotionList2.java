@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 
 public class GyroMotionList2 {
 
-	private static List<Double> listYawAngle=GyroMotionList.listYawAngle;
-	private static List<Double> listRollAngle=GyroMotionList.listRollAngle;
-	private static List<Double> listPitchAngle=GyroMotionList.listPitchAngle;
+	private static List<Double> listYawAngle=GyroMotions.listYawAngle;
+	private static List<Double> listRollAngle=GyroMotions.listRollAngle;
+	private static List<Double> listPitchAngle=GyroMotions.listPitchAngle;
 	
 	
 	

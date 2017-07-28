@@ -3,7 +3,7 @@ package Motion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GyroMotionList {
+public class GyroMotions {
 
 	public static List<Double> listYawAngle = new ArrayList<>();
 	public static List<Double> listRollAngle = new ArrayList<>();
@@ -13,7 +13,7 @@ public class GyroMotionList {
 	public static List<Double> listPitchDifference = new ArrayList<>();
 	public static int listLength = 10;
 
-	public GyroMotionList() {
+	public GyroMotions() {
 		double initialValue = 0.0;
 		listYawDifference.add(initialValue);
 		listRollDifference.add(initialValue);

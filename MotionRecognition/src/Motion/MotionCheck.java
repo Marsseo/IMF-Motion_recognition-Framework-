@@ -16,11 +16,11 @@ public class MotionCheck {
 
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<List> differenceResultList = new ArrayList<>();
-	public static List<GyroMotionInterface> GyroMotionList = new ArrayList<>();
+	public List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
 	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
 	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
 
-	private GyroMotionList gyroMotionList;
+	private GyroMotions gyroMotions;
 
 	public MotionCheck() {
 
@@ -29,10 +29,11 @@ public class MotionCheck {
 		irCheckThreadStart();
 		buttonCheckThreadStart();
 
-		gyroMotionList = new GyroMotionList();
+		gyroMotions= new GyroMotions();
 		double[] yawLine = {90, 280, 160, 220, 0, 0, 0, 0, 0};
 		double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 0, 0};
 		yawRollPitchRangeList.add(yawLine);
+		gyroMotionList.add(new GyroMotionImpl_UpDown());
 	}
 
 	public static void buttonAddData(String status) {
@@ -59,7 +60,7 @@ public class MotionCheck {
 
 				while (true) {
 					if (motionOn == false) {
-						gyroMotionList.pitchCircle();
+						gyroMotions.pitchCircle();
 						System.out.println("pitchCircle 실행 while문");
 						try {
 							Thread.sleep(200);
@@ -73,11 +74,11 @@ public class MotionCheck {
 						}
 						//범위안의 변화요소 뽑아내는 부분
 						if (!yawRollPitchRangeList.isEmpty()) {
-							differenceResultList = gyroMotionList.Range(yawRollPitchRangeList);
+							differenceResultList = gyroMotions.Range(yawRollPitchRangeList);
 
 							//해당 모션체크부분
 							if (!differenceResultList.isEmpty()) {
-								for (GyroMotionInterface motion : GyroMotionList) {
+								for (GyroMotionInterface motion : gyroMotionList) {
 									motion.gyroMotion(differenceResultList);
 
 								}

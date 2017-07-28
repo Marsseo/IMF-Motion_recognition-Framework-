@@ -1,6 +1,6 @@
 package Motion.server;
 
-import Motion.GyroMotionList;
+import Motion.GyroMotions;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.json.JSONObject;
@@ -52,7 +52,7 @@ public class GyroscopeResource extends CoapResource {
 			currYawAngle=yawAngle;
 			currPitchAngle=pitchAngle;
 			currRollAngle=rollAngle;
-			GyroMotionList.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
+			GyroMotions.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
 		}else if (sensor.equals("status")) {
 
 		}
