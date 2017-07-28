@@ -53,12 +53,16 @@ public class GyroMotionList {
 	}
 	
 	
-	public static void yawLine(List<double[]> differenceResultList){
+	public static void yawLine(List<List> differenceResultList){
 		System.out.println(differenceResultList.size());
+		
 						
 						for(int i=0;i<differenceResultList.size();i++){
-							double[] count=differenceResultList.get(i);
-							if(count[0]==0){
+							List<double[]> factorsInRange =differenceResultList.get(i);
+							for(int j=0;j<factorsInRange.size();j++){
+							
+							double[] count=factorsInRange.get(j);
+							if(j==0){
 							
 								if(count[1]>=0){
 									System.out.println(count[1]);
@@ -66,7 +70,7 @@ public class GyroMotionList {
 							}else{
 									System.out.println("right");
 								}
-							}else if(count[0]==1){
+							}else if(j==1){
 								if(count[2]>=0){
 									System.out.println(count[2]);
 									System.out.println("down");
@@ -74,7 +78,7 @@ public class GyroMotionList {
 									System.out.println("up");
 								}
 							}
-							
+							}
 							
 							
 					}
