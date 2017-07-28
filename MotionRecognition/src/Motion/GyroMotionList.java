@@ -66,14 +66,27 @@ public class GyroMotionList {
 							}else{
 									System.out.println("right");
 								}
+							}else if(count[0]==1){
+								if(count[2]>=0){
+									System.out.println(count[2]);
+									System.out.println("down");
+							}else{
+									System.out.println("up");
+								}
 							}
+							
+							
 							
 					}
 	}
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
-		double[] difference = {0,0,0,0}; //해당 범위{범위지정번호,yaw,roll,pitch}
-		List differenceInRangeList = new ArrayList<>();
+		double[] difference = {0,0,0,0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
+		List<List> differenceInRangeResultList = new ArrayList<>();
+		for(int k=0;k<yawRollPitchRangeList.size();k++){
+			List<double[]> differenceInRangeList = new ArrayList<>();
+			differenceInRangeResultList.add(differenceInRangeList);
+		}
 		if (listYawAngle.size() >= listLength) {
 			for (int i = 0; i < listYawAngle.size(); i++) {
 				double yawAngle = listYawAngle.get(i);
@@ -96,6 +109,9 @@ public class GyroMotionList {
 					double rollMaxRange = range[3];
 					double pitchMinRange = range[4];
 					double pitchMaxRange = range[5];
+					double yawGap=range[6];
+					double rollGap=range[7];
+					double pitchGap=range[8];
 					if(yawMinRange== yawMaxRange)yawEnable=false;
 					if(rollMinRange==rollMaxRange)rollEnable=false;
 					if(pitchMinRange==pitchMaxRange)pitchEnable=false;
@@ -125,16 +141,23 @@ public class GyroMotionList {
 					}
 					
 					if (yawSatisfaction==true&&rollSatisfaction==true&&pitchSatisfaction==true) {
-						difference[0]=j;
-						difference[1] = yawDifference;
-						difference[2] = rollDifference;
-						difference[3]= pitchDifference;
-						differenceInRangeList.add(difference);
+						difference[0]=i; //추후 step에 사용, 해당 값의 순서
+						if(yawDifference<=yawGap||yawGap==0){
+							difference[1] = yawDifference;
+						}
+					    if(rollDifference<=rollGap||rollGap==0){
+								difference[2] = rollDifference;
+							}
+						if(pitchDifference<=pitchGap||pitchGap==0){
+								difference[3]= pitchDifference;
+							}
+						List<double[]> temp=differenceInRangeResultList.get(j);
+						temp.add(difference);
 					}
 				}
 			}
 		}
-		return differenceInRangeList;
+		return differenceInRangeResultList;
 	}
 
 	public static int yawLeftRight() {

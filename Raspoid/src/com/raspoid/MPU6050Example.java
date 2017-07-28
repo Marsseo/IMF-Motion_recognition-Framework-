@@ -96,14 +96,14 @@ public class MPU6050Example {
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
-			
+			/*
 			button();
 			
 			try {
 				distance("ultrasonic");
 				distance("ifraredray");
 			} catch (Exception ex) {	ex.printStackTrace();}
-			
+			*/
 			Tools.sleepMilliseconds(100);
 		}
 

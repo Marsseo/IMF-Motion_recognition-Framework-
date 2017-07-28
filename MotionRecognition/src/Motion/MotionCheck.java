@@ -16,7 +16,8 @@ public class MotionCheck {
 	
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<double[]> differenceResultList = new ArrayList<>();
-	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌
+	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
+	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
 
 	private GyroMotionList gyroMotionList;
 
