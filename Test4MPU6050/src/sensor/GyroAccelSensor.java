@@ -14,14 +14,18 @@ public class GyroAccelSensor {
 	private I2CDevice mpu6050;
 	
 	private double acclX, acclY, acclZ;
-	
 	private double gyroX, gyroY, gyroZ;
+	
+	private double tempGyroX, tempGyroY, tempGyroZ;
+	
 	private double gyroAngleXcollect=0, gyroAngleYcollect=0, gyroAngleZcollect=0;
 		
 	private double gyroAngularSpeedOffsetX ,gyroAngularSpeedOffsetY, gyroAngularSpeedOffsetZ;
 	
 	private double deltaGyroX, deltaGyroY, deltaGyroZ;
 	private double splAngleX, splAngleY, splAngleZ;
+	
+	private double temp;
 	
 	private double filteredAngleX = 0.;
 	private double filteredAngleY = 0.;
@@ -32,6 +36,12 @@ public class GyroAccelSensor {
 	private long lastUpdateTimeX = 0;
 	private long lastUpdateTimeY = 0;
 	private long lastUpdateTimeZ = 0;
+
+	public double getTemp() throws IOException {
+		temp = readWord2C(Mpu6050Registers.MPU6050_RA_TEMP_OUT_H)/340.00+36.53;
+		return temp;
+	}
+	
 	
 	
 	public double getAcclX() throws IOException {
@@ -83,14 +93,14 @@ public class GyroAccelSensor {
 	
 	// 필터된 값을 리턴하는 함수
 	public double getFilteredAngleX() {
-		double alpha = 1;
-		filteredAngleX = alpha * (filteredAngleX + gyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
+		double alpha = 0.96;
+		filteredAngleX = alpha * (filteredAngleX + tempGyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
 		return filteredAngleX;
 	}
 
 	public double getFilteredAngleY() {
-		double alpha = 1;
-		filteredAngleY = alpha * (filteredAngleX + gyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
+		double alpha = 0.96;
+		filteredAngleY = alpha * (filteredAngleY + tempGyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
 		return filteredAngleY;
 	}
 
@@ -157,14 +167,18 @@ public class GyroAccelSensor {
 		getGyroY();
 		getGyroZ();
 		
-		gyroX -= gyroAngularSpeedOffsetX;
-		gyroY -= gyroAngularSpeedOffsetY;
-		gyroZ -= gyroAngularSpeedOffsetZ;
+		tempGyroX = gyroX - gyroAngularSpeedOffsetX;
+		tempGyroY = gyroY - gyroAngularSpeedOffsetY;
+		tempGyroZ = gyroZ - gyroAngularSpeedOffsetZ;
 		
-		double dt = Math.abs(System.currentTimeMillis() - (lastUpdateTimeX+lastUpdateTimeY+lastUpdateTimeZ)/3.0) / 1000.;
-		gyroX = gyroX*dt;
-		gyroY = gyroY*dt;
-		gyroZ = gyroZ*dt;
+//		getDeltaAngleX();
+//		getDeltaAngleY();
+//		getDeltaAngleZ();
+		
+		double dt = Math.abs(System.currentTimeMillis() - lastUpdateTimeX) / 1000.;
+		tempGyroX = tempGyroX*dt;
+		tempGyroY = tempGyroY*dt;
+		tempGyroZ = tempGyroZ*dt;
 		lastUpdateTimeX = System.currentTimeMillis();
 		lastUpdateTimeY = System.currentTimeMillis();
 		lastUpdateTimeZ = System.currentTimeMillis();
@@ -180,7 +194,7 @@ public class GyroAccelSensor {
 	}
 	
 	public GyroAccelSensor() throws I2CFactory.UnsupportedBusNumberException, IOException {
-				bus = I2CFactory.getInstance(I2CBus.BUS_1);
+		bus = I2CFactory.getInstance(I2CBus.BUS_1);
 		mpu6050 = bus.getDevice(0x68);
 		System.out.println("Create GyroAccelSensor");
 		
@@ -468,84 +482,87 @@ public class GyroAccelSensor {
 				
 				
 				
-				System.out.println("acclx : "+acclx);
-				System.out.println("accly : "+accly);
-				System.out.println("acclz : "+acclz);
-				System.out.println("|");				
-								
-				System.out.println("acclx-prevAcclx : "+ deltaX);
-				System.out.println("accly-prevAccly : "+ deltaY);
-				System.out.println("acclz-prevAcclz : "+ deltaZ);
-				System.out.println("|");
-				
-				System.out.println("velocityX1 : "+ vecX1);
-				System.out.println("velocityY1 : "+ vecY1);
-				System.out.println("velocityZ1 : "+ vecZ1);
-				System.out.println("|");
-				
-				System.out.println("velocityX2 : "+ vecX2);
-				System.out.println("velocityY2 : "+ vecY2);
-				System.out.println("velocityZ2 : "+ vecZ2);
-				System.out.println("|");
-				
-				System.out.println("positionX1 : "+ posX1);
-				System.out.println("positionY1 : "+ posY1);
-				System.out.println("positionZ1 : "+ posZ1);
-				System.out.println("|");
-				
-				System.out.println("positionX2 : "+ posX2);
-				System.out.println("positionY2 : "+ posY2);
-				System.out.println("positionZ2 : "+ posZ2);
-				System.out.println("|");
-				
-				System.out.println("deltaPositionX : "+ deltaPosX);
-				System.out.println("deltaPositionY : "+ deltaPosY);
-				System.out.println("deltaPositionZ : "+ deltaPosZ);
-				System.out.println("|");
-				
-				System.out.println("gyrox : "+gyrox);
-				System.out.println("gyroy : "+gyroy);
-				System.out.println("gyroz : "+gyroz);
-				System.out.println("|");
-				
-				System.out.println("x rotation : "+ test.x_rotation(acclx, accly, acclz));
-				System.out.println("y rotation : "+ test.y_rotation(acclx, accly, acclz));
-				System.out.println("z rotation : "+ test.z_rotation(acclx, accly, acclz));
-				System.out.println("|");
-				
-				System.out.println("degX1 : "+degX1);
-				System.out.println("degY1 : "+degY1);
-				System.out.println("degZ1 : "+degZ1);
-				System.out.println("|");
-				
-				System.out.println("degX2 : "+degX2);
-				System.out.println("degY2 : "+degY2);
-				System.out.println("degZ2 : "+degZ2);
-				System.out.println("|");
-				
-				System.out.println("degX3 : "+degX3);
-				System.out.println("degY3 : "+degY3);
-				System.out.println("degZ3 : "+degZ3);
-				System.out.println("|");
-				
-				System.out.println("deltaDegX1 : "+deltaDegX1);
-				System.out.println("deltaDegY1 : "+deltaDegY1);
-				System.out.println("deltaDegZ1 : "+deltaDegZ1);
-				System.out.println("|");				
-				
-				System.out.println("filteredAngleX : "+test.getFilteredAngleX());
-				System.out.println("filteredAngleY : "+test.getFilteredAngleY());
-				System.out.println("filteredAngleZ : "+test.getFilteredAngleZ());
-				System.out.println("|");
-				
-				System.out.println("AngleX : "+test.getGyroAngleXcollect());
-				System.out.println("AngleY : "+test.getGyroAngleYcollect());
-				System.out.println("AngleZ : "+test.getGyroAngleZcollect());
-				System.out.println("|");
-				
+//				System.out.println("acclx : "+acclx);
+//				System.out.println("accly : "+accly);
+//				System.out.println("acclz : "+acclz);
+//				System.out.println("|");				
+//								
+//				System.out.println("acclx-prevAcclx : "+ deltaX);
+//				System.out.println("accly-prevAccly : "+ deltaY);
+//				System.out.println("acclz-prevAcclz : "+ deltaZ);
+//				System.out.println("|");
+//				
+//				System.out.println("velocityX1 : "+ vecX1);
+//				System.out.println("velocityY1 : "+ vecY1);
+//				System.out.println("velocityZ1 : "+ vecZ1);
+//				System.out.println("|");
+//				
+//				System.out.println("velocityX2 : "+ vecX2);
+//				System.out.println("velocityY2 : "+ vecY2);
+//				System.out.println("velocityZ2 : "+ vecZ2);
+//				System.out.println("|");
+//				
+//				System.out.println("positionX1 : "+ posX1);
+//				System.out.println("positionY1 : "+ posY1);
+//				System.out.println("positionZ1 : "+ posZ1);
+//				System.out.println("|");
+//				
+//				System.out.println("positionX2 : "+ posX2);
+//				System.out.println("positionY2 : "+ posY2);
+//				System.out.println("positionZ2 : "+ posZ2);
+//				System.out.println("|");
+//				
+//				System.out.println("deltaPositionX : "+ deltaPosX);
+//				System.out.println("deltaPositionY : "+ deltaPosY);
+//				System.out.println("deltaPositionZ : "+ deltaPosZ);
+//				System.out.println("|");
+//				
+//				System.out.println("gyrox : "+gyrox);
+//				System.out.println("gyroy : "+gyroy);
+//				System.out.println("gyroz : "+gyroz);
+//				System.out.println("|");
+//				
+//				System.out.println("x rotation : "+ test.x_rotation(acclx, accly, acclz));
+//				System.out.println("y rotation : "+ test.y_rotation(acclx, accly, acclz));
+//				System.out.println("z rotation : "+ test.z_rotation(acclx, accly, acclz));
+//				System.out.println("|");
+//				
+//				System.out.println("degX1 : "+degX1);
+//				System.out.println("degY1 : "+degY1);
+//				System.out.println("degZ1 : "+degZ1);
+//				System.out.println("|");
+//				
+//				System.out.println("degX2 : "+degX2);
+//				System.out.println("degY2 : "+degY2);
+//				System.out.println("degZ2 : "+degZ2);
+//				System.out.println("|");
+//				
+//				System.out.println("degX3 : "+degX3);
+//				System.out.println("degY3 : "+degY3);
+//				System.out.println("degZ3 : "+degZ3);
+//				System.out.println("|");
+//				
+//				System.out.println("deltaDegX1 : "+deltaDegX1);
+//				System.out.println("deltaDegY1 : "+deltaDegY1);
+//				System.out.println("deltaDegZ1 : "+deltaDegZ1);
+//				System.out.println("|");				
+//				
+//				System.out.println("filteredAngleX : "+test.getFilteredAngleX());
+//				System.out.println("filteredAngleY : "+test.getFilteredAngleY());
+//				System.out.println("filteredAngleZ : "+test.getFilteredAngleZ());
+//				System.out.println("|");
+//				
+//				System.out.println("AngleX : "+test.getGyroAngleXcollect());
+//				System.out.println("AngleY : "+test.getGyroAngleYcollect());
+//				System.out.println("AngleZ : "+test.getGyroAngleZcollect());
+//				System.out.println("|");
+//				
 				System.out.println("SimpleAngleX : "+test.getSplAngleX());
 				System.out.println("SimpleAngleY : "+test.getSplAngleY());
 				System.out.println("SimpleAngleZ : "+test.getSplAngleZ());
+				System.out.println("|");
+				
+				System.out.println("Temperature : "+test.getTemp());
 				System.out.println("|");
 				System.out.println("|- End");
 				

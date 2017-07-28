@@ -26,13 +26,13 @@ public class Main {
 		System.out.println("stop");
 	}
 	public static void main(String[] args) throws Exception {
-		Main sensingCar=new Main();
-		sensingCar.start();
+		Main main=new Main();
+		main.start();
 		System.out.println("input command(Press q to quit)");
 		Scanner scanner=new Scanner(System.in);
 		String command=scanner.nextLine();
 		if(command.equals("q")){
-			sensingCar.stop();
+			main.stop();
 		}
 	}
 

@@ -101,12 +101,13 @@ public class CoordinateSeries {
 				z = new Vector<Double>();
 		separateCoordinates(x, y, z);
 		
-		xStats = getStats(x); 
-		yStats = getStats(y); 
+		xStats = getStats(x);
+		yStats = getStats(y);
 		zStats = getStats(z);
 		
 		highest = Math.max(xStats[1], Math.max(yStats[1], zStats[1]));
 		lowest = Math.min(xStats[0], Math.min(yStats[0], zStats[0]));
+	
 	}
 	
 	/**

@@ -14,6 +14,7 @@ import java.io.IOException;
 public class TouchSwitch {
 	
 	private GpioPinDigitalInput gpioPinDigitalInput;
+	private String state="off";
 	
 	public TouchSwitch(Pin TouchPinNo){
 		GpioController gpioController = GpioFactory.getInstance();
@@ -24,10 +25,20 @@ public class TouchSwitch {
 	public void setGpioPinListenerDigital(GpioPinListenerDigital listener) {
 		gpioPinDigitalInput.addListener(listener);
 	}
+	
+	public String getStatus(){
+		
+		if(gpioPinDigitalInput.getState()==PinState.HIGH){
+			state = "off";
+		}else state="on";
+		
+		return state;
+	}
+	
 
 	//Method
 	public static void main(String[] args) throws IOException {
-		TouchSwitch button = new TouchSwitch(RaspiPin.GPIO_01);
+		TouchSwitch button = new TouchSwitch(RaspiPin.GPIO_05);
 		button.setGpioPinListenerDigital(new GpioPinListenerDigital() {
 			@Override
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {

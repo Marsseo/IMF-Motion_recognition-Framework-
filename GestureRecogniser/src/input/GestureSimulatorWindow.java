@@ -130,11 +130,15 @@ public class GestureSimulatorWindow extends JFrame {
 		lblFilepath.setText(filePath);
 		filePath = null;
 		
+		double x=0,y=0,z=0;
+		
 		Scanner scanner;
 		try {
 			scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
 	        	Coordinate c = InputParser.getCoord(scanner.nextLine());
+			
+			Coordinate d = new Coordinate(x, y, z);
 	        	coordinateQueue.add(c);
 	        }
 	        scanner.close();
