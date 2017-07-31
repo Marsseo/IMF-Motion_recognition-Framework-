@@ -85,7 +85,7 @@ public class MotionCheck {
 				
 			}
 		};
-//		gyroCheckThread.start();
+		gyroCheckThread.start();
 		
 	}
 
@@ -99,7 +99,7 @@ public class MotionCheck {
 			}
 
 		};
-		ultraCheckThread.start();
+		//ultraCheckThread.start();
 	}
 
 	private void irCheckThreadStart() {
@@ -113,7 +113,7 @@ public class MotionCheck {
 			}
 			
 		};
-		irCheckThread.start();
+		//irCheckThread.start();
 	}
 
 	private void buttonCheckThreadStart() {

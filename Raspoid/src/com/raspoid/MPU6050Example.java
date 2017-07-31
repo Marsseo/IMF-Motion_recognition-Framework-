@@ -93,9 +93,9 @@ public class MPU6050Example {
 				filteredAngles[2]=180+filteredAngles[2];
 			}
 			
-//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
-//							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
-//			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
+			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
+							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
+			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 			
 			button();
 			
