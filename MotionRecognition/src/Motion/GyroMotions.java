@@ -1,7 +1,10 @@
 package Motion;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GyroMotions {
 
@@ -53,36 +56,7 @@ public class GyroMotions {
 	}
 	
 	
-	public static void yawLine(List<List> differenceResultList){
-		System.out.println(differenceResultList.size());
-		
-						
-						for(int i=0;i<differenceResultList.size();i++){
-							List<double[]> factorsInRange =differenceResultList.get(i);
-							for(int j=0;j<factorsInRange.size();j++){
-							
-							double[] count=factorsInRange.get(j);
-							if(j==0){
-							
-								if(count[1]>=0){
-									System.out.println(count[1]);
-									System.out.println("left");
-							}else{
-									System.out.println("right");
-								}
-							}else if(j==1){
-								if(count[2]>=0){
-									System.out.println(count[2]);
-									System.out.println("down");
-							}else{
-									System.out.println("up");
-								}
-							}
-							}
-							
-							
-					}
-	}
+
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 		double[] difference = {0,0,0,0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
@@ -144,15 +118,15 @@ public class GyroMotions {
 						pitchSatisfaction=true;
 					}
 					
-					if (yawSatisfaction==true&&rollSatisfaction==true&&pitchSatisfaction==true) {
+					if (yawSatisfaction&&rollSatisfaction&&pitchSatisfaction) {
 						difference[0]=i; //추후 step에 사용, 해당 값의 순서
-						if(yawDifference<=yawGap||yawGap==0){
+						if(Math.abs(yawDifference)<=yawGap||yawGap==0){
 							difference[1] = yawDifference;
 						}
-					    if(rollDifference<=rollGap||rollGap==0){
+					    if(Math.abs(rollDifference)<=rollGap||rollGap==0){
 								difference[2] = rollDifference;
 							}
-						if(pitchDifference<=pitchGap||pitchGap==0){
+						if(Math.abs(pitchDifference)<=pitchGap||pitchGap==0){
 								difference[3]= pitchDifference;
 							}
 						List<double[]> temp=differenceInRangeResultList.get(j);
@@ -162,6 +136,85 @@ public class GyroMotions {
 			}
 		}
 		return differenceInRangeResultList;
+	}
+	
+	public static String motionDecision(Map<String,Integer> motionMap){
+		
+			Set<String> keySet=motionMap.keySet();
+			
+			int prevalue=0;
+			boolean sameCount=false;
+			String finalMotion="";
+			Iterator<String> keys = keySet.iterator();
+			
+			while (keys.hasNext()) {
+			String key = keys.next(); // Set의 key 값을 하나씩 key에 대입
+			int count = motionMap.get(key); // 해당 key에 해당하는 value 대입 / 오토 언박싱
+			System.out.println(key + " : " + count);
+		    motionMap.remove(key);
+			if(prevalue<count){
+				prevalue=count;
+				finalMotion=key;
+				sameCount=false;
+			}else if(prevalue==count){
+				sameCount=true;
+			}
+			}
+			
+			if(sameCount){
+				return finalMotion;
+			}else{
+				return "두개이상의 모션이 인식됩니다.( 인식 실패 )";
+			}
+			
+
+	}
+	
+	public static void action(String finalMotion){
+		if(finalMotion=="left"){
+			System.out.print("Left 모션 인식");
+			
+		}else if(finalMotion=="right"){
+			System.out.print("Right 모션 인식");
+		}else if(finalMotion=="up"){
+			System.out.print("Up 모션 인식");
+		}else if(finalMotion=="down"){
+			System.out.print("Down 모션 인식");
+		}
+	}
+	
+	
+	
+		public static void yawLine(List<List> differenceResultList){
+		System.out.println(differenceResultList.size());
+		
+						
+						for(int i=0;i<differenceResultList.size();i++){
+							List<double[]> factorsInRange =differenceResultList.get(i);
+							for(int j=0;j<factorsInRange.size();j++){
+							
+							double[] count=factorsInRange.get(j);
+							if(j==0){
+							
+								if(count[1]>=0){
+									System.out.println(count[1]);
+									System.out.println("left");
+							}else{
+									System.out.println(count[1]);
+									System.out.println("right");
+								}
+							}else if(j==1){
+								if(count[2]>=0){
+									//System.out.println(count[2]);
+									//System.out.println("down");
+							}else{
+									//System.out.println("up");
+								}
+							}
+							}
+							
+							
+					}
 	}
 
 	public static int yawLeftRight() {

@@ -5,6 +5,9 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
+import static com.raspoid.MPU6050.DEFAULT_DLPF_CFG;
+import static com.raspoid.MPU6050.DEFAULT_MPU6050_ADDRESS;
+import static com.raspoid.MPU6050.DEFAULT_SMPLRT_DIV;
 import com.raspoid.sensors.IRSensor;
 import com.raspoid.sensors.UltrasonicSensor;
 import converter.PCF8591;
@@ -25,7 +28,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.109";
+	public static String ipAdress = "192.168.3.133";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -34,6 +37,9 @@ public class MPU6050Example {
 	public static UltrasonicSensor ultrasonic;
 	public static PCF8591 pcf8591;
 	public static IRSensor iRSensor;
+	
+	public static long time = 0;
+	public static long currtime=0;
 
 	/**
 	 * Private constructor to hide the implicit public one.
@@ -58,8 +64,10 @@ public class MPU6050Example {
 		iRSensor = new IRSensor(pcf8591);
 		
 		mpu6050.startUpdatingThread();
+		time = System.currentTimeMillis();
 
 		while (true) {
+			
 			Tools.log("-----------------------------------------------------");
 //
 //			// Accelerometer
@@ -93,18 +101,30 @@ public class MPU6050Example {
 				filteredAngles[2]=180+filteredAngles[2];
 			}
 			
-//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
-//							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
-//			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
+		Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
+							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
+			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 			
-			button();
-			
-			try {
-				distance("ultrasonic");
-				distance("ifraredray");
-			} catch (Exception ex) {	ex.printStackTrace();}
-			
+//			button();
+//			
+//			try {
+//				distance("ultrasonic");
+//				distance("ifraredray");
+//			} catch (Exception ex) {	ex.printStackTrace();}
+//			
 			Tools.sleepMilliseconds(100);
+			currtime = System.currentTimeMillis();
+			System.out.println(currtime-time);
+			if((currtime-time)>=60000){
+				try {
+					mpu6050.stopUpdatingThread();
+				} catch (InterruptedException ex) {
+					Logger.getLogger(MPU6050Example.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				mpu6050=new MPU6050();
+				mpu6050.startUpdatingThread();
+				time = System.currentTimeMillis();
+			}
 		}
 
 	}

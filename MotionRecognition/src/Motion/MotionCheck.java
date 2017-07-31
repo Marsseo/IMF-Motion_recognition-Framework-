@@ -34,9 +34,10 @@ public class MotionCheck {
 		buttonCheckThreadStart();
 
 		gyroMotions= new GyroMotions();
-		double[] yawLine = {90, 280, 160, 220, 0, 0, 0, 0, 0};
-		double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 0, 0};
+		double[] yawLine = {90, 280, 160, 220, 0, 0, 3, 0, 0};
+		double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 1, 0};
 		yawRollPitchRangeList.add(yawLine);
+		yawRollPitchRangeList.add(rollLine);
 		gyroMotionList.add(new GyroMotionImpl_UpDown());
 	}
 
@@ -84,8 +85,12 @@ public class MotionCheck {
 							if (!differenceResultList.isEmpty()) {
 								for (GyroMotionInterface motion : gyroMotionList) {
 									motion.gyroMotion(differenceResultList,motionMap);
-
 								}
+								if(!motionMap.isEmpty()){
+									String finalMotion=gyroMotions.motionDecision(motionMap);
+									gyroMotions.action(finalMotion);
+								}
+								
 							}
 						}
 					}

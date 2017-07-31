@@ -440,7 +440,7 @@ public class MPU6050 extends I2CComponent{
      */
     private void calibrateSensors() {
         Tools.log("Calibration starting in 5 seconds (don't move the sensor).", Tools.Color.ANSI_RED);
-        Tools.sleepMilliseconds(5000);
+        //Tools.sleepMilliseconds(5000);
         Tools.log("Calibration started (~5s) (don't move the sensor)", Tools.Color.ANSI_RED);
         
         int nbReadings = 50;
@@ -480,6 +480,7 @@ public class MPU6050 extends I2CComponent{
             Tools.debug("Updating thread of the MPU6050 is already started.", Tools.Color.ANSI_RED);
         }
     }
+		
     
     /**
      * Stops the thread responsible to update MPU6050 values in background. 

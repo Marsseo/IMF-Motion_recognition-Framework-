@@ -11,6 +11,7 @@ public class GyroMotionImpl_UpDown implements GyroMotionInterface {
 		int rightCount=0;
 		int upCount=0;
 		int downCount=0;
+		//System.out.println("differenceResultList.size() :"+differenceResultList.size());
 		for (int i = 0; i < differenceResultList.size(); i++) {
 			List<double[]> factorsInRange = differenceResultList.get(i);
 			for (int j = 0; j < factorsInRange.size(); j++) {
@@ -27,6 +28,7 @@ public class GyroMotionImpl_UpDown implements GyroMotionInterface {
 						rightCount++;
 					}
 				} else if (i == 1) {
+					
 					if (count[2] >= 0) {
 						System.out.println(count[2]);
 						System.out.println("down");
@@ -39,6 +41,10 @@ public class GyroMotionImpl_UpDown implements GyroMotionInterface {
 			}
 
 		}
+		motionMap.put("left", leftCount);
+		motionMap.put("right", rightCount);
+		motionMap.put("up", upCount);
+		motionMap.put("down", downCount);
 	}
 
 }
