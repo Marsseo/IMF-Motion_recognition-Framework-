@@ -1,7 +1,9 @@
 package Motion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MotionCheck {
 
@@ -17,6 +19,8 @@ public class MotionCheck {
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<List> differenceResultList = new ArrayList<>();
 	public List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
+	public Map<String, Integer> motionMap = new HashMap<String, Integer>();
+
 	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
 	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
 
@@ -79,7 +83,7 @@ public class MotionCheck {
 							//해당 모션체크부분
 							if (!differenceResultList.isEmpty()) {
 								for (GyroMotionInterface motion : gyroMotionList) {
-									motion.gyroMotion(differenceResultList);
+									motion.gyroMotion(differenceResultList,motionMap);
 
 								}
 							}
