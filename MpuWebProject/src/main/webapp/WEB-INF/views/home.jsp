@@ -65,6 +65,7 @@
 							</a>
 							<span id="facebookID" style="margin: 15px"></span>
 							
+							
 							<ul class="dropdown-menu">
 								<li class="dropdown-menu-title">
 									<span>Account Settings</span>
@@ -72,7 +73,7 @@
 								<li>
 									<a href="javascript:;">
 										<i class="halflings-icon user"></i>
-										Profile
+										member.getMemail()=${member.memail}
 									</a>
 								</li>
 								<li>
