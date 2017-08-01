@@ -14,12 +14,13 @@ public class MotionCheck {
 	public static String buttonStatus = "off";
 	public static double irDistance;
 	public static double ultrasonicDistance;
-	public static boolean motionOn = false;
+	public static int motionOn = 0;
 
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<List> differenceResultList = new ArrayList<>();
 	public List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
 	public Map<String, Integer> motionMap = new HashMap<String, Integer>();
+	public List<TrigerMotionInterface> trigerMotionList = new ArrayList<>();
 
 	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
 	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
@@ -34,11 +35,24 @@ public class MotionCheck {
 		buttonCheckThreadStart();
 
 		gyroMotions= new GyroMotions();
-		double[] yawLine = {90, 280, 160, 220, 0, 0, 3, 0, 0};
-		double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 1, 0};
-		yawRollPitchRangeList.add(yawLine);
-		yawRollPitchRangeList.add(rollLine);
-		gyroMotionList.add(new GyroMotionImpl_UpDown());
+		double[] leftLine={190, 270, 160, 220, 0, 0, 1, 50, 0};
+		double[] rightLine={90, 170, 160, 220, 0, 0, 1, 50, 0};
+		double[] upLine={170, 190, 90, 160, 0, 0,1 , 50, 0};
+		double[] downLine={170, 190, 220, 270, 0, 0, 1, 50, 0};
+		
+		//double[] yawLine = {90, 270, 160, 220, 0, 0, 3, 0, 0};
+		//double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 3, 0};
+		//double[] diagonalLine={0, 360, 90, 270, 0, 0, 3, 3, 0};
+		yawRollPitchRangeList.add(leftLine); //0번
+		yawRollPitchRangeList.add(rightLine);//1번
+		yawRollPitchRangeList.add(upLine); //2번
+		yawRollPitchRangeList.add(downLine); //3번
+		gyroMotionList.add(new GyroMotionImpl_Up());
+		gyroMotionList.add(new GyroMotionImpl_Left());
+		gyroMotionList.add(new GyroMotionImpl_Right());
+		gyroMotionList.add(new GyroMotionImpl_Down());
+		
+		trigerMotionList.add(gyroMotions);
 	}
 
 	public static void buttonAddData(String status) {
@@ -53,7 +67,7 @@ public class MotionCheck {
 		ultrasonicDistance = distance;
 	}
 
-	public static void MotionRecognitionStatus(boolean status) {
+	public static void MotionRecognitionStatus(int status) {
 		motionOn = status;
 	}
 
@@ -64,19 +78,32 @@ public class MotionCheck {
 			public void run() {
 
 				while (true) {
-					if (motionOn == false) {
-						gyroMotions.pitchCircle();
-						System.out.println("pitchCircle 실행 while문");
+					if (motionOn == 0) {
+						for(TrigerMotionInterface triger: trigerMotionList){
+							triger.trigerMotion(0);
+						}
+						System.out.println("pitchCircle 1단계"); //나중에 삭제각
 						try {
-							Thread.sleep(200);
+							Thread.sleep(500);
 						} catch (Exception e) {
 						}
-					} else {
-						System.out.println("yaw roll 실행 while문");
+					}
+					
+					else if(motionOn == 1){
 						try {
-							Thread.sleep(1000);
+							Thread.sleep(500);
 						} catch (Exception e) {
 						}
+					System.out.println("pitchCircle 2단계"); //나중에 삭제각
+						for(TrigerMotionInterface triger: trigerMotionList){
+							triger.trigerMotion(1);
+						}
+						
+						
+					}else {
+						System.out.println("yaw roll 실행 while문"); //나중에 삭제각
+						motionMap.clear();
+						
 						//범위안의 변화요소 뽑아내는 부분
 						if (!yawRollPitchRangeList.isEmpty()) {
 							differenceResultList = gyroMotions.Range(yawRollPitchRangeList);
@@ -92,6 +119,11 @@ public class MotionCheck {
 								}
 								
 							}
+							
+							motionOn=0;
+						}else{
+							motionOn=0;
+							System.out.println("Please, Add your Motion in List");
 						}
 					}
 				}

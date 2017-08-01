@@ -6,7 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class GyroMotions {
+public class GyroMotions implements TrigerMotionInterface {
+
+	public static boolean MotionListCollecting = false;
+
+	public static List<Double> listYawAngles = new ArrayList<>();
+	public static List<Double> listRollAngles = new ArrayList<>();
+	public static List<Double> listPitchAngles = new ArrayList<>();
+	public static List<Double> listYawDifferences = new ArrayList<>();
+	public static List<Double> listRollDifferences = new ArrayList<>();
+	public static List<Double> listPitchDifferences = new ArrayList<>();
 
 	public static List<Double> listYawAngle = new ArrayList<>();
 	public static List<Double> listRollAngle = new ArrayList<>();
@@ -14,54 +23,120 @@ public class GyroMotions {
 	public static List<Double> listYawDifference = new ArrayList<>();
 	public static List<Double> listRollDifference = new ArrayList<>();
 	public static List<Double> listPitchDifference = new ArrayList<>();
+
 	public static int listLength = 10;
+	public static double initialValue = 0.0;
 
 	public GyroMotions() {
-		double initialValue = 0.0;
-		listYawDifference.add(initialValue);
-		listRollDifference.add(initialValue);
-		listPitchDifference.add(initialValue);
+
+		listYawDifferences.add(initialValue);
+		listRollDifferences.add(initialValue);
+		listPitchDifferences.add(initialValue);
 	}
 
 	//Gyro3축 값을 받음 , listLength 만큼의 길이의 리스트에 값을 넣는다.
 	public static void gyroAddData(double yaw, double pitch, double roll) {
-		if (listYawAngle.size() < listLength) {
-			listYawAngle.add(yaw);
-			listRollAngle.add(roll);
-			listPitchAngle.add(pitch);
-		} else if (listYawAngle.size() >= listLength) {
-			listYawAngle.remove(0);
-			listPitchAngle.remove(0);
-			listRollAngle.remove(0);
-			listYawAngle.add(yaw);
-			listRollAngle.add(roll);
-			listPitchAngle.add(pitch);
+		if (listYawAngles.size() < listLength) {
+			listYawAngles.add(yaw);
+			listRollAngles.add(roll);
+			listPitchAngles.add(pitch);
+		} else if (listYawAngles.size() >= listLength) {
+			listYawAngles.remove(0);
+			listPitchAngles.remove(0);
+			listRollAngles.remove(0);
+			listYawAngles.add(yaw);
+			listRollAngles.add(roll);
+			listPitchAngles.add(pitch);
 		}
-		if (listYawAngle.size() >= 2) {
-			double nextValue = listYawAngle.get(listYawAngle.size()-1);
-			double preValue = listYawAngle.get(listYawAngle.size() - 2);
-			listYawDifference.add(nextValue - preValue);
-			nextValue = listRollAngle.get(listRollAngle.size()-1);
-			preValue = listRollAngle.get(listRollAngle.size() - 2);
-			listRollDifference.add(nextValue - preValue);
-			nextValue = listPitchAngle.get(listPitchAngle.size()-1);
-			preValue = listPitchAngle.get(listPitchAngle.size() - 2);
-			listPitchDifference.add(nextValue - preValue);
-			if(listYawDifference.size()>=listLength+1){
-				listYawDifference.remove(0);
-			listPitchDifference.remove(0);
-			listRollDifference.remove(0);
-		}	
+		if (listYawAngles.size() >= 2) {
+			double nextValue = listYawAngles.get(listYawAngles.size() - 1);
+			double preValue = listYawAngles.get(listYawAngles.size() - 2);
+			listYawDifferences.add(nextValue - preValue);
+			nextValue = listRollAngles.get(listRollAngles.size() - 1);
+			preValue = listRollAngles.get(listRollAngles.size() - 2);
+			listRollDifferences.add(nextValue - preValue);
+			nextValue = listPitchAngles.get(listPitchAngles.size() - 1);
+			preValue = listPitchAngles.get(listPitchAngles.size() - 2);
+			listPitchDifferences.add(nextValue - preValue);
+			if (listYawDifferences.size() >= listLength + 1) {
+				listYawDifferences.remove(0);
+				listPitchDifferences.remove(0);
+				listRollDifferences.remove(0);
+			}
+		}
+
+		if (MotionListCollecting) {
+
+			listYawAngle.add(yaw);
+			listRollAngle.add(roll);
+			listPitchAngle.add(pitch);
+
+			if (listYawAngle.size() >= 2) {
+				double nextValue = listYawAngle.get(listYawAngle.size() - 1);
+				double preValue = listYawAngle.get(listYawAngle.size() - 2);
+				listYawDifference.add(nextValue - preValue);
+				nextValue = listRollAngle.get(listRollAngle.size() - 1);
+				preValue = listRollAngle.get(listRollAngle.size() - 2);
+				listRollDifference.add(nextValue - preValue);
+				nextValue = listPitchAngle.get(listPitchAngle.size() - 1);
+				preValue = listPitchAngle.get(listPitchAngle.size() - 2);
+				listPitchDifference.add(nextValue - preValue);
+
+			} else {
+				listYawDifference.add(initialValue);
+				listRollDifference.add(initialValue);
+				listPitchDifference.add(initialValue);
+			}
 		}
 	}
 	
-	
+	private void emptingContinuedList(){
+		if (!listYawAngles.isEmpty()) {
+			listYawAngles.clear();
+		}
+		if (!listRollAngles.isEmpty()) {
+			listRollAngles.clear();
+		}
+		if (!listPitchAngles.isEmpty()) {
+			listPitchAngles.clear();
+		}
+		if (!listYawDifferences.isEmpty()) {
+			listYawDifferences.clear();
+		}
+		if (!listRollDifferences.isEmpty()) {
+			listRollDifferences.clear();
+		}
+		if (!listPitchDifferences.isEmpty()) {
+			listPitchDifferences.clear();
+		}
+	}
 
+	private void emptingCollectedList() {
+		if (!listYawAngle.isEmpty()) {
+			listYawAngle.clear();
+		}
+		if (!listRollAngle.isEmpty()) {
+			listRollAngle.clear();
+		}
+		if (!listPitchAngle.isEmpty()) {
+			listPitchAngle.clear();
+		}
+		if (!listYawDifference.isEmpty()) {
+			listYawDifference.clear();
+		}
+		if (!listRollDifference.isEmpty()) {
+			listRollDifference.clear();
+		}
+		if (!listPitchDifference.isEmpty()) {
+			listPitchDifference.clear();
+		}
+	}
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
-		double[] difference = {0,0,0,0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
+
+		double[] difference = {0, 0, 0, 0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
 		List<List> differenceInRangeResultList = new ArrayList<>();
-		for(int k=0;k<yawRollPitchRangeList.size();k++){
+		for (int k = 0; k < yawRollPitchRangeList.size(); k++) {
 			List<double[]> differenceInRangeList = new ArrayList<>();
 			differenceInRangeResultList.add(differenceInRangeList);
 		}
@@ -74,12 +149,12 @@ public class GyroMotions {
 				double rollDifference = listRollDifference.get(i);
 				double pitchDifference = listPitchDifference.get(i);
 				for (int j = 0; j < yawRollPitchRangeList.size(); j++) {
-					boolean yawEnable=true;
-					boolean rollEnable=true;
-					boolean pitchEnable=true;
-					boolean yawSatisfaction=false;
-					boolean rollSatisfaction=false;
-					boolean pitchSatisfaction=false;
+					boolean yawEnable = true;
+					boolean rollEnable = true;
+					boolean pitchEnable = true;
+					boolean yawSatisfaction = false;
+					boolean rollSatisfaction = false;
+					boolean pitchSatisfaction = false;
 					double[] range = yawRollPitchRangeList.get(j);
 					double yawMinRange = range[0];
 					double yawMaxRange = range[1];
@@ -87,49 +162,55 @@ public class GyroMotions {
 					double rollMaxRange = range[3];
 					double pitchMinRange = range[4];
 					double pitchMaxRange = range[5];
-					double yawGap=range[6];
-					double rollGap=range[7];
-					double pitchGap=range[8];
-					if(yawMinRange== yawMaxRange)yawEnable=false;
-					if(rollMinRange==rollMaxRange)rollEnable=false;
-					if(pitchMinRange==pitchMaxRange)pitchEnable=false;
-					
-					if(yawEnable==true){
-						if(yawMinRange < yawAngle && yawAngle < yawMaxRange ){
-							yawSatisfaction=true;
-						}
-					}else{
-						yawSatisfaction=true;
+					double yawGap = range[6];
+					double rollGap = range[7];
+					double pitchGap = range[8];
+					if (yawMinRange == yawMaxRange) {
+						yawEnable = false;
 					}
-					
-					if(rollEnable==true){
-						if(rollMinRange < rollAngle && rollAngle < rollMaxRange ){
-							rollSatisfaction=true;
-						}
-					}else{
-						rollSatisfaction=true;
+					if (rollMinRange == rollMaxRange) {
+						rollEnable = false;
 					}
-					
-					if(pitchEnable==true){
-						if(pitchMinRange < pitchAngle && pitchAngle < pitchMaxRange ){
-							pitchSatisfaction=true;
-						}
-					}else{
-						pitchSatisfaction=true;
+					if (pitchMinRange == pitchMaxRange) {
+						pitchEnable = false;
 					}
-					
-					if (yawSatisfaction&&rollSatisfaction&&pitchSatisfaction) {
-						difference[0]=i; //추후 step에 사용, 해당 값의 순서
-						if(Math.abs(yawDifference)<=yawGap||yawGap==0){
+
+					if (yawEnable == true) {
+						if (yawMinRange < yawAngle && yawAngle < yawMaxRange) {
+							yawSatisfaction = true;
+						}
+					} else {
+						yawSatisfaction = true;
+					}
+
+					if (rollEnable == true) {
+						if (rollMinRange < rollAngle && rollAngle < rollMaxRange) {
+							rollSatisfaction = true;
+						}
+					} else {
+						rollSatisfaction = true;
+					}
+
+					if (pitchEnable == true) {
+						if (pitchMinRange < pitchAngle && pitchAngle < pitchMaxRange) {
+							pitchSatisfaction = true;
+						}
+					} else {
+						pitchSatisfaction = true;
+					}
+
+					if (yawSatisfaction && rollSatisfaction && pitchSatisfaction) {
+						difference[0] = i; //추후 step에 사용, 해당 값의 순서
+						if (Math.abs(yawDifference) <= yawGap || yawGap == 0) {
 							difference[1] = yawDifference;
 						}
-					    if(Math.abs(rollDifference)<=rollGap||rollGap==0){
-								difference[2] = rollDifference;
-							}
-						if(Math.abs(pitchDifference)<=pitchGap||pitchGap==0){
-								difference[3]= pitchDifference;
-							}
-						List<double[]> temp=differenceInRangeResultList.get(j);
+						if (Math.abs(rollDifference) <= rollGap || rollGap == 0) {
+							difference[2] = rollDifference;
+						}
+						if (Math.abs(pitchDifference) <= pitchGap || pitchGap == 0) {
+							difference[3] = pitchDifference;
+						}
+						List<double[]> temp = differenceInRangeResultList.get(j);
 						temp.add(difference);
 					}
 				}
@@ -137,53 +218,140 @@ public class GyroMotions {
 		}
 		return differenceInRangeResultList;
 	}
-	
-	public static String motionDecision(Map<String,Integer> motionMap){
-		
-			Set<String> keySet=motionMap.keySet();
-			
-			int prevalue=0;
-			boolean sameCount=false;
-			String finalMotion="";
-			Iterator<String> keys = keySet.iterator();
-			
-			while (keys.hasNext()) {
+
+	public static String motionDecision(Map<String, Integer> motionMap) {
+
+		Set<String> keySet = motionMap.keySet();
+
+		int prevalue = 0;
+		boolean sameCount = false;
+		String finalMotion = "";
+		Iterator<String> keys = keySet.iterator();
+
+		while (keys.hasNext()) {
 			String key = keys.next(); // Set의 key 값을 하나씩 key에 대입
 			int count = motionMap.get(key); // 해당 key에 해당하는 value 대입 / 오토 언박싱
 			System.out.println(key + " : " + count);
-		    motionMap.remove(key);
-			if(prevalue<count){
-				prevalue=count;
-				finalMotion=key;
-				sameCount=false;
-			}else if(prevalue==count){
-				sameCount=true;
+
+			if (prevalue < count) {
+				prevalue = count;
+				finalMotion = key;
+				sameCount = false;
+			} else if (prevalue == count) {
+				sameCount = true;
 			}
-			}
-			
-			if(sameCount){
-				return finalMotion;
-			}else{
-				return "두개이상의 모션이 인식됩니다.( 인식 실패 )";
-			}
-			
+			//motionMap.remove(key);
+		}
+
+		if (sameCount) {
+			return "두개이상의 모션이 인식됩니다.( 인식 실패 )";
+		} else {
+			return finalMotion;
+		}
 
 	}
-	
-	public static void action(String finalMotion){
-		if(finalMotion=="left"){
+
+	public static void action(String finalMotion) {
+		if (finalMotion == "left") {
 			System.out.print("Left 모션 인식");
-			
-		}else if(finalMotion=="right"){
+
+		} else if (finalMotion == "right") {
 			System.out.print("Right 모션 인식");
-		}else if(finalMotion=="up"){
+		} else if (finalMotion == "up") {
 			System.out.print("Up 모션 인식");
-		}else if(finalMotion=="down"){
+		} else if (finalMotion == "down") {
 			System.out.print("Down 모션 인식");
 		}
 	}
+
+	@Override
+	public void trigerMotion(int status) {
+		boolean step1 = false;
+		boolean step2 = false;
+		int count = 0;
+		if (listPitchAngles.size() >= 5) {
+			for (int i = 0; i < listPitchAngles.size(); i++) {
+				double prevalue = listPitchAngles.get(i);
+				if (status == 0) {
+
+					if (prevalue < 130 && step1 == false) {
+						step1 = true;
+						System.out.println("Step1 On");
+					}
+					if (step1 == true) {
+						if (prevalue > 170) {
+							step2 = true;
+							System.out.println("Step2 On");
+						}
+					}
+
+					if (step1 == true && step2 == true) {
+						emptingContinuedList();
+						System.out.println("Motion On");
+						MotionCheck.MotionRecognitionStatus(1);
+						emptingCollectedList();
+						MotionListCollecting = true;
+						break;
+					}
+
+				} else if (status == 1) {
+					if (prevalue < 130 && step1 == false) {
+						step1 = true;
+						System.out.println("Step1 On");
+					}
+					if (step1 == true) {
+						if (prevalue > 170) {
+							step2 = true;
+							System.out.println("Step2 On");
+						}
+					}
+
+					if (step1 == true && step2 == true) {
+						emptingContinuedList();
+						System.out.println("Motion Recognition");
+						MotionCheck.MotionRecognitionStatus(2);
+						MotionListCollecting = false;
+						break;
+					}
+				}
+
+			}
+		}
+	}
+
+	/*
 	
-	
+	public synchronized static void pitchCircle() {
+		boolean step1 = false;
+		boolean step2 = false;
+		int count = 0;
+		if (listPitchAngle.size() >= 8) {
+			for (int i = 0; i < listPitchAngle.size(); i++) {
+				double prevalue = listPitchAngle.get(i);
+				if (MotionCheck.motionOn == false) {
+
+					if (prevalue < 130 && step1 == false) {
+						step1 = true;
+						System.out.println("Step1 On");
+					}
+					if (step1 == true) {
+						if (prevalue > 170) {
+							step2 = true;
+							System.out.println("Step2 On");
+						}
+					}
+
+					if (step1 == true && step2 == true) {
+						System.out.println("Motion On");
+						MotionCheck.MotionRecognitionStatus(true);
+						i = listPitchAngle.size();
+					}
+
+				}
+
+			}
+		}
+	}
 	
 		public static void yawLine(List<List> differenceResultList){
 		System.out.println(differenceResultList.size());
@@ -319,36 +487,6 @@ public class GyroMotions {
 		};
 	}
 
-	public synchronized static void pitchCircle() {
-		boolean step1 = false;
-		boolean step2 = false;
-		int count = 0;
-		if (listPitchAngle.size() >= 8) {
-			for (int i = 0; i < listPitchAngle.size(); i++) {
-				double prevalue = listPitchAngle.get(i);
-				if (MotionCheck.motionOn == false) {
 
-					if (prevalue < 130 && step1 == false) {
-						step1 = true;
-						System.out.println("Step1 On");
-					}
-					if (step1 == true) {
-						if (prevalue > 170) {
-							step2 = true;
-							System.out.println("Step2 On");
-						}
-					}
-
-					if (step1 == true && step2 == true) {
-						System.out.println("Motion On");
-						MotionCheck.MotionRecognitionStatus(true);
-						i = listPitchAngle.size();
-					}
-
-				}
-
-			}
-		}
-	}
-
+	 */
 }

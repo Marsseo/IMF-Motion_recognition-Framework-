@@ -11,8 +11,6 @@ import static com.raspoid.MPU6050.DEFAULT_SMPLRT_DIV;
 import com.raspoid.sensors.IRSensor;
 import com.raspoid.sensors.UltrasonicSensor;
 import converter.PCF8591;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
@@ -40,6 +38,7 @@ public class MPU6050Example {
 	
 	public static long time = 0;
 	public static long currtime=0;
+	public static int value=0;
 
 	/**
 	 * Private constructor to hide the implicit public one.
@@ -65,6 +64,8 @@ public class MPU6050Example {
 		
 		mpu6050.startUpdatingThread();
 		time = System.currentTimeMillis();
+		
+	
 
 		while (true) {
 			
@@ -113,6 +114,7 @@ public class MPU6050Example {
 //			} catch (Exception ex) {	ex.printStackTrace();}
 //			
 			Tools.sleepMilliseconds(100);
+			/*
 			currtime = System.currentTimeMillis();
 			System.out.println(currtime-time);
 			if((currtime-time)>=60000){
@@ -125,6 +127,8 @@ public class MPU6050Example {
 				mpu6050.startUpdatingThread();
 				time = System.currentTimeMillis();
 			}
+
+*/
 		}
 
 	}

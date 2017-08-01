@@ -22,7 +22,7 @@ public class GyroMotionList2 {
 		if (listPitchAngle.size() >= 8) {
 			for (int i = 0; i < listPitchAngle.size(); i++) {
 				double prevalue = listPitchAngle.get(i);
-				if (MotionCheck.motionOn == false) {
+				if (MotionCheck.motionOn == 0) {
 
 				if (prevalue < 90) {
 					step1 = true;
@@ -35,7 +35,7 @@ public class GyroMotionList2 {
 
 				if (step1 == true && step2 == true) {
 					System.out.println("Motion On");
-					MotionCheck.MotionRecognitionStatus(true);
+					MotionCheck.MotionRecognitionStatus(1);
 				}
 					
 				}
@@ -69,11 +69,11 @@ public class GyroMotionList2 {
 			}
 			if (leftCount > 6) {
 				System.out.println("yaw Dirention :  <---");
-				MotionCheck.MotionRecognitionStatus(false);
+				MotionCheck.MotionRecognitionStatus(0);
 				System.out.println("Motion Off");
 			} else if (rightCount > 6) {
 				System.out.println("yaw Dirention :  --->");
-				MotionCheck.MotionRecognitionStatus(false);
+				MotionCheck.MotionRecognitionStatus(0);
 				System.out.println("Motion Off");
 			}
 		};
@@ -107,11 +107,11 @@ public class GyroMotionList2 {
 			}
 			if (upCount > 6) {
 				System.out.println("Roll Dirention :  up");
-				MotionCheck.MotionRecognitionStatus(false);
+				MotionCheck.MotionRecognitionStatus(0);
 				System.out.println("Motion Off");
 			} else if (downCount > 6) {
 				System.out.println("Roll Dirention :  down");
-				MotionCheck.MotionRecognitionStatus(false);
+				MotionCheck.MotionRecognitionStatus(0);
 				System.out.println("Motion Off");
 			}
 		};
@@ -131,7 +131,7 @@ public class GyroMotionList2 {
 				
 				System.out.println("is it a circle? : "+circle);
 			}
-			MotionCheck.MotionRecognitionStatus(false);
+			MotionCheck.MotionRecognitionStatus(0);
 			
 		
 		}
@@ -205,7 +205,7 @@ public class GyroMotionList2 {
 
 			
 		}
-		MotionCheck.MotionRecognitionStatus(false);
+		MotionCheck.MotionRecognitionStatus(0);
 		return infoMap;
 			
 	}
