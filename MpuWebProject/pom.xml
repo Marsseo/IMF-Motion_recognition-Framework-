@@ -56,14 +56,14 @@
 		</dependency>
 		<!--Spring-Websocket -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>4.3.8.RELEASE</version>
-		</dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.8.RELEASE</version>
+		</dependency>			
 		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-websocket</artifactId>
-			<version>8.0.44</version>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-websocket</artifactId>
+		    <version>8.0.44</version>
 		</dependency>
 
 		<!-- AOP를 위한 AspectJ 설정 -->
@@ -261,6 +261,38 @@
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-facebook</artifactId>
 			<version>2.0.3.RELEASE</version>
+		</dependency>
+		
+		<!-- CoAP을 위한 라이브러리 -->
+		<dependency>
+		    <groupId>org.eclipse.californium</groupId>
+		    <artifactId>californium-proxy</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.californium</groupId>
+		    <artifactId>californium-core</artifactId>
+		    <version>1.0.5</version>
+		</dependency>	
+		<dependency>
+		    <groupId>org.eclipse.californium</groupId>
+		    <artifactId>californium-osgi</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.californium</groupId>
+		    <artifactId>scandium</artifactId>
+		    <version>1.0.5</version>
+		</dependency>	
+		<dependency>
+		    <groupId>org.eclipse.californium</groupId>
+		    <artifactId>element-connector</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpmime</artifactId>
+		    <version>4.5.3</version>
 		</dependency>
 
 

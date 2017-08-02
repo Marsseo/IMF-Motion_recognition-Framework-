@@ -43,8 +43,9 @@
 
 		<script>
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-			var group, camera, scene, renderer;
+			var group, camera, scene, renderer, yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
 			init();
+			requestGyroSensorData();
 			animate();
 			function init() {
 				scene = new THREE.Scene();
@@ -53,8 +54,8 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 				// camera
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-				camera.position.set( 15, 20, 30 );
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera.position.set( 15, 20, 0 );
 				scene.add( camera );
 				// controls
 				var controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -113,11 +114,26 @@
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x += 0;
+				group.rotation.x += (pitchAngle-prepitchAngle)/10000; //빨강 y값
+				group.rotation.y += (yawAngle-preyawAngle)/10000; //초록 z값
+				group.rotation.z += (rollAngle-prerollAngle)/10000; //파랑 x값
 				render();
 			}
 			function render() {
 				renderer.render( scene, camera );
+			}
+			function requestGyroSensorData(){
+				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
+				ws.onmessage = function(event){
+					var data = JSON.parse(event.data);
+					preyawAngle = data.yawAngle;
+					prepithAngle = data.pitchAngle;
+					prerollAngle = data.rollAngle;
+				};
+				yawAngle = preyawAngle;
+				pitchAngle = prepitchAngle;
+				rollAngle = prerollAngle;
+				
 			}
 		</script>
 
