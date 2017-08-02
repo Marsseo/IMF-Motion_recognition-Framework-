@@ -1,5 +1,6 @@
 package Motion;
 
+import static Motion.MotionCheck.buttonAddData;
 import Motion.TriggerMotionInterface;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -295,7 +296,7 @@ public class GyroMotions implements TriggerMotionInterface {
 						MotionCheck.MotionRecognitionStatus(1);
 						emptingCollectedList();
 						MotionListCollecting = true;
-						break;
+						i=listPitchAngles.size();
 					}
 
 				} else if (status == 1) {
@@ -315,7 +316,8 @@ public class GyroMotions implements TriggerMotionInterface {
 						System.out.println("Motion Recognition");
 						MotionCheck.MotionRecognitionStatus(2);
 						MotionListCollecting = false;
-						break;
+						i=listPitchAngles.size();
+						buttonAddData("ready");  //다른 인터페이스도 이건꼭 해줘야함
 					}
 				}
 
@@ -339,6 +341,8 @@ public class GyroMotions implements TriggerMotionInterface {
 			System.out.println("Motion Recognition");
 			MotionCheck.MotionRecognitionStatus(2);
 			MotionListCollecting = false;
+			buttonAddData("ready");  // 버튼 상태는 ready , on , off 세가지
+
 			}
 		}
 

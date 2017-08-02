@@ -12,7 +12,7 @@ public class MotionCheck {
 	public static Thread ultraCheckThread;
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
-	public static String buttonStatus = "off";
+	public static String buttonStatus = "ready";
 	public static double irDistance;
 	public static double ultrasonicDistance;
 	public static int motionOn = 0;
@@ -81,11 +81,12 @@ public class MotionCheck {
 
 				while (true) {
 					if (motionOn == 0) {
+						System.out.println("pitchCircle 1단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: trigerMotionList){
 							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
 						}
-						System.out.println("pitchCircle 1단계"); //나중에 삭제각
+						
 						try {
 							Thread.sleep(500);
 						} catch (Exception e) {

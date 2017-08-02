@@ -1,7 +1,10 @@
 package com.raspoid;
 
+import com.pi4j.io.gpio.PinState;
 import com.raspoid.sensors.TouchSwitch;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
@@ -35,17 +38,17 @@ public class MPU6050Example {
 	public static UltrasonicSensor ultrasonic;
 	public static PCF8591 pcf8591;
 	public static IRSensor iRSensor;
-	
+
 	public static long time = 0;
-	public static long currtime=0;
-	public static int value=0;
+	public static long currtime = 0;
+	public static int value = 0;
 
 	/**
 	 * Private constructor to hide the implicit public one.
 	 */
 	private MPU6050Example() {
 		coapClient = new CoapClient();
-		
+
 	}
 
 	/**
@@ -55,20 +58,39 @@ public class MPU6050Example {
 	 */
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 		MPU6050 mpu6050 = new MPU6050();
-		
-		ts= new TouchSwitch(RaspiPin.GPIO_06);
-		
+
+		ts = new TouchSwitch(RaspiPin.GPIO_06);
+
 		ultrasonic = new UltrasonicSensor(RaspiPin.GPIO_04, RaspiPin.GPIO_05);
 		pcf8591 = new PCF8591(0x48, PCF8591.AIN0);
 		iRSensor = new IRSensor(pcf8591);
-		
+
 		mpu6050.startUpdatingThread();
 		time = System.currentTimeMillis();
-		
-	
+
+		ts.setGpioPinListenerDigital(new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+//				if(event.getState() == PinState.HIGH) {
+//					System.out.println("off");
+//				} else {
+//					System.out.println("on");
+//				}
+
+				jsonObject = new JSONObject();
+				jsonObject.put("sensor", "button");
+				jsonObject.put("status", ts.getStatus());
+				json = jsonObject.toString();
+
+				coapClient = new CoapClient();
+				coapClient.setURI("coap://" + ipAdress + "/button");
+				coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
+				coapClient.shutdown();
+			}
+		});
 
 		while (true) {
-			
+
 			Tools.log("-----------------------------------------------------");
 //
 //			// Accelerometer
@@ -94,19 +116,19 @@ public class MPU6050Example {
 //			// Filtered angles
 			Tools.log("Filtered angles:");
 			double[] filteredAngles = mpu6050.getFilteredAngles();
-			if(filteredAngles[2]<0){
-				filteredAngles[2]=180+filteredAngles[2];
-			}else if(filteredAngles[2]==0){
-				filteredAngles[2]=180;
-			}else{
-				filteredAngles[2]=180+filteredAngles[2];
+			if (filteredAngles[2] < 0) {
+				filteredAngles[2] = 180 + filteredAngles[2];
+			} else if (filteredAngles[2] == 0) {
+				filteredAngles[2] = 180;
+			} else {
+				filteredAngles[2] = 180 + filteredAngles[2];
 			}
-			
-		Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
+
+			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
-			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
-			
-			button();
+			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
+
+//			button();
 //			
 //			try {
 //				distance("ultrasonic");
@@ -128,12 +150,12 @@ public class MPU6050Example {
 				time = System.currentTimeMillis();
 			}
 
-*/
+			 */
 		}
 
 	}
 
-	public static void mouseMove(double x, double y,double z) {
+	public static void mouseMove(double x, double y, double z) {
 		double roll = x;
 		double pitch = y;
 		double yaw = z;
@@ -154,9 +176,9 @@ public class MPU6050Example {
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
 		coapClient.shutdown();
 	}
-	
-	public static void button(){
-		
+
+	public static void button() {
+
 		jsonObject = new JSONObject();
 		jsonObject.put("sensor", "button");
 		jsonObject.put("status", ts.getStatus());
@@ -167,26 +189,26 @@ public class MPU6050Example {
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
 		coapClient.shutdown();
 	}
-	
-	public static void distance(String sensor) throws Exception{
-		
+
+	public static void distance(String sensor) throws Exception {
+
 		jsonObject = new JSONObject();
 		jsonObject.put("sensor", sensor);
-		
-		if(sensor.equals("ultrasonic")){
-			
+
+		if (sensor.equals("ultrasonic")) {
+
 			jsonObject.put("distance", String.valueOf(ultrasonic.getDistance()));
 			json = jsonObject.toString();
-			
-		}else if(sensor.equals("ifraredray")){
-			
+
+		} else if (sensor.equals("ifraredray")) {
+
 			jsonObject.put("distance", String.valueOf(iRSensor.getValue()));
 			json = jsonObject.toString();
-			
-		}				
+
+		}
 
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://" + ipAdress +"/"+sensor);
+		coapClient.setURI("coap://" + ipAdress + "/" + sensor);
 		coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
 		coapClient.shutdown();
 	}
