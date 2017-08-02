@@ -106,7 +106,7 @@ public class MPU6050Example {
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			mouseMove(filteredAngles[0], filteredAngles[1],filteredAngles[2]);
 			
-//			button();
+			button();
 //			
 //			try {
 //				distance("ultrasonic");
@@ -158,7 +158,7 @@ public class MPU6050Example {
 	public static void button(){
 		
 		jsonObject = new JSONObject();
-		jsonObject.put("sensor", "touch");
+		jsonObject.put("sensor", "button");
 		jsonObject.put("status", ts.getStatus());
 		json = jsonObject.toString();
 

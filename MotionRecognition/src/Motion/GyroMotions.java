@@ -1,12 +1,13 @@
 package Motion;
 
+import Motion.TriggerMotionInterface;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class GyroMotions implements TrigerMotionInterface {
+public class GyroMotions implements TriggerMotionInterface {
 
 	public static boolean MotionListCollecting = false;
 
@@ -65,7 +66,7 @@ public class GyroMotions implements TrigerMotionInterface {
 			}
 		}
 
-		if (MotionListCollecting) {
+		if (MotionListCollecting == true) {
 
 			listYawAngle.add(yaw);
 			listRollAngle.add(roll);
@@ -89,8 +90,8 @@ public class GyroMotions implements TrigerMotionInterface {
 			}
 		}
 	}
-	
-	private void emptingContinuedList(){
+
+	private void emptingContinuedList() {
 		if (!listYawAngles.isEmpty()) {
 			listYawAngles.clear();
 		}
@@ -109,6 +110,9 @@ public class GyroMotions implements TrigerMotionInterface {
 		if (!listPitchDifferences.isEmpty()) {
 			listPitchDifferences.clear();
 		}
+		listYawDifferences.add(initialValue);
+		listRollDifferences.add(initialValue);
+		listPitchDifferences.add(initialValue);
 	}
 
 	private void emptingCollectedList() {
@@ -134,7 +138,6 @@ public class GyroMotions implements TrigerMotionInterface {
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 
-		double[] difference = {0, 0, 0, 0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
 		List<List> differenceInRangeResultList = new ArrayList<>();
 		for (int k = 0; k < yawRollPitchRangeList.size(); k++) {
 			List<double[]> differenceInRangeList = new ArrayList<>();
@@ -149,6 +152,7 @@ public class GyroMotions implements TrigerMotionInterface {
 				double rollDifference = listRollDifference.get(i);
 				double pitchDifference = listPitchDifference.get(i);
 				for (int j = 0; j < yawRollPitchRangeList.size(); j++) {
+					double[] difference = {0, 0, 0, 0}; //해당 범위지정번호: 인덱스값 ,{값이 들어온 순서,yaw,roll,pitch}
 					boolean yawEnable = true;
 					boolean rollEnable = true;
 					boolean pitchEnable = true;
@@ -265,7 +269,7 @@ public class GyroMotions implements TrigerMotionInterface {
 	}
 
 	@Override
-	public void trigerMotion(int status) {
+	public void triggerMotion(int status) {
 		boolean step1 = false;
 		boolean step2 = false;
 		int count = 0;
@@ -317,6 +321,27 @@ public class GyroMotions implements TrigerMotionInterface {
 
 			}
 		}
+	}
+
+	@Override
+	public void triggerButton(int step, String buttonStatus) {
+		if (step == 0) {
+			if (buttonStatus.equals("on")) {
+				emptingContinuedList();
+				System.out.println("Motion On");
+				MotionCheck.MotionRecognitionStatus(1);
+				emptingCollectedList();
+				MotionListCollecting = true;
+			}
+		} else if (step == 1) {
+			if (buttonStatus.equals("off")) {
+			emptingContinuedList();
+			System.out.println("Motion Recognition");
+			MotionCheck.MotionRecognitionStatus(2);
+			MotionListCollecting = false;
+			}
+		}
+
 	}
 
 	/*

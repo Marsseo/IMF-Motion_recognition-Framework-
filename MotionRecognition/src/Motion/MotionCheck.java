@@ -1,5 +1,6 @@
 package Motion;
 
+import Motion.TriggerMotionInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class MotionCheck {
 	public static List<List> differenceResultList = new ArrayList<>();
 	public List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
 	public Map<String, Integer> motionMap = new HashMap<String, Integer>();
-	public List<TrigerMotionInterface> trigerMotionList = new ArrayList<>();
+	public List<TriggerMotionInterface> trigerMotionList = new ArrayList<>();
 
 	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
 	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
@@ -53,6 +54,7 @@ public class MotionCheck {
 		gyroMotionList.add(new GyroMotionImpl_Down());
 		
 		trigerMotionList.add(gyroMotions);
+		//trigerMotionList.add(new ButtonTrigger());
 	}
 
 	public static void buttonAddData(String status) {
@@ -79,8 +81,9 @@ public class MotionCheck {
 
 				while (true) {
 					if (motionOn == 0) {
-						for(TrigerMotionInterface triger: trigerMotionList){
-							triger.trigerMotion(0);
+						for(TriggerMotionInterface trigger: trigerMotionList){
+							trigger.triggerMotion(0);
+							trigger.triggerButton(0,buttonStatus);
 						}
 						System.out.println("pitchCircle 1단계"); //나중에 삭제각
 						try {
@@ -95,8 +98,9 @@ public class MotionCheck {
 						} catch (Exception e) {
 						}
 					System.out.println("pitchCircle 2단계"); //나중에 삭제각
-						for(TrigerMotionInterface triger: trigerMotionList){
-							triger.trigerMotion(1);
+						for(TriggerMotionInterface trigger: trigerMotionList){
+							trigger.triggerMotion(1);
+							trigger.triggerButton(1,buttonStatus);
 						}
 						
 						

@@ -14,7 +14,7 @@ public class GyroMotionImpl_Left implements GyroMotionInterface{
 		for (int j = 0; j < factorsInRange.size(); j++) {
 
 			double[] count = factorsInRange.get(j);
-			if (count[1] > 0) {
+			if (count[1] > 0&&count[2]!=0) {
 						System.out.println(count[1]);
 						System.out.println("left");
 						leftCount++;
