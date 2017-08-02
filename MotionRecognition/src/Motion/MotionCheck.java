@@ -37,18 +37,23 @@ public class MotionCheck {
 		buttonCheckThreadStart();
 
 		gyroMotions= new GyroMotions();
-		double[] leftLine={190, 270, 160, 220, 0, 0, 1, 50, 0};
-		double[] rightLine={90, 170, 160, 220, 0, 0, 1, 50, 0};
-		double[] upLine={170, 190, 90, 160, 0, 0,1 , 50, 0};
-		double[] downLine={170, 190, 220, 270, 0, 0, 1, 50, 0};
+		//double[] leftLine={190, 270, 160, 220, 0, 0, 1, 50, 0};
+		//double[] rightLine={90, 170, 160, 220, 0, 0, 0,1,0, 50,0, 0};
+		//double[] upLine={170, 190, 90, 160, 0, 0,0,1 ,0, 50,0, 0};
+		//double[] downLine={170, 190, 220, 270, 0, 0, 0, 1,0, 50,0, 0};
+		
+		double[] left={-360,360,90,270,0,0,1,80,0,1,0,0};
+		double[] right={-360,360,90,270,0,0,1,80,0,1,0,0};
+		double[] up={-360,360,90,270,0,0,0,1,1,80,0,0};
+		double[] down={-360,360,90,270,0,0,0,1,1,80,0,0};
 		
 		//double[] yawLine = {90, 270, 160, 220, 0, 0, 3, 0, 0};
 		//double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 3, 0};
 		//double[] diagonalLine={0, 360, 90, 270, 0, 0, 3, 3, 0};
-		yawRollPitchRangeList.add(leftLine); //0번
-		yawRollPitchRangeList.add(rightLine);//1번
-		yawRollPitchRangeList.add(upLine); //2번
-		yawRollPitchRangeList.add(downLine); //3번
+		yawRollPitchRangeList.add(left); //0번
+		yawRollPitchRangeList.add(right);//1번
+		yawRollPitchRangeList.add(up); //2번
+		yawRollPitchRangeList.add(down); //3번
 		gyroMotionList.add(new GyroMotionImpl_Up());
 		gyroMotionList.add(new GyroMotionImpl_Left());
 		gyroMotionList.add(new GyroMotionImpl_Right());

@@ -264,14 +264,14 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static void action(String finalMotion) {
 		if (finalMotion == "left") {
-			System.out.print("Left 모션 인식");
+			System.out.println("----------------------Left 모션 인식");
 
 		} else if (finalMotion == "right") {
-			System.out.print("Right 모션 인식");
+			System.out.println("----------------------Right 모션 인식");
 		} else if (finalMotion == "up") {
-			System.out.print("Up 모션 인식");
+			System.out.println("----------------------Up 모션 인식");
 		} else if (finalMotion == "down") {
-			System.out.print("Down 모션 인식");
+			System.out.println("----------------------Down 모션 인식");
 		}
 	}
 
@@ -303,6 +303,7 @@ public class GyroMotions implements TriggerMotionInterface {
 						emptingCollectedList();
 						MotionListCollecting = true;
 						i=listPitchAngles.size();
+						
 					}
 
 				} else if (status == 1) {
