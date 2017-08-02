@@ -23,7 +23,8 @@ public class MotionCheck {
 	public Map<String, Integer> motionMap = new HashMap<String, Integer>();
 	public List<TriggerMotionInterface> trigerMotionList = new ArrayList<>();
 
-	//[yaw min, yaw max, roll min , roll max,pitch min,pitch max,yaw Gap,roll Gap,pitch Gap] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
+	//[yaw min(0), yaw max(1), roll min(2) , roll max(3),pitch min(4),pitch max(5),
+	// yaw Gap Min(6),yaw Gap Max(7),roll GapMin (8),roll Gap Max (9),pitch Gap Min (10), pitch Gap Max(11)] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
 	//해당각의 Gap을 고려하지 않을경우 0값을 넣어줌
 
 	private GyroMotions gyroMotions;
@@ -81,7 +82,7 @@ public class MotionCheck {
 
 				while (true) {
 					if (motionOn == 0) {
-						System.out.println("pitchCircle 1단계"); //나중에 삭제각
+						System.out.println("모션준비 1단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: trigerMotionList){
 							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
@@ -98,7 +99,7 @@ public class MotionCheck {
 							Thread.sleep(500);
 						} catch (Exception e) {
 						}
-					System.out.println("pitchCircle 2단계"); //나중에 삭제각
+					System.out.println("모션을 취하는중 2단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: trigerMotionList){
 							trigger.triggerMotion(1);
 							trigger.triggerButton(1,buttonStatus);
@@ -106,7 +107,7 @@ public class MotionCheck {
 						
 						
 					}else {
-						System.out.println("yaw roll 실행 while문"); //나중에 삭제각
+						System.out.println("모션분석중........."); //나중에 삭제각
 						motionMap.clear();
 						
 						//범위안의 변화요소 뽑아내는 부분
