@@ -81,23 +81,22 @@ String accessToken=accessGrant.getAccessToken();
 	*/
 	
 
+			
+		
 	@RequestMapping("/")
+		public String home() {
+		
+		return "home";
+	}
+	
+	@RequestMapping("/gyroTest")
 	public String GyroTest() {
 	
 		
-		return "gyroTest2";
+		return "gyroTest";
 	}
 	
 	
-		
-		
-/*		@RequestMapping("/")
-		public String home() {
-		
-			LOGGER.info("/요청처리함");
-			return "home";
-		}*/
-
 /*	@Inject
 	public HomeController(Facebook facebook, ConnectionRepository connectionRepository) {
 		this.facebook=facebook;

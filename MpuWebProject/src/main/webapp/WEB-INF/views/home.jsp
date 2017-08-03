@@ -46,7 +46,7 @@
 					<span class="icon-bar"></span>
 				</a>
 				<a class="brand" href="home">
-					<span>IoT0617</span>
+					<span>IoT0619</span>
 				</a>
 
 				<!-- start: Header Menu -->
@@ -115,9 +115,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="tasks.html">
+							<a href="gyroTest">
 								<i class="icon-tasks"></i>
-								<span class="hidden-tablet"> Tasks</span>
+								<span class="hidden-tablet">Gyro Test</span>
 							</a>
 						</li>
 						<li>
