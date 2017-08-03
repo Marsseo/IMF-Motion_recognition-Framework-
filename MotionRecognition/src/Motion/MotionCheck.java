@@ -37,30 +37,27 @@ public class MotionCheck {
 		buttonCheckThreadStart();
 
 		gyroMotions= new GyroMotions();
-		//double[] leftLine={190, 270, 160, 220, 0, 0, 1, 50, 0};
-		//double[] rightLine={90, 170, 160, 220, 0, 0, 0,1,0, 50,0, 0};
-		//double[] upLine={170, 190, 90, 160, 0, 0,0,1 ,0, 50,0, 0};
-		//double[] downLine={170, 190, 220, 270, 0, 0, 0, 1,0, 50,0, 0};
 		
 		double[] left={-360,360,90,270,0,0,1,80,0,1,0,0};
 		double[] right={-360,360,90,270,0,0,1,80,0,1,0,0};
 		double[] up={-360,360,90,270,0,0,0,1,1,80,0,0};
 		double[] down={-360,360,90,270,0,0,0,1,1,80,0,0};
+		double[] zigzag={-360,360,90,270,0,0,1,80,1,80,0,0};
+		double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
 		
-		//double[] yawLine = {90, 270, 160, 220, 0, 0, 3, 0, 0};
-		//double[] rollLine = {170, 190, 90, 270, 0, 0, 0, 3, 0};
-		//double[] diagonalLine={0, 360, 90, 270, 0, 0, 3, 3, 0};
 		yawRollPitchRangeList.add(left); //0번
 		yawRollPitchRangeList.add(right);//1번
 		yawRollPitchRangeList.add(up); //2번
 		yawRollPitchRangeList.add(down); //3번
+		yawRollPitchRangeList.add(zigzag); //4번
 		gyroMotionList.add(new GyroMotionImpl_Up());
 		gyroMotionList.add(new GyroMotionImpl_Left());
 		gyroMotionList.add(new GyroMotionImpl_Right());
 		gyroMotionList.add(new GyroMotionImpl_Down());
+		gyroMotionList.add(new GyroMotionImpl_ZigZag());
+		gyroMotionList.add(new GyroMotionImpl_Circle());
 		
 		trigerMotionList.add(gyroMotions);
-		//trigerMotionList.add(new ButtonTrigger());
 	}
 
 	public static void buttonAddData(String status) {
