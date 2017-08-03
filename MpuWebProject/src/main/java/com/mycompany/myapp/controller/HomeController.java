@@ -85,7 +85,7 @@ String accessToken=accessGrant.getAccessToken();
 	public String GyroTest() {
 	
 		
-		return "gyroTest";
+		return "gyroTest2";
 	}
 	
 	

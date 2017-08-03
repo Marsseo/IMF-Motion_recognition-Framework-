@@ -54,7 +54,7 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 				// camera
-				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
 				camera.position.set( 15, 20, 0 );
 				scene.add( camera );
 				// controls
@@ -68,8 +68,10 @@
 				camera.add( light );
 				// helper
 				scene.add( new THREE.AxisHelper( 20 ) );
+				scene.add( new THREE.GridHelper( 50, 10 ) );
 				// textures
 				var loader = new THREE.TextureLoader();
+				
 				var texture = loader.load( 'textures/sprites/disc.png' );
 				group = new THREE.Group();
 				scene.add( group );
@@ -89,7 +91,7 @@
 				// convex hull
 				var meshMaterial = new THREE.MeshLambertMaterial( {
 					color: 0xffffff,
-					opacity: 0.5,
+					opacity: 0.7,
 					transparent: true
 				} );
 				var meshGeometry = new THREE.ConvexBufferGeometry( pointsGeometry.vertices );
@@ -114,9 +116,9 @@
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x += (pitchAngle-prepitchAngle)/10000; //빨강 y값
-				group.rotation.y += (yawAngle-preyawAngle)/10000; //초록 z값
-				group.rotation.z += (rollAngle-prerollAngle)/10000; //파랑 x값
+				group.rotation.x = prepitchAngle/200; //빨강 y값
+				group.rotation.y = preyawAngle/200; //초록 z값
+				group.rotation.z = prerollAngle/200; //파랑 x값
 				render();
 			}
 			function render() {
@@ -126,8 +128,8 @@
 				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
-					preyawAngle = data.yawAngle;
-					prepithAngle = data.pitchAngle;
+					preyawAngle = data.yawAngle-180;
+					prepitchAngle = data.pitchAngle-180;
 					prerollAngle = data.rollAngle;
 				};
 				yawAngle = preyawAngle;
