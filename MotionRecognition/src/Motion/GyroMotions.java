@@ -139,7 +139,10 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 
+		//메소드에서  리턴해줄  리스트 생성
 		List<List> differenceInRangeResultList = new ArrayList<>();
+		
+		//구간을 설정해놓은 갯수만큼 리스트 생성해놓기
 		for (int k = 0; k < yawRollPitchRangeList.size(); k++) {
 			List<double[]> differenceInRangeList = new ArrayList<>();
 			differenceInRangeResultList.add(differenceInRangeList);
@@ -167,9 +170,12 @@ public class GyroMotions implements TriggerMotionInterface {
 					double rollMaxRange = range[3];
 					double pitchMinRange = range[4];
 					double pitchMaxRange = range[5];
-					double yawGap = range[6];
-					double rollGap = range[7];
-					double pitchGap = range[8];
+					double yawGapMin = range[6];
+					double yawGapMax = range[7];
+					double rollGapMin = range[8];
+					double rollGapMax = range[9];
+					double pitchGapMin = range[10];
+					double pitchGapMax = range[11];
 					if (yawMinRange == yawMaxRange) {
 						yawEnable = false;
 					}
@@ -206,13 +212,13 @@ public class GyroMotions implements TriggerMotionInterface {
 
 					if (yawSatisfaction && rollSatisfaction && pitchSatisfaction) {
 						difference[0] = i; //추후 step에 사용, 해당 값의 순서
-						if (Math.abs(yawDifference) <= yawGap || yawGap == 0) {
+						if (yawGapMin<=Math.abs(yawDifference)&&Math.abs(yawDifference) <= yawGapMax) {
 							difference[1] = yawDifference;
 						}
-						if (Math.abs(rollDifference) <= rollGap || rollGap == 0) {
+						if (rollGapMin<=Math.abs(rollDifference)&&Math.abs(rollDifference) <= rollGapMax) {
 							difference[2] = rollDifference;
 						}
-						if (Math.abs(pitchDifference) <= pitchGap || pitchGap == 0) {
+						if (pitchGapMin<=Math.abs(pitchDifference)&&Math.abs(pitchDifference) <= pitchGapMax) {
 							difference[3] = pitchDifference;
 						}
 						List<double[]> temp = differenceInRangeResultList.get(j);
@@ -258,14 +264,14 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static void action(String finalMotion) {
 		if (finalMotion == "left") {
-			System.out.print("Left 모션 인식");
+			System.out.println("----------------------Left 모션 인식");
 
 		} else if (finalMotion == "right") {
-			System.out.print("Right 모션 인식");
+			System.out.println("----------------------Right 모션 인식");
 		} else if (finalMotion == "up") {
-			System.out.print("Up 모션 인식");
+			System.out.println("----------------------Up 모션 인식");
 		} else if (finalMotion == "down") {
-			System.out.print("Down 모션 인식");
+			System.out.println("----------------------Down 모션 인식");
 		}
 	}
 
@@ -297,6 +303,7 @@ public class GyroMotions implements TriggerMotionInterface {
 						emptingCollectedList();
 						MotionListCollecting = true;
 						i=listPitchAngles.size();
+						
 					}
 
 				} else if (status == 1) {

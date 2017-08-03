@@ -12,9 +12,9 @@ public class GyroMotionImpl_Up implements GyroMotionInterface {
 		for (int j = 0; j < factorsInRange.size(); j++) {
 
 			double[] count = factorsInRange.get(j);
-			if (count[2] < 0) {
-						System.out.println(count[2]);
-						System.out.println("up");
+			if (count[2] < 0&&count[1]!=0) {
+						//System.out.println(count[2]);
+						//System.out.println("up");
 						upCount++;
 					} 
 		}
