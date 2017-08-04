@@ -15,13 +15,13 @@ public class Controller extends GyroMotions{
 	
 		backTire=new BackTire();
 		frontTire=new FrontTire();
-		speed=0;
+		speed=500;
 		frontTireAngle=90;
 }
 
 	@Override
 	public void triggerMotion(int i) {
-	    System.out.println("zzz");
+	    System.out.println(frontTireAngle);
 		List<Double> listRollAngles=GyroMotions.getListRollAngles();
 		List<Double> listYawDifferences=GyroMotions.getListYawDifferences();
 		double currRollAnglesValue;
@@ -31,11 +31,11 @@ public class Controller extends GyroMotions{
 			if(rollAnglesPreValue!=currRollAnglesValue){
 				rollAnglesPreValue=currRollAnglesValue;
 				if(currRollAnglesValue<150){
-					speed+=100;
+					speed+=200;
 					System.out.println("speed++++");
 					
 				}else if(currRollAnglesValue>210){
-					speed-=100;
+					speed-=200;
 					System.out.println("speed---");
 				}
 				backTire.setSpeed(speed);
