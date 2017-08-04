@@ -11,6 +11,8 @@ import com.raspoid.MPU6050;
 import com.raspoid.sensors.IRSensor;
 import com.raspoid.sensors.UltrasonicSensor;
 import converter.PCF8591;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
@@ -26,7 +28,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.42";
+	public static String ipAdress = "192.168.3.133";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -124,6 +126,12 @@ public class MPU6050Example {
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
+			
+			try {
+				distance("ifraredray");
+			} catch (Exception ex) {
+				Logger.getLogger(MPU6050Example.class.getName()).log(Level.SEVERE, null, ex);
+			}
 
 //			button();
 //			

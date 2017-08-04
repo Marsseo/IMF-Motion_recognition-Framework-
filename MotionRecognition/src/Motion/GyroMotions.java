@@ -89,7 +89,6 @@ public class GyroMotions implements TriggerMotionInterface {
 		return initialValue;
 	}
 
-	
 	public GyroMotions() {
 
 		listYawDifferences.add(initialValue);
@@ -202,7 +201,7 @@ public class GyroMotions implements TriggerMotionInterface {
 
 		//메소드에서  리턴해줄  리스트 생성
 		List<List> differenceInRangeResultList = new ArrayList<>();
-		
+
 		//구간을 설정해놓은 갯수만큼 리스트 생성해놓기
 		for (int k = 0; k < yawRollPitchRangeList.size(); k++) {
 			List<double[]> differenceInRangeList = new ArrayList<>();
@@ -273,13 +272,13 @@ public class GyroMotions implements TriggerMotionInterface {
 
 					if (yawSatisfaction && rollSatisfaction && pitchSatisfaction) {
 						difference[0] = i; //추후 step에 사용, 해당 값의 순서
-						if (yawGapMin<=Math.abs(yawDifference)&&Math.abs(yawDifference) <= yawGapMax) {
+						if (yawGapMin <= Math.abs(yawDifference) && Math.abs(yawDifference) <= yawGapMax) {
 							difference[1] = yawDifference;
 						}
-						if (rollGapMin<=Math.abs(rollDifference)&&Math.abs(rollDifference) <= rollGapMax) {
+						if (rollGapMin <= Math.abs(rollDifference) && Math.abs(rollDifference) <= rollGapMax) {
 							difference[2] = rollDifference;
 						}
-						if (pitchGapMin<=Math.abs(pitchDifference)&&Math.abs(pitchDifference) <= pitchGapMax) {
+						if (pitchGapMin <= Math.abs(pitchDifference) && Math.abs(pitchDifference) <= pitchGapMax) {
 							difference[3] = pitchDifference;
 						}
 						List<double[]> temp = differenceInRangeResultList.get(j);
@@ -321,7 +320,7 @@ public class GyroMotions implements TriggerMotionInterface {
 			return finalMotion;
 		}
 	}
-	
+
 	@Override
 	public void triggerMotion(int status) {
 		boolean step1 = false;
@@ -349,8 +348,8 @@ public class GyroMotions implements TriggerMotionInterface {
 						MotionCheck.MotionRecognitionStatus(1);
 						emptingCollectedList();
 						MotionListCollecting = true;
-						i=listPitchAngles.size();
-						
+						i = listPitchAngles.size();
+
 					}
 
 				} else if (status == 1) {
@@ -370,7 +369,7 @@ public class GyroMotions implements TriggerMotionInterface {
 						System.out.println("Motion Recognition");
 						MotionCheck.MotionRecognitionStatus(2);
 						MotionListCollecting = false;
-						i=listPitchAngles.size();
+						i = listPitchAngles.size();
 						buttonAddData("ready");  //다른 인터페이스도 이건꼭 해줘야함
 					}
 				}
@@ -391,12 +390,35 @@ public class GyroMotions implements TriggerMotionInterface {
 			}
 		} else if (step == 1) {
 			if (buttonStatus.equals("off")) {
-			emptingContinuedList();
-			System.out.println("Motion Recognition");
-			MotionCheck.MotionRecognitionStatus(2);
-			MotionListCollecting = false;
-			buttonAddData("ready");  // 버튼 상태는 ready , on , off 세가지
+				emptingContinuedList();
+				System.out.println("Motion Recognition");
+				MotionCheck.MotionRecognitionStatus(2);
+				MotionListCollecting = false;
+				buttonAddData("ready");  // 버튼 상태는 ready , on , off 세가지
 
+			}
+		}
+
+	}
+
+	@Override
+	public void triggerIR(int step, double distance) {
+		System.out.println(distance);
+		if (step == 0) {
+			if (distance < 10) {
+				emptingContinuedList();
+				System.out.println("Motion On");
+				MotionCheck.MotionRecognitionStatus(1);
+				emptingCollectedList();
+				MotionListCollecting = true;
+
+			}
+		}else if(step ==1){
+			if (distance < 10) {
+				emptingContinuedList();
+				System.out.println("Motion Recognition");
+				MotionCheck.MotionRecognitionStatus(2);
+				MotionListCollecting = false;
 			}
 		}
 

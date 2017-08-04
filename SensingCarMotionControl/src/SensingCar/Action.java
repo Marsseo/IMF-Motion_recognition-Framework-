@@ -18,11 +18,11 @@ public class Action implements ActionInterface {
 		switch (finalMotion) {
 			case "left":
 				System.out.println("----------------------Left 모션 인식");
-				camera.turnLeftRight(30);
+				camera.turnLeftRight(120);
 				break;
 			case "right":
 				System.out.println("----------------------Right 모션 인식");
-				camera.turnLeftRight(80);
+				camera.turnLeftRight(60);
 				break;
 			case "up":
 				System.out.println("----------------------Up 모션 인식");

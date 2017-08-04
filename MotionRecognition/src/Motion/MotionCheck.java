@@ -13,7 +13,7 @@ public class MotionCheck {
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
 	public static String buttonStatus = "ready";
-	public static double irDistance;
+	public static double irDistance=0.0;
 	public static double ultrasonicDistance;
 	public static int motionOn = 0;
 
@@ -92,6 +92,7 @@ public class MotionCheck {
 						for(TriggerMotionInterface trigger: triggerOnMotionList){
 							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
+							trigger.triggerIR(0,irDistance);
 						}
 						
 						try {
@@ -109,8 +110,8 @@ public class MotionCheck {
 						for(TriggerMotionInterface trigger: triggerOffMotionList){
 							trigger.triggerMotion(1);
 							trigger.triggerButton(1,buttonStatus);
+							trigger.triggerIR(1, irDistance);
 						}
-						
 						
 					}else {
 						System.out.println("모션분석중........."); //나중에 삭제각
