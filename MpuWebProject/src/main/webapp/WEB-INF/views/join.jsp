@@ -48,10 +48,10 @@ body {
 							<i class="halflings-icon home"></i>
 						</a>
 					</div>
-					<h2>로그인</h2>
+					<h2>회원가입</h2>
 					<div align="center" >
 						<a href="fb/login" class="btn btn-block btn-social btn-facebook" >
-							<span class="fa fa-facebook"></span><div style="text-align: center">페이스북으로 1초만에 로그인</div>
+							<span class="fa fa-facebook"></span><div style="text-align: center">페이스북으로 1초만에 가입</div>
 						</a>
 					</div>
 

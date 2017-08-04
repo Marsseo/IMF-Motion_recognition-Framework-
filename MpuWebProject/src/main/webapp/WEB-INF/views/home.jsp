@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -16,6 +18,9 @@
 <script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.min.js"></script>
 <script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.module.js"></script>
 
+
+
+
 <!-- start: CSS -->
 <link id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -31,11 +36,9 @@
 <link rel="shortcut icon" href="<%=application.getContextPath()%>/resources/img/favicon.ico">
 <!-- end: Favicon -->
 
-
 </head>
 
 <body>
-	<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/facebook.js"></script>
 	<!-- start: Header -->
 	<div class="navbar">
 		<div class="navbar-inner">
@@ -51,21 +54,16 @@
 
 				<!-- start: Header Menu -->
 				<div class="nav-no-collapse header-nav">
+
 					<ul class="nav pull-right">
-<!-- 						<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-						</fb:login-button> -->
-						<div  class="fb-login-button" data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-use-continue-as="false"></div>
-						
+
 						<!-- start: User Dropdown -->
 						<li class="dropdown">
 							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-								<i  class="halflings-icon white user"></i>
-								
+								<i class="halflings-icon white user"></i>
+
 								<span class="caret"></span>
 							</a>
-							<span id="facebookID" style="margin: 15px"></span>
-							
-							
 							<ul class="dropdown-menu">
 								<li class="dropdown-menu-title">
 									<span>Account Settings</span>
@@ -73,7 +71,7 @@
 								<li>
 									<a href="javascript:;">
 										<i class="halflings-icon user"></i>
-										member.getMemail()=${member.memail}
+										<div id='status'>${member.memail}</div>
 									</a>
 								</li>
 								<li>
@@ -85,7 +83,23 @@
 							</ul>
 						</li>
 						<!-- end: User Dropdown -->
-						
+						<span>${member.memail}</span>
+						<a class="btn btn-primary" href="join">
+								<i class="fa fa-user fa-fw"></i>
+								회원가입
+							</a>
+						<c:if test="${member.memail==null}">
+							<a class="btn btn-primary" href="login">
+								<i class="fa fa-user fa-fw"></i>
+								로그인
+							</a>
+						</c:if>
+						<c:if test="${member.memail!=null}">
+							<a class="btn btn-primary" href="logout">
+								<i class="fa fa-lock"> </i>
+								로그아웃
+							</a>
+						</c:if>
 					</ul>
 				</div>
 				<!-- end: Header Menu -->
@@ -142,7 +156,7 @@
 								<li>
 									<a class="submenu" href="submenu.html">
 										<i class="icon-file-alt"></i>
-										
+
 										<span class="hidden-tablet"> Sub Menu 1</span>
 									</a>
 								</li>
