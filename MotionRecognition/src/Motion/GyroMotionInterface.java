@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface GyroMotionInterface {
 	
-	public void gyroMotion(List<List> list,Map<String,Integer> motionMap);
+	public void gyroMotion(List<List> differenceResultList,Map<String,Integer> motionMap);
 }

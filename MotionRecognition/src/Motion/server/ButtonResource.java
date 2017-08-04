@@ -40,7 +40,7 @@ public class ButtonResource extends CoapResource {
 		String requestJson = exchange.getRequestText();
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
-		if (sensor.equals("touch")) {
+		if (sensor.equals("button")) {
 			String status= requestJsonObject.getString("status");
 			currStatus=status;
 			MotionCheck.buttonAddData(currStatus);

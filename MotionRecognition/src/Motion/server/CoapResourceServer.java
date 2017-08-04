@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class CoapResourceServer {
 
 	private static final Logger logger = LoggerFactory.getLogger(CoapResourceServer.class);
-	private CoapServer coapServer;
+	public static CoapServer coapServer;
 
 	//static block(californium의 자체 로그 출력 금지
 	static {
@@ -39,11 +39,11 @@ public class CoapResourceServer {
 		coapServer.add(new ButtonResource());
 	}
 
-	public void start() {
+	public static void start() {
 		coapServer.start();
 	}
 
-	public void stop() {
+	public static void stop() {
 		coapServer.stop();
 		coapServer.destroy();
 	}
