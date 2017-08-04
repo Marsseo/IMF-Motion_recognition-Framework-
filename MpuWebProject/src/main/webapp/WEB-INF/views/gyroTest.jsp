@@ -43,7 +43,7 @@
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/stats.min.js"></script>
 
 		<script>
-			var group;
+			var group = new Array();
 			var camera, scene, renderer;
 			var positions, colors;
 			var maxParticleCount = 1000;
@@ -68,11 +68,80 @@
 				scene.add( group );
 				scene.add( new THREE.AxisHelper( 1000 ) );
 				
-				var helper = new THREE.BoxHelper( new THREE.Mesh( new THREE.BoxGeometry( r, 0.05*r, 0.7*r ) ) );
+				var mesh = new THREE.Mesh( new THREE.BoxGeometry( r, 0.05*r, 0.7*r ) );				
+				var helper = new THREE.BoxHelper( mesh );
 				helper.material.color.setHex( 0xffffff );
 				helper.material.blending = THREE.AdditiveBlending;
 				helper.material.transparent = true;
 				group.add( helper );
+				
+								
+				
+				var material = new THREE.LineBasicMaterial({
+					color: 0x191919
+				});
+				
+				var material1 = new THREE.LineBasicMaterial({
+					color: 0x020202
+				});
+				
+				var material2 = new THREE.LineBasicMaterial({
+					color: 0x771177
+				});
+				
+				for(var i=1;i<15;i++){
+					var geometry = new THREE.Geometry();
+					geometry.vertices.push(
+							
+						new THREE.Vector3( 400, 20, 280-40*i),
+						new THREE.Vector3( -400, 20, 280-40*i)					
+						
+					);
+
+					var line = new THREE.Line( geometry, material );
+					group.add( line );
+				}
+				
+				for(var i=1;i<21;i++){
+					var geometry = new THREE.Geometry();
+					geometry.vertices.push(
+							
+						new THREE.Vector3( 400-40*i, 20, 280),
+						new THREE.Vector3( 400-40*i, 20, -280)
+						
+					);
+					
+					if(i>12) var line = new THREE.Line( geometry, material2 );
+					else var line = new THREE.Line( geometry, material );
+					group.add( line );
+				}
+				
+				for(var i=1;i<15;i++){
+					var geometry = new THREE.Geometry();
+					geometry.vertices.push(
+							
+						new THREE.Vector3( 400, -20, 280-40*i),
+						new THREE.Vector3( -400, -20, 280-40*i)					
+						
+					);
+	
+					var line = new THREE.Line( geometry, material1 );
+					group.add( line );
+				}
+				for(var i=1;i<21;i++){
+					var geometry = new THREE.Geometry();
+					geometry.vertices.push(
+							
+						new THREE.Vector3( 400-40*i, -20, 280),
+						new THREE.Vector3( 400-40*i, -20, -280)
+						
+					);
+	
+					var line = new THREE.Line( geometry, material1 );
+					group.add( line );
+				}
+				
+				
 				var segments = maxParticleCount * maxParticleCount;
 				positions = new Float32Array( segments * 3 );
 				colors = new Float32Array( segments * 3 );
@@ -101,7 +170,7 @@
 				group.rotation.z = prerollAngle/200; //파랑 x값
 				
 				var time = Date.now() * 0.001;
-				group.rotation.z = time * 0.1;
+				group.rotation.z = time * 1;
 				render();
 				
 			}
