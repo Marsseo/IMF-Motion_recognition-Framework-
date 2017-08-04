@@ -29,22 +29,16 @@ import com.mycompany.myapp.dto.Member;
 
 @Controller
 @SessionAttributes({"member"})
-public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+public class JoinController {
+	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 
 
-	@RequestMapping("/login")
+	@RequestMapping("/join")
 	public String login() {
-		return "login";
+		return "join";
 		
 	}
-	@RequestMapping("/logout")
-	public String logout(SessionStatus sessionStatus) {
-		sessionStatus.setComplete();
 
-		return "home";
-		
-	}
 	
 	
 }

@@ -6,9 +6,9 @@
 	<!-- 프로젝트를 개발하는 회사의 도메인 -->
 	<groupId>com.mycompany</groupId>
 	<!--웹어플리케이션의 식별명(중복 불가) -->
-	<artifactId>MpuWebProject</artifactId>
+	<artifactId>myapp</artifactId>
 	<!--프로젝트의 식별명(중복 불가) -->
-	<name>MpuWebProject</name>
+	<name>IoTWebProgramming</name>
 	<!--프로젝트의 최종 산출물의 형태 -->
 	<packaging>war</packaging>
 	<!--프로젝트의 버전 -->
@@ -56,14 +56,14 @@
 		</dependency>
 		<!--Spring-Websocket -->
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-websocket</artifactId>
-		    <version>4.3.8.RELEASE</version>
-		</dependency>			
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.3.8.RELEASE</version>
+		</dependency>
 		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-websocket</artifactId>
-		    <version>8.0.44</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-websocket</artifactId>
+			<version>8.0.44</version>
 		</dependency>
 
 		<!-- AOP를 위한 AspectJ 설정 -->
@@ -223,7 +223,7 @@
 		</dependency>
 
 		<!-- Spring Security -->
-<!-- 		<dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring.security.version}</version>
@@ -242,57 +242,25 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
-		</dependency> -->
+		</dependency>
 		
 		<!-- Use Apache HttpClient as HTTP Client -->
-<!-- 		<dependency>
+		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.3.2</version>
-		</dependency> -->
+		</dependency>
 
 <!-- Spring Social -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-facebook-web</artifactId>
 			<version>2.0.3.RELEASE</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-facebook</artifactId>
 			<version>2.0.3.RELEASE</version>
-		</dependency>
-		
-		<!-- CoAP을 위한 라이브러리 -->
-		<dependency>
-		    <groupId>org.eclipse.californium</groupId>
-		    <artifactId>californium-proxy</artifactId>
-		    <version>1.0.5</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.eclipse.californium</groupId>
-		    <artifactId>californium-core</artifactId>
-		    <version>1.0.5</version>
-		</dependency>	
-		<dependency>
-		    <groupId>org.eclipse.californium</groupId>
-		    <artifactId>californium-osgi</artifactId>
-		    <version>1.0.5</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.eclipse.californium</groupId>
-		    <artifactId>scandium</artifactId>
-		    <version>1.0.5</version>
-		</dependency>	
-		<dependency>
-		    <groupId>org.eclipse.californium</groupId>
-		    <artifactId>element-connector</artifactId>
-		    <version>1.0.5</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpmime</artifactId>
-		    <version>4.5.3</version>
 		</dependency>
 
 
