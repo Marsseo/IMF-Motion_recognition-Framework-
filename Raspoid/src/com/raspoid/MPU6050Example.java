@@ -8,9 +8,6 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.Tools;
 import com.raspoid.MPU6050;
-import static com.raspoid.MPU6050.DEFAULT_DLPF_CFG;
-import static com.raspoid.MPU6050.DEFAULT_MPU6050_ADDRESS;
-import static com.raspoid.MPU6050.DEFAULT_SMPLRT_DIV;
 import com.raspoid.sensors.IRSensor;
 import com.raspoid.sensors.UltrasonicSensor;
 import converter.PCF8591;
@@ -29,7 +26,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.133";
+	public static String ipAdress = "192.168.3.42";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;

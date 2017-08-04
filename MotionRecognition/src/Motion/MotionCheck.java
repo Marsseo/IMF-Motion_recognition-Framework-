@@ -19,9 +19,11 @@ public class MotionCheck {
 
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<List> differenceResultList = new ArrayList<>();
-	public List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
-	public Map<String, Integer> motionMap = new HashMap<String, Integer>();
-	public List<TriggerMotionInterface> trigerMotionList = new ArrayList<>();
+	public static List<GyroMotionInterface> gyroMotionList = new ArrayList<>();
+	public static Map<String, Integer> motionMap = new HashMap<String, Integer>();
+	public static List<TriggerMotionInterface> triggerOnMotionList = new ArrayList<>();
+	public static List<TriggerMotionInterface> triggerOffMotionList = new ArrayList<>();
+	public ActionInterface actionInterfaceImpl;
 
 	//[yaw min(0), yaw max(1), roll min(2) , roll max(3),pitch min(4),pitch max(5),
 	// yaw Gap Min(6),yaw Gap Max(7),roll GapMin (8),roll Gap Max (9),pitch Gap Min (10), pitch Gap Max(11)] , 고려하지 않을 경우 max와 min에 각각 0을 넣어줌,
@@ -29,7 +31,8 @@ public class MotionCheck {
 
 	private GyroMotions gyroMotions;
 
-	public MotionCheck() {
+	public MotionCheck(ActionInterface action) {
+		actionInterfaceImpl=action;
 
 		gyroCheckThreadStart();
 		ultraCheckThreadStart();
@@ -57,7 +60,8 @@ public class MotionCheck {
 		gyroMotionList.add(new GyroMotionImpl_ZigZag());
 		gyroMotionList.add(new GyroMotionImpl_Circle());
 		
-		trigerMotionList.add(gyroMotions);
+		triggerOnMotionList.add(gyroMotions);
+		triggerOffMotionList.add(gyroMotions);
 	}
 
 	public static void buttonAddData(String status) {
@@ -85,7 +89,7 @@ public class MotionCheck {
 				while (true) {
 					if (motionOn == 0) {
 						System.out.println("모션준비 1단계"); //나중에 삭제각
-						for(TriggerMotionInterface trigger: trigerMotionList){
+						for(TriggerMotionInterface trigger: triggerOnMotionList){
 							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
 						}
@@ -102,7 +106,7 @@ public class MotionCheck {
 						} catch (Exception e) {
 						}
 					System.out.println("모션을 취하는중 2단계"); //나중에 삭제각
-						for(TriggerMotionInterface trigger: trigerMotionList){
+						for(TriggerMotionInterface trigger: triggerOffMotionList){
 							trigger.triggerMotion(1);
 							trigger.triggerButton(1,buttonStatus);
 						}
@@ -123,7 +127,7 @@ public class MotionCheck {
 								}
 								if(!motionMap.isEmpty()){
 									String finalMotion=gyroMotions.motionDecision(motionMap);
-									gyroMotions.action(finalMotion);
+									actionInterfaceImpl.action(finalMotion);
 								}
 								
 							}

@@ -63,7 +63,7 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handlePOST(CoapExchange exchange) {
-		//{"sensor":"change","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
+		//{"sensor":"gyroscope","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
 	//{"sensor":"status"} 이런식으로 요청
 	
 	

@@ -29,6 +29,67 @@ public class GyroMotions implements TriggerMotionInterface {
 	public static int listLength = 10;
 	public static double initialValue = 0.0;
 
+	public static boolean isMotionListCollecting() {
+		return MotionListCollecting;
+	}
+
+	public static List<Double> getListYawAngles() {
+		return listYawAngles;
+	}
+
+	public static List<Double> getListRollAngles() {
+		return listRollAngles;
+	}
+
+	public static List<Double> getListPitchAngles() {
+		return listPitchAngles;
+	}
+
+	public static List<Double> getListYawDifferences() {
+		return listYawDifferences;
+	}
+
+	public static List<Double> getListRollDifferences() {
+		return listRollDifferences;
+	}
+
+	public static List<Double> getListPitchDifferences() {
+		return listPitchDifferences;
+	}
+
+	public static List<Double> getListYawAngle() {
+		return listYawAngle;
+	}
+
+	public static List<Double> getListRollAngle() {
+		return listRollAngle;
+	}
+
+	public static List<Double> getListPitchAngle() {
+		return listPitchAngle;
+	}
+
+	public static List<Double> getListYawDifference() {
+		return listYawDifference;
+	}
+
+	public static List<Double> getListRollDifference() {
+		return listRollDifference;
+	}
+
+	public static List<Double> getListPitchDifference() {
+		return listPitchDifference;
+	}
+
+	public static int getListLength() {
+		return listLength;
+	}
+
+	public static double getInitialValue() {
+		return initialValue;
+	}
+
+	
 	public GyroMotions() {
 
 		listYawDifferences.add(initialValue);
@@ -259,43 +320,8 @@ public class GyroMotions implements TriggerMotionInterface {
 		} else {
 			return finalMotion;
 		}
-
 	}
-
-	public static void action(String finalMotion) {
-//		if (finalMotion == "left") {
-//			System.out.println("----------------------Left 모션 인식");
-//
-//		} else if (finalMotion == "right") {
-//			System.out.println("----------------------Right 모션 인식");
-//		} else if (finalMotion == "up") {
-//			System.out.println("----------------------Up 모션 인식");
-//		} else if (finalMotion == "down") {
-//			System.out.println("----------------------Down 모션 인식");
-//		}
-		
-		switch(finalMotion){
-			case "left":
-				System.out.println("----------------------Left 모션 인식");
-				break;
-			case "right":
-						System.out.println("----------------------Right 모션 인식");
-						break;
-			case "up":
-				System.out.println("----------------------Up 모션 인식");
-				break;
-			case "down":
-				System.out.println("----------------------Down 모션 인식");
-				break;
-			case "zigzag":
-				System.out.println("----------------------ZigZag 모션 인식");
-				break;
-			default:
-				System.out.println("----------------------모션 매칭 실패");
-				break;
-		}
-	}
-
+	
 	@Override
 	public void triggerMotion(int status) {
 		boolean step1 = false;
