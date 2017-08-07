@@ -36,7 +36,29 @@ public class GyroAccelSensor {
 	private long lastUpdateTimeX = 0;
 	private long lastUpdateTimeY = 0;
 	private long lastUpdateTimeZ = 0;
+	
+	private double dmpGyroX, dmpGyroY, dmpGyroZ;
+	private double dmpValue[];
 
+	public double[] getDmpValue() {
+		return dmpValue;
+	}
+
+	
+	public double getDmpGyroX() {
+		return dmpGyroX;
+	}
+
+	public double getDmpGyroY() {
+		return dmpGyroY;
+	}
+
+	public double getDmpGyroZ() {
+		return dmpGyroZ;
+	}
+
+	
+	
 	public double getTemp() throws IOException {
 		temp = readWord2C(Mpu6050Registers.MPU6050_RA_TEMP_OUT_H)/340.00+36.53;
 		return temp;
@@ -216,6 +238,12 @@ public class GyroAccelSensor {
 		
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_2,
 					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_2);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
+					Mpu6050RegisterValues.MPU6050_RA_FIFO_E);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
+					Mpu6050RegisterValues.MPU6050_RA_FIFO_RESET);
 		
 		System.out.println("Calibration started (3초간 움직이지 마세요)");
 		
@@ -562,7 +590,12 @@ public class GyroAccelSensor {
 				System.out.println("SimpleAngleZ : "+test.getSplAngleZ());
 				System.out.println("|");
 				
-				System.out.println("Temperature : "+test.getTemp());
+//				System.out.println("Temperature : "+test.getTemp());
+//				System.out.println("|");
+				
+				System.out.println("SimpleAngleX : "+test.getSplAngleX());
+				System.out.println("SimpleAngleY : "+test.getSplAngleY());
+				System.out.println("SimpleAngleZ : "+test.getSplAngleZ());
 				System.out.println("|");
 				System.out.println("|- End");
 				
