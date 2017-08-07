@@ -20,8 +20,8 @@
 	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@106.253.56.122:1521:orcl" />
-		<property name="user" value="iot1team1"></property>
-		<property name="password" value="iot12345"></property>
+		<property name="user" value="iot1_motion"></property>
+		<property name="password" value="iot1_motion"></property>
 		<property name="maxPoolSize" value="1"></property>
 		<property name="initialPoolSize" value="1"></property>
 		<property name="acquireIncrement" value="1"></property>
