@@ -170,7 +170,7 @@
 				group.rotation.z = prerollAngle/200; //파랑 x값
 				
 				var time = Date.now() * 0.001;
-				group.rotation.z = time * 1;
+				//group.rotation.z = time * 1;
 				render();
 				
 			}
