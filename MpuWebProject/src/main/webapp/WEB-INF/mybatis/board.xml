@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<insert id="insert" parameterType="com.mycompany.myapp.dto.Board">
+		<selectKey keyProperty="bno" resultType="int" order="AFTER">
+		select board_bno_seq.currval from dual
+		</selectKey>
+		insert into board (
+			bno, btitle, BCONTENT, BWRITER, BDATE,
+			BPASSWORD, BHITCOUNT, BLIKECOUNT,
+			BORIGINALFILENAME, BSAVEDFILENAME,
+			BFILECONTENT)
+		values	(
+			board_bno_seq.nextval,
+			#{btitle},
+			#{bcontent},
+			#{bwriter},  sysdate,
+			#{bpassword}, 0, 0,
+			#{boriginalfilename},
+			#{bsavedfilename},
+			#{bfilecontent}
+			)
+	</insert>
+
+	<select id="selectPage" parameterType="map"
+		resultType="com.mycompany.myapp.dto.Board">	
+		select distinct a.*, ( select count(*) from boardcomment where bno =a.bno ) as count
+		from ( select rownum as r, bno, boriginalfilename, btitle, bwriter,	bdate, bhitcount, blikecount
+			from ( select  bno, boriginalfilename, btitle, bwriter, bdate, bhitcount, blikecount 
+				from board order by bno desc
+			) 
+			where rownum &lt;=#{endNum}
+		) a, 
+		boardcomment b  
+		where r &gt;=#{startNum} and a.bno = b.bno(+)
+		order by a.bno desc
+	</select>
+	<select id="countAll" resultType="int">
+		select count(*) from board
+	</select>
+	<select id="selectByBno"  parameterType="int" resultType="com.mycompany.myapp.dto.Board">
+		select * from board where bno=#{bno}
+	</select>
+	
+	<update id="updateBhitcount" parameterType="map">
+	update board set bhitcount=#{bhitcount} where bno=#{bno}
+	</update>
+	
+	<delete id="delete">
+	delete from board where bno=#{bno}
+	</delete>
+	
+	<update id="update" parameterType="com.mycompany.myapp.dto.Board">
+	<if test="boriginalfilename != null">
+	update board set btitle=#{btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=current_timestamp, boriginalfilename=#{boriginalfilename}, 
+	bsavedfilename=#{bsavedfilename}, bfilecontent=#{bfilecontent} where bno=#{bno}
+	</if>	
+	
+	<if test="boriginalfilename == null">
+	update board set btitle=#{btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=current_timestamp where bno=#{bno}
+	</if>
+	</update>
+	
+	<update id="updateBlikecount" parameterType="map">
+	update board set blikecount=#{blikecount} where bno=#{bno}
+	</update>
+</mapper>
