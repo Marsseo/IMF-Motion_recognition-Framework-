@@ -14,6 +14,7 @@ public class Controller extends GyroMotions{
 	public Controller() throws Exception{
 	
 		backTire=new BackTire();
+		backTire.forward();
 		frontTire=new FrontTire();
 		speed=500;
 		frontTireAngle=90;
@@ -52,10 +53,10 @@ public class Controller extends GyroMotions{
 				yawDifferencesPreValue=currYawDifferencesValue;
 				if(Math.abs(currYawDifferencesValue)>8){
 					if(currYawDifferencesValue<0){
-						frontTireAngle+=30;
+						//frontTireAngle+=30;
 						System.out.println("FrontAngle++++");
 					}else{
-						frontTireAngle-=30;
+						//frontTireAngle-=30;
 						System.out.println("FrontAngle----");
 					}
 					frontTire.setAngle(frontTireAngle);
