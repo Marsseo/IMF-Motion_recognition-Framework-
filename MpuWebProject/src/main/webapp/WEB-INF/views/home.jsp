@@ -217,9 +217,9 @@
 							</a>
 						</li>
 						<li>
-							<a href="icon.html">
+							<a href="board/boardList">
 								<i class="icon-star"></i>
-								<span class="hidden-tablet"> Icons</span>
+								<span class="hidden-tablet"> Board</span>
 							</a>
 						</li>
 						<li>
