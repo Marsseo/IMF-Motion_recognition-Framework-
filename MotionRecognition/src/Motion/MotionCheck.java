@@ -41,10 +41,10 @@ public class MotionCheck {
 
 		gyroMotions= new GyroMotions();
 		
-		double[] left={-360,360,90,270,0,0,1,80,0,1,0,0};
-		double[] right={-360,360,90,270,0,0,1,80,0,1,0,0};
-		double[] up={-360,360,90,270,0,0,0,1,1,80,0,0};
-		double[] down={-360,360,90,270,0,0,0,1,1,80,0,0};
+		double[] left={-360,360,90,270,0,0,0.8,80,0,1,0,0};
+		double[] right={-360,360,90,270,0,0,0.8,80,0,1,0,0};
+		double[] up={-360,360,90,270,0,0,0,1,0.8,80,0,0};
+		double[] down={-360,360,90,270,0,0,0,1,0.8,80,0,0};
 		double[] zigzag={-360,360,90,270,0,0,1,80,1,80,0,0};
 		double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
 		
@@ -59,6 +59,7 @@ public class MotionCheck {
 		gyroMotionList.add(new GyroMotionImpl_Down());
 		gyroMotionList.add(new GyroMotionImpl_ZigZag());
 		gyroMotionList.add(new GyroMotionImpl_Circle());
+		gyroMotionList.add(new GyroMotionImpl_N());
 		
 		triggerOnMotionList.add(gyroMotions);
 		triggerOffMotionList.add(gyroMotions);
