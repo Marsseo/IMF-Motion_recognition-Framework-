@@ -532,7 +532,7 @@ public class MPU6050 extends I2CComponent{
         double alpha = 0.96;
         filteredAngleX = alpha * (filteredAngleX + deltaGyroAngleX) + (1. - alpha) * accelAngleX;
         filteredAngleY = alpha * (filteredAngleY + deltaGyroAngleY) + (1. - alpha) * accelAngleY;
-        filteredAngleZ = filteredAngleZ + deltaGyroAngleZ;
+        filteredAngleZ = filteredAngleZ + Math.round(deltaGyroAngleZ*100)/100.;
     }
     
     /**
