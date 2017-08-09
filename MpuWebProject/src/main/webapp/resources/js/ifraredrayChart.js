@@ -1,7 +1,7 @@
 var ifraredrayChart;
 $(function() {
 	
-	ultrasonicChart = new Highcharts.Chart({
+	ifraredrayChart = new Highcharts.Chart({
 		
 		chart: {
 			renderTo:"ifraredrayChartContainer",
@@ -38,7 +38,7 @@ function requestIfraredrayData(){
 	var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/Ifraredray");
 	ws.onmessage = function(event){
 		var data = JSON.parse(event.data);
-		var series = ultrasonicChart.series[0];
+		var series = ifraredrayChart.series[0];
 		var shift = series.data.length>20;
 		series.addPoint([data.time, data.distance], true, shift);
 		

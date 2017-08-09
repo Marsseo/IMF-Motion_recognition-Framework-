@@ -1,18 +1,18 @@
-var ifraredrayChart;
+var gyroChart;
 $(function() {
 	
-	ultrasonicChart = new Highcharts.Chart({
+	gyroChart = new Highcharts.Chart({
 		
 		chart: {
-			renderTo:"ifraredrayChartContainer",
+			renderTo:"gyroChartContainer",
 			defaultSeriesType:"spline",
 			events: {
-				load: requestIfraredrayData
+				load: requestGyroData
 			}
 		},
-		colors: ['red'],
+		colors: ['green', 'orange', 'blue'],
 		title: {
-			text: "IfraredraySensor(적외선 거리센서)"
+			text: "GyroSensor(자이로 센서)"
 		},
 		xAxis:{
 			type: "datetime",
@@ -23,24 +23,36 @@ $(function() {
 			minPadding: 0.2,
 			maxPadding: 0.2,
 			title: {
-				text: "거리",
+				text: "각도",
 				margin: 30
 			}
 		},
-		series: [{
-			name: "거리",
-			date:[]
-			}]
+		series : [ {
+			name : "yaw",
+			date : []
+		}, {
+			name : "pitch",
+			date : []
+		}, {
+			name : "roll",
+			date : []
+		} ]
 	});
 });
 
-function requestIfraredrayData(){
-	var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/Ifraredray");
+function requestGyroData(){
+	var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
 	ws.onmessage = function(event){
 		var data = JSON.parse(event.data);
-		var series = ultrasonicChart.series[0];
-		var shift = series.data.length>20;
-		series.addPoint([data.time, data.distance], true, shift);
+		var series1 = gyroChart.series[0];
+		var series2 = gyroChart.series[1];
+		var series3 = gyroChart.series[2];
+		var shift1 = series1.data.length>20;
+		var shift2 = series2.data.length>20;
+		var shift3 = series3.data.length>20;
+		series1.addPoint([data.time, data.yawAngle], true, shift1);
+		series2.addPoint([data.time, data.pitchAngle], true, shift2);
+		series3.addPoint([data.time, data.rollAngle], true, shift3);
 		
 	};
 }

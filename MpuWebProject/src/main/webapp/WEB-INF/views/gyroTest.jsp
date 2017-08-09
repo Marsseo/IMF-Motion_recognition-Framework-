@@ -17,15 +17,7 @@
 				rel='stylesheet' type='text/css'
 			>
 		<!-- end: CSS -->
-		<!--  하이차트 start -->
-		<script	src="<%=application.getContextPath()%>/resources/highcharts/code/highcharts.js"></script>
-		<script	src="<%=application.getContextPath()%>/resources/highcharts/code/themes/gray.js"></script>
-		<script
-			src="<%=application.getContextPath()%>/resources/highcharts/code/highcharts-more.js"></script>
-		<script src="<%=application.getContextPath()%>/resources/js/ultrasonicChart.js"></script>
-		<script src="<%=application.getContextPath()%>/resources/js/ifraredrayChart.js"></script>
-		<script src="<%=application.getContextPath()%>/resources/js/gyroChart.js"></script>
-		<!-- 하이차트 end -->
+		
 		<link href="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<script src="<%= application.getContextPath() %>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
 		<script src="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
@@ -47,9 +39,7 @@
 		<jsp:include page="home.jsp" flush="false"></jsp:include>
 
 		<div id="container"></div>
-		<div id=""></div>
-		<div id=""></div>
-		<div id=""></div>
+		
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/dat.gui.min.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/OrbitControls.js"></script>

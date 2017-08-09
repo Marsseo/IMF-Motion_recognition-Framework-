@@ -36,14 +36,14 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://192.168.3.109/ultrasonic");
+		coapClient.setURI("coap://192.168.3.109/ifraredray");
 		coapObserveRelation = coapClient.observe(new CoapHandler() {
 			
 			@Override
 			public void onLoad(CoapResponse response) {
 				String json = response.getResponseText();
 				JSONObject jsonObject = new JSONObject(json);
-				int distance = Integer.parseInt(jsonObject.getString("distance"));
+				double distance = Double.parseDouble(jsonObject.getString("distance"));
 				jsonObject.put("time", getUTCTime(new Date().getTime()));
 				jsonObject.put("distance", distance);
 				json = jsonObject.toString();
