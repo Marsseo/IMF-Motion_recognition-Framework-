@@ -36,7 +36,7 @@
 <body>
 
 		<div id="container"></div>
-
+		<div id=""></div>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/dat.gui.min.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/OrbitControls.js"></script>
