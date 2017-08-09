@@ -50,6 +50,8 @@
 	<!-- WebSocket URL Mapping -->
 	<websocket:handlers>
 	<websocket:mapping handler="gyroSensorHandler" path="websocket/GyroSensor"></websocket:mapping>
+	<websocket:mapping handler="ultrasonicSensorHandler" path="websocket/Ultrasonic"></websocket:mapping>
+	<websocket:mapping handler="ifraredraySensorHandler" path="websocket/Ifraredray"></websocket:mapping>
 	</websocket:handlers>
 
 </beans:beans>
