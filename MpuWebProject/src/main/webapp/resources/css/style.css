@@ -306,7 +306,7 @@ h6 {
   	min-height: 40px;
   	padding-right: 20px;
   	padding-left: 20px;
-	background: #080808;
+	background: #47475C;
 	filter: none;
 	text-shadow: 1px 1px 1px #0a0c0e;
 	border: none;
@@ -346,7 +346,7 @@ a.brand span {
 .header-nav {
 	padding: 0px;
 	color: #fff !important;
-	background: #000 !important;
+	background: #47475C !important;
 }
 
 .header-nav .nav {
@@ -512,141 +512,7 @@ border-bottom: 1px solid transparent;
             box-shadow: none;
 }
 
-.dropdown-menu:after,
-.dropdown-menu:before {
-	top: -1px;
-	left: 10px;
-	border-right: 9px solid transparent;
-	border-bottom: 9px solid #222 !important;
-	border-left: 9px solid transparent;
-	content: '';
-}
 
-.dropdown-menu {
-	border-top: 5px solid transparent;
-  	position: absolute;
-  	top: 100%;
-  	left: 0;
-  	z-index: 1000;
-  	display: none;
-  	float: left;
-  	min-width: 160px;
-	max-width: 300px;
-  	padding: 0px 0;
-  	margin: 0px 0 0 0;
-  	list-style: none;
-	text-shadow: none;
-  	-webkit-border-radius: 0px;
-       -moz-border-radius: 0px;
-          	border-radius: 0px;
-  	-webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;	
-}
-
-.dropdown-menu.pull-right {
-  	right: 0;
-  	left: auto;
-}
-
-.dropdown-menu .divider {
-  	*width: 100%;
-  	height: 1px;
-  	margin: 0px 1px;
-  	*margin: -5px 0 5px;
-  	overflow: hidden;
-  	background-color: #eee;
-  	border-bottom: 1px solid #ffffff;
-}
-
-.dropdown-menu li a {
-  	display: block;
-  	padding: 7px 10px !important;
-  	clear: both;
-  	font-weight: normal;
-  	line-height: 20px;
-  	color: #000;
-	text-shadow: none;
-  	white-space: normal !important;
-}
-
-.dropdown-menu li {
-	border-bottom: 1px solid #eee;
-}
-
-.dropdown-menu li:first-child {
-	border-top: 0px !important;
-}
-
-.dropdown-menu li:last-child {
-	border-bottom: 0px !important;
-}
-
-.dropdown-menu li > a:hover,
-.dropdown-menu li > a:focus,
-.dropdown-submenu:hover > a {
-  	color: #ffffff;
-  	text-decoration: none;
-  	background: #578EBE;
-}
-
-.dropdown-menu .active > a,
-.dropdown-menu .active > a:hover {
-  	color: #ffffff;
-  	text-decoration: none;
-  	background: #578EBE;
-}
-
-.dropdown-menu .disabled > a,
-.dropdown-menu .disabled > a:hover {
-  	color: #999999;
-}
-
-.dropdown-menu .disabled > a:hover {
-  	text-decoration: none;
-  	cursor: default;
-  	background-color: transparent;
-}
-
-.dropdown-menu-title {
-	background: #222;
-	color: #fff;
-	padding: 8px 0px;
-	position: relative;
-}
-
-.dropdown-menu-title span {
-	margin-left: 15px;
-}
-
-.dropdown-menu-title a:link {
-	position: absolute;
-	right: 4px;
-	top: 4px;
-	padding: 4px 6px !important;
-}
-
-.dropdown-menu-title a i {
-	color: #fff;
-}
-
-.dropdown-menu-title a:hover {
-	background: #fff !important;
-}
-
-.dropdown-menu-title a:hover i {
-	color: #222 !important;
-}
-
-.dropdown-menu-sub-footer {
-	background: #eee;
-}
-
-.dropdown-menu ul,
-.dropdown-menu ul li  {
-	padding: 0px !important;
-	margin: 0px !important;
-}
 
 ul.notifications li,
 ul.tasks li,

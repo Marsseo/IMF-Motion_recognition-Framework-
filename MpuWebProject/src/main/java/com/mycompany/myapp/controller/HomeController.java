@@ -72,23 +72,40 @@ public class HomeController {
 		if (facebook.isAuthorized()) {
 
 			// 페이스북에서 프로필을 읽어온다.
-			User profile = facebook.fetchObject("me", User.class, "email");
-
+			User profile = facebook.fetchObject("me", User.class, "name,email,cover,picture");
+			
+			
 			// 프로필을 모델로 전송
 			model.addAttribute("profile", profile);
-
+			
 			// 멤버객체 생성
 			Member member = new Member();
 
 			// 필드에 저장
 			member.setMemail(profile.getEmail());
+			member.setMname(profile.getName());
+			System.out.println(profile.getEmail());
+			System.out.println(profile.getName());
+/*			System.out.println(profile.getId());
+			System.out.println(profile.getCover().toString());
+			member.setMphoto(profile.getCover().getSource());
+			*/
 			// 전송
 			model.addAttribute("member", member);
 
+			logger.info("Home");
+			System.out.println("------------------------------------------");
+			System.out.println("프로필출력");
+			System.out.println(profile.getEmail());
+			System.out.println(profile.getName());
+			System.out.println("------------------------------------------");
+			System.out.println("멤버출력");
 			System.out.println(member.getMemail());
+			System.out.println(member.getMname());
+			System.out.println(member.getMphoto());
 			// 회원인지 확인
 			member = service.getMember(member.getMemail());
-			System.out.println(member.getMemail());
+//			System.out.println(member.getMemail());
 
 			// 1. 회원가입이 안되있는 경우
 			if (member == null) {
@@ -109,5 +126,6 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	
 
 }

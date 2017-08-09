@@ -165,7 +165,7 @@
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x = prepitchAngle/200; //빨강 y값
+				group.rotation.x = prepitchAngle/200; /* 빨강 y값 */
 				group.rotation.y = preyawAngle/200; //초록 z값
 				group.rotation.z = prerollAngle/200; //파랑 x값
 				

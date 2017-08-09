@@ -28,7 +28,7 @@
 <link rel="shortcut icon" href="<%=application.getContextPath()%>/resources/img/favicon.ico">
 <!-- end: Favicon -->
 
-<link  id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap-social.css" rel="stylesheet">
+<link id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap-social.css" rel="stylesheet">
 <style type="text/css">
 body {
 	background: url(resources/img/bg-login.jpg) !important;
@@ -37,8 +37,6 @@ body {
 </head>
 <body>
 	<div id="fb-root"></div>
-
-	<div id="status">${member.memail}</div>
 	<div class="container-fluid-full">
 		<div class="row-fluid">
 			<div class="row-fluid">
@@ -49,9 +47,11 @@ body {
 						</a>
 					</div>
 					<h2>회원가입</h2>
-					<div align="center" >
-						<a href="fb/login" class="btn btn-block btn-social btn-facebook" >
-							<span class="fa fa-facebook"></span><div style="text-align: center">페이스북으로 1초만에 가입</div>
+					<div align="center">
+						<a href="join/insert?email=${profile.getEmail()}&name=${profile.getName()}" class="btn btn-block btn-social btn-facebook">
+						<!-- <a href="join/insert" class="btn btn-block btn-social btn-facebook"> -->
+							<span class="fa fa-facebook"></span>
+							<div style="text-align: center">페이스북으로 1초만에 가입</div>
 						</a>
 					</div>
 
@@ -92,6 +92,7 @@ body {
 		</div>
 		<!-- /.fluid-container -->
 	</div>
+
 	<!-- /fluid-row -->
 
 	<!-- start: JavaScript -->

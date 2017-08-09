@@ -18,4 +18,10 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
+	@Override
+	public void memberJoin(Member member) {
+		dao.memberInsert(member);
+		
+	}
+
 }
