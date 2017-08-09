@@ -11,6 +11,15 @@ public class Member {
 	private String mlevel;
 	private String mphoto;
 	
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	
+	private String mid;
+	
 	public String getMoriginalfilename() {
 		return moriginalfilename;
 	}

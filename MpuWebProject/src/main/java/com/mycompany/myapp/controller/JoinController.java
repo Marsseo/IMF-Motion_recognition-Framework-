@@ -45,20 +45,24 @@ public class JoinController {
 	
 	@RequestMapping("join/insert")
 
-	public String insert(Member member, User profile, String name, String email) {
+	public String insert(Member member, User profile, String name, String email, String mid) {
 	
 		
 		member.setMname(name);
 		member.setMemail(email);
 		
+		member.setMid(mid);
+		
 		logger.info("join");
 		System.out.println("프로필출력");
 		System.out.println(profile.getEmail());
 		System.out.println(profile.getName());
+		System.out.println(profile.getId());
 		System.out.println("------------------------------------------");
 		System.out.println("멤버출력");
 		System.out.println(member.getMemail());
 		System.out.println(member.getMname());
+		System.out.println(member.getMid());
 		
 		service.memberJoin(member);
 		

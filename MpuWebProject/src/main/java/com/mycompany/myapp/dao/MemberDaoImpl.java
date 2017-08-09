@@ -19,9 +19,9 @@ public class MemberDaoImpl implements MemberDao {
 	Connection conn=null;
 	
 	@Override
-	public Member memberSelectByMemail(String memail){
+	public Member memberSelectByMid(String mid){
 //		System.out.println(memail);
-		Member member=sqlSessionTemplate.selectOne("member.selectByMemail", memail);
+		Member member=sqlSessionTemplate.selectOne("member.selectByMid", mid);
 //		int member=sqlSessionTemplate.selectOne("member.countAll", memail);
 //		System.out.println(member);
 		return member;
@@ -32,7 +32,7 @@ public class MemberDaoImpl implements MemberDao {
 
 		sqlSessionTemplate.insert("member.insert",member);
 		
-		return member.getMemail();
+		return member.getMid();
 	}
 	
 }

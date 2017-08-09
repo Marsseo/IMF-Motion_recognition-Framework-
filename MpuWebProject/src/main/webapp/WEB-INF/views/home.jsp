@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <title>Home</title>
-<link href="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<%-- <link href="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> --%>
 <script src="<%=application.getContextPath()%>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 
@@ -22,14 +22,14 @@
 
 
 <!-- start: CSS -->
-<link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet">
+<%-- <link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet"> --%>
 <%-- <link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet"> --%>
-<link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
+<%-- <link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
 	rel='stylesheet' type='text/css'
->
+> --%>
 <!-- start: CSS -->
 
 <!-- start: Favicon -->
@@ -37,10 +37,14 @@
 <!-- end: Favicon -->
 
 <!-- start: highchart CSS -->
-<link href="<%=application.getContextPath()%>/resources/css/template.css" rel="stylesheet"/>
-<link href="<%=application.getContextPath()%>/resources/css/source-sans-pro.css" rel="stylesheet"/>
+<link href="<%=application.getContextPath()%>/resources/css/highcharts/template.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath()%>/resources/css/highcharts/source-sans-pro.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath()%>/resources/css/highcharts/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath()%>/resources/css/highcharts/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- end: highchart CSS -->
 
-<!-- start: highchart CSS -->
+<link href="<%=application.getContextPath()%>/resources/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath()%>/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -56,7 +60,7 @@
 						</div>
 
 						<div id="menu-second" class="hidden-xs">
-							<ul class="nav navbar-nav">
+							<ul class="nav navbar-nav" style="line-height: 50%">
 								<!-- start: User Dropdown -->
 								<li class="item-112 deeper dropdown">
 									<a style="width: 100px; height: 50px; vertical-align: middle;" class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -88,17 +92,19 @@
 								<div style="float: left">
 									<img src="http://graph.facebook.com/${profile.getId()}/picture" />
 								</div>
-								<a class="btn btn-primary" href="join"
-									style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
+								
+							</ul>
+							<a class="btn btn-primary" href="fb/login"
+									style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0) "
 								>
-									<i class="fa fa-user fa-fw"></i>
+									<!-- <i class="fa fa-user fa-fw"></i> -->
 									회원가입
 								</a>
 								<c:if test="${member.memail==null}">
 									<a class="btn btn-primary" href="login"
-										style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
+										style=" line-height:30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)" 
 									>
-										<i class="fa fa-user fa-fw"></i>
+										<!-- <i class="fa fa-user fa-fw"></i> -->
 										로그인
 									</a>
 								</c:if>
@@ -106,11 +112,10 @@
 									<a class="btn btn-primary" href="logout"
 										style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 									>
-										<i class="fa fa-lock"> </i>
+										<!-- <i class="fa fa-lock"> </i> -->
 										로그아웃
 									</a>
 								</c:if>
-							</ul>
 							<div class="clearfix"></div>
 						</div>
 						<!-- end: Header Menu -->
@@ -202,7 +207,7 @@
 		</nav>
 	</div>
 
-<%-- 
+	<%-- 
 	<jsp:include page="join.jsp" flush="false">
 	<jsp:param value="3" name="month"/>
 

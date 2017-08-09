@@ -11,6 +11,8 @@ import java.util.Set;
 public class GyroMotions implements TriggerMotionInterface {
 
 	public static boolean MotionListCollecting = false;
+	public static boolean adjustingYawAxis=false;
+	public static double YawAxisValueForAdjusting=0.0;
 
 	public static List<Double> listYawAngles = new ArrayList<>();
 	public static List<Double> listRollAngles = new ArrayList<>();
@@ -128,8 +130,13 @@ public class GyroMotions implements TriggerMotionInterface {
 		}
 
 		if (MotionListCollecting == true) {
+			
+			if(!adjustingYawAxis){
+				YawAxisValueForAdjusting=yaw-180;
+				adjustingYawAxis=true;
+			}else{
 
-			listYawAngle.add(yaw);
+			listYawAngle.add(yaw-YawAxisValueForAdjusting);
 			listRollAngle.add(roll);
 			listPitchAngle.add(pitch);
 
@@ -149,6 +156,9 @@ public class GyroMotions implements TriggerMotionInterface {
 				listRollDifference.add(initialValue);
 				listPitchDifference.add(initialValue);
 			}
+			}
+		}else{
+			adjustingYawAxis=false;
 		}
 	}
 
@@ -198,6 +208,10 @@ public class GyroMotions implements TriggerMotionInterface {
 	}
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
+		
+		for(double k : listYawAngle){
+			System.out.println(k);
+		}
 
 		//메소드에서  리턴해줄  리스트 생성
 		List<List> differenceInRangeResultList = new ArrayList<>();

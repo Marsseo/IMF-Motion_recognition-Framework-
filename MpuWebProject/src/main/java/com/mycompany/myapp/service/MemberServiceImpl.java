@@ -13,8 +13,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao dao;
 	
 	@Override
-	public Member getMember(String memail) {
-		Member member=dao.memberSelectByMemail(memail);
+	public Member getMember(String mid) {
+		Member member=dao.memberSelectByMid(mid);
 		return member;
 	}
 

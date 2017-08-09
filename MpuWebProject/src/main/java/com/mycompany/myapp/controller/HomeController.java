@@ -82,14 +82,24 @@ public class HomeController {
 			Member member = new Member();
 
 			// 필드에 저장
-			member.setMemail(profile.getEmail());
+			if (profile.getEmail()==null) {
+				member.setMemail("");
+			}else{
+				member.setMemail(profile.getEmail());
+			}
 			member.setMname(profile.getName());
-			System.out.println(profile.getEmail());
+			member.setMoriginalfilename("");
+			member.setMsavedfilename("");
+			member.setMfilecontent("");
+			member.setMlevel("");
+			
+			member.setMid(profile.getId());
+			
+			
 			System.out.println(profile.getName());
-/*			System.out.println(profile.getId());
-			System.out.println(profile.getCover().toString());
-			member.setMphoto(profile.getCover().getSource());
-			*/
+			System.out.println(profile.getId());
+			
+
 			// 전송
 			model.addAttribute("member", member);
 
@@ -98,14 +108,15 @@ public class HomeController {
 			System.out.println("프로필출력");
 			System.out.println(profile.getEmail());
 			System.out.println(profile.getName());
+			System.out.println(profile.getId());
 			System.out.println("------------------------------------------");
 			System.out.println("멤버출력");
 			System.out.println(member.getMemail());
 			System.out.println(member.getMname());
-			System.out.println(member.getMphoto());
+			System.out.println(member.getMid());
 			// 회원인지 확인
-			member = service.getMember(member.getMemail());
-//			System.out.println(member.getMemail());
+			
+			member = service.getMember(member.getMid());
 
 			// 1. 회원가입이 안되있는 경우
 			if (member == null) {
