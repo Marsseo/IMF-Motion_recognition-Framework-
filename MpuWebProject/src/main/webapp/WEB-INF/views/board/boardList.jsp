@@ -36,6 +36,7 @@
 	</script>
 </head>
 <body>
+	<jsp:include page="../home.jsp" flush="false"></jsp:include>
 	<div style="width: 1000px; margin: auto; text-align: center">
 		<h4>게시물 목록</h4>
 		<div style="width: 1000px; margin: auto; text-align: right">

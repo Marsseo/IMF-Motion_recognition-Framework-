@@ -183,7 +183,7 @@
 											</a>
 										</li>
 										<li class="item-256">
-											<a href="gyroTest">
+											<a href="<%=application.getContextPath()%>/gyroTest">
 												<i class="icon-tasks"></i>
 												<span class="hidden-tablet">UltraSonic, Infrared light</span>
 											</a>
@@ -191,7 +191,7 @@
 									</ul>
 								</li>
 								<li class="item-282 deeper dropdown">
-									<a href="board/boardList">
+									<a href="<%=application.getContextPath()%>/board/boardList">
 										<span class="hidden-tablet"> Board</span>
 									</a>
 

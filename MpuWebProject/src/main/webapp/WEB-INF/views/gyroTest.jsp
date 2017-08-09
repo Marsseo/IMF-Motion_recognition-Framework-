@@ -35,6 +35,8 @@
 	</head>
 <body>
 
+		<jsp:include page="home.jsp" flush="false"></jsp:include>
+
 		<div id="container"></div>
 		<div id=""></div>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/dat.gui.min.js"></script>
