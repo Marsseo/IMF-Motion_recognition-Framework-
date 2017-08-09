@@ -5,6 +5,7 @@ import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,38 +41,30 @@ public class GyroAccelSensor {
 	
 	private long lastUpdateTime = 0;
 	
-	private double dmpGyroX, dmpGyroY, dmpGyroZ;
 	private double dmpValue;
-
+	
+	int fifoCount;
+	private int packetSize=42;
+	private byte buffer[]= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	byte fifoBuffer[] = new byte[64];
+	float ypr[] = new float[3];
+	
 	public double getDmpValue() throws IOException {
 		
-		dmpValue = readWord2C(Mpu6050Registers.MPU6050_RA_FIFO_COUNTH);
+		
+
 		
 		return dmpValue;
 	}
 
-	
-	public double getDmpGyroX() {
-		return dmpGyroX;
-	}
-
-	public double getDmpGyroY() {
-		return dmpGyroY;
-	}
-
-	public double getDmpGyroZ() {
-		return dmpGyroZ;
-	}
-
-	
+		
 	
 	public double getTemp() throws IOException {
 		temp = readWord2C(Mpu6050Registers.MPU6050_RA_TEMP_OUT_H)/340.00+36.53;
 		return temp;
 	}
 	
-	
-	
+		
 	public double getAcclX() throws IOException {
 		acclX = readWord2C(Mpu6050Registers.MPU6050_RA_ACCEL_XOUT_H)/16384.0;
 		return acclX;
@@ -131,8 +124,8 @@ public class GyroAccelSensor {
 	}
 
 	public double getFilteredAngleZ() {
-		filteredAngleZ += tempGyroZ;
-		return filteredAngleZ+tempGyroZ;
+		
+		return filteredAngleZ;
 	}
 	
 	// 실시간으로 올라가는 값을 측정하기 위해 각 축의 각속도의 변화랑을 리턴하는 함수
@@ -181,7 +174,70 @@ public class GyroAccelSensor {
 		splAngleZ = getGyroAngleZcollect();
 		return (int)splAngleZ;
 	}
-	
+	//생성자 부분
+	public GyroAccelSensor() throws I2CFactory.UnsupportedBusNumberException, IOException {
+		bus = I2CFactory.getInstance(I2CBus.BUS_1);
+		mpu6050 = bus.getDevice(0x68);
+		System.out.println("Create GyroAccelSensor");
+		
+		//디바이스 깨우기
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_1,
+					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_1);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_SMPLRT_DIV,
+					Mpu6050RegisterValues.MPU6050_RA_SMPLRT_DIV);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_CONFIG,
+					Mpu6050RegisterValues.MPU6050_RA_CONFIG);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_ACCEL_CONFIG,
+					Mpu6050RegisterValues.MPU6050_RA_ACCEL_CONFIG);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_INT_ENABLE,
+					Mpu6050RegisterValues.MPU6050_RA_INT_ENABLE);
+		
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_2,
+					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_2);
+		
+		//DMP(Digital motion processing) 부분
+		
+		//오프셋을 빼주는 부분 ( 자이로 x, y, z 와  가속도 z 부분)		
+//		mpu6050.write(Mpu6050Registers.MPU6050_RA_YG_OFFS_USRH, buffer, 220, 16);
+//		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZG_OFFS_USRH, buffer, 76, 16);
+//		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZG_OFFS_USRH, buffer, -85, 16);
+//		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZA_OFFS_H, buffer, 1788, 16);
+		
+		//DMP 활성화
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
+					Mpu6050RegisterValues.MPU6050_USERCTRL_DMP_EN_BIT);
+		//DMP reset
+		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
+					Mpu6050RegisterValues.MPU6050_USERCTRL_DMP_RESET_BIT);
+
+		
+		System.out.println("Calibration started (3초간 움직이지 마세요)");
+		
+		// Gyroscope offsets 오프셋을 구하여 오차를 빼주기 위해서 필요한 부분
+		gyroAngularSpeedOffsetX = 0.;
+		gyroAngularSpeedOffsetY = 0.;
+		gyroAngularSpeedOffsetZ = 0.;
+		
+		int nbReadings = 300;
+		for(int i = 0; i < nbReadings; i++) {
+			
+			gyroAngularSpeedOffsetX += getGyroX();
+			gyroAngularSpeedOffsetY += getGyroY();
+			gyroAngularSpeedOffsetZ += getGyroZ();
+			
+			try {Thread.sleep((long) 10);	} catch (InterruptedException ex) {	}
+		}
+		
+		gyroAngularSpeedOffsetX /= nbReadings;
+		gyroAngularSpeedOffsetY /= nbReadings;
+		gyroAngularSpeedOffsetZ /= nbReadings;
+		
+		System.out.println("Calibration이 끝났습니다.");
+	}
 	
 	// 한번에 모든 값을 업데이트하기 위한 메소드
 	public void updateValues() throws IOException{
@@ -212,78 +268,24 @@ public class GyroAccelSensor {
 		double alpha = 0.96;
 		filteredAngleX = alpha * (filteredAngleX + tempGyroX) + (1. - alpha) * x_rotation(acclX, acclY, acclZ);
 		filteredAngleY = alpha * (filteredAngleY + tempGyroY) + (1. - alpha) * y_rotation(acclX, acclY, acclZ);
-		getFilteredAngleZ();
+		filteredAngleZ += (Math.round(tempGyroZ*100))/100.;
+		
+		
+		// DMP 부분 업데이트
+		
+		mpu6050.read(Mpu6050Registers.MPU6050_RA_FIFO_COUNTH, buffer, 0, 16);
+		fifoCount = (buffer[0]<<8) | buffer[1];
+		
+		//if(fifoCount == 1024) mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN, Mpu6050RegisterValues.MPU6050_USERCTRL_DMP_RESET_BIT);
+		
+		getFIFOBytes(fifoBuffer, packetSize);
 		
 	}
 	
-	public GyroAccelSensor() throws I2CFactory.UnsupportedBusNumberException, IOException {
-		bus = I2CFactory.getInstance(I2CBus.BUS_1);
-		mpu6050 = bus.getDevice(0x68);
-		System.out.println("Create GyroAccelSensor");
-		
-		//디바이스 깨우기
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_1,
-					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_1);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_SMPLRT_DIV,
-					Mpu6050RegisterValues.MPU6050_RA_SMPLRT_DIV);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_CONFIG,
-					Mpu6050RegisterValues.MPU6050_RA_CONFIG);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_ACCEL_CONFIG,
-					Mpu6050RegisterValues.MPU6050_RA_ACCEL_CONFIG);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_INT_ENABLE,
-					Mpu6050RegisterValues.MPU6050_RA_INT_ENABLE);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_PWR_MGMT_2,
-					Mpu6050RegisterValues.MPU6050_RA_PWR_MGMT_2);
-		
-		//DMP(Digital motion processing) 부분
-		
-		//오프셋을 빼주는 부분 ( 자이로 x, y, z 와  가속도 z 부분)
-		double[] aabb = {220, 76, -85, 1788};
-		byte a = Array.getByte(aabb, 0);
-		byte b = Array.getByte(aabb, 1);
-		byte c = Array.getByte(aabb, 2);
-		byte d = Array.getByte(aabb, 3);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_YG_OFFS_USRH, a);
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZG_OFFS_USRH, b);
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZG_OFFS_USRH, c);
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_ZA_OFFS_H, d);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
-					Mpu6050RegisterValues.MPU6050_RA_FIFO_E);
-		
-		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
-					Mpu6050RegisterValues.MPU6050_RA_FIFO_RESET);		
-		
-		System.out.println("Calibration started (3초간 움직이지 마세요)");
-		
-		// Gyroscope offsets 오프셋을 구하여 오차를 빼주기 위해서 필요한 부분
-		gyroAngularSpeedOffsetX = 0.;
-		gyroAngularSpeedOffsetY = 0.;
-		gyroAngularSpeedOffsetZ = 0.;
-		
-		int nbReadings = 300;
-		for(int i = 0; i < nbReadings; i++) {
-			
-			gyroAngularSpeedOffsetX += getGyroX();
-			gyroAngularSpeedOffsetY += getGyroY();
-			gyroAngularSpeedOffsetZ += getGyroZ();
-			
-			try {Thread.sleep((long) 10);	} catch (InterruptedException ex) {	}
-		}
-		
-		gyroAngularSpeedOffsetX /= nbReadings;
-		gyroAngularSpeedOffsetY /= nbReadings;
-		gyroAngularSpeedOffsetZ /= nbReadings;
-		
-		System.out.println("Calibration이 끝났습니다.");
+	private void getFIFOBytes(byte[] fifoBuffer, int packetSize) throws IOException {
+		mpu6050.read(Mpu6050Registers.MPU6050_RA_FIFO_R_W, fifoBuffer, 0, packetSize);
 	}
-	
+		
 	
 	// I2C통신을 이용하여 읽은 데이터를 값으로 변경하는 함수
 	public double readWord2C(byte addr) throws IOException{
@@ -428,7 +430,7 @@ public class GyroAccelSensor {
 //				System.out.println("Temperature : "+test.getTemp());
 //				System.out.println("|");
 			
-				
+				System.out.println("fifoBuffer : "+ Arrays.toString(test.fifoBuffer));
 				System.out.println("|");
 				System.out.println("|- End");
 				
@@ -444,4 +446,5 @@ public class GyroAccelSensor {
 		}
 		
 	}
+	
 }

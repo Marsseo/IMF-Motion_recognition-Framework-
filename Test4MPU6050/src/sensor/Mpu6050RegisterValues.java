@@ -64,5 +64,7 @@ public class Mpu6050RegisterValues {
 	 */
 	public static final byte MPU6050_RA_FIFO_RESET = 0b01000100;
 	
-
+	public static final byte MPU6050_USERCTRL_DMP_EN_BIT = 7;
+	
+	public static final byte MPU6050_USERCTRL_DMP_RESET_BIT = 3;
 }
