@@ -13,7 +13,7 @@ public class MotionCheck {
 	public static Thread irCheckThread;
 	public static Thread buttonCheckThread;
 	public static String buttonStatus = "ready";
-	public static double irDistance=0.0;
+	public static double irDistance=1000000;
 	public static double ultrasonicDistance;
 	public static int motionOn = 0;
 

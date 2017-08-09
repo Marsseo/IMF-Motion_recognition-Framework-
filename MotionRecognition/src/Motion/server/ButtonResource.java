@@ -29,6 +29,17 @@ public class ButtonResource extends CoapResource {
 	@Override
 	public void handleGET(CoapExchange exchange) {
 
+		String sensor = exchange.getRequestOptions().getUriQuery().get(0).split("=")[1];
+		String status = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
+		
+		if (sensor.equals("button")) {
+			currStatus=status;
+			MotionCheck.buttonAddData(currStatus);
+		} else if  (sensor.equals("status")){
+			
+		}else{
+			exchange.respond("fail");
+		}
 	}
 
 	@Override

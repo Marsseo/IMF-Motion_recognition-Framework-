@@ -11,38 +11,36 @@ import org.slf4j.LoggerFactory;
 public class GyroscopeResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(GyroscopeResource.class);
-	
+
 	private static GyroscopeResource instance;
 	public static double currYawAngle;
 	public static double currRollAngle;
 	public static double currPitchAngle;
-	
-	
 
 	public GyroscopeResource() throws Exception {
 		super("gyroscope");
 		instance = this;
-		
+
 		setObservable(true);
 		getAttributes().setObservable();
 		setObserveType(CoAP.Type.NON);
-		
-		Thread thread = new Thread(){
+
+		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				while(true){
-					try{
+				while (true) {
+					try {
 						changed();
 						Thread.sleep(500);
-					}catch(Exception e){
+					} catch (Exception e) {
 						LOGGER.info(e.toString());
 					}
 				}
 			}
-			
-		}; 
+
+		};
 		//thread.start();
-		
+
 	}
 
 	public static GyroscopeResource getInstance() {
@@ -52,12 +50,13 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handleGET(CoapExchange exchange) {
-		System.out.println("Get방식");
+		//System.out.println("Get방식");
+
 		JSONObject responseJsonObject = new JSONObject();
-		responseJsonObject.put("yawAngle", String.valueOf(currYawAngle) );
-		responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle) );
-		responseJsonObject.put("rollAngle", String.valueOf(currRollAngle) );
-		
+		responseJsonObject.put("yawAngle", String.valueOf(currYawAngle));
+		responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle));
+		responseJsonObject.put("rollAngle", String.valueOf(currRollAngle));
+
 		String responseJson = responseJsonObject.toString();
 		exchange.respond(responseJson);
 	}
@@ -66,37 +65,57 @@ public class GyroscopeResource extends CoapResource {
 	public void handlePOST(CoapExchange exchange) {
 		System.out.println("post 방식");
 		//{"sensor":"gyroscope","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
-	//{"sensor":"status"} 이런식으로 요청
-	
-	
-	
-		try{
-		String requestJson = exchange.getRequestText();
-		JSONObject requestJsonObject = new JSONObject(requestJson);
-		String sensor = requestJsonObject.getString("sensor");
-		if (sensor.equals("gyroscope")) {
-			double yawAngle= Double.parseDouble(requestJsonObject.getString("yawAngle"));
-			double pitchAngle= Double.parseDouble(requestJsonObject.getString("pitchAngle"));
-			double rollAngle= Double.parseDouble(requestJsonObject.getString("rollAngle"));
-			currYawAngle=yawAngle;
-			currPitchAngle=pitchAngle;
-			currRollAngle=rollAngle;
-			GyroMotions.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
-		}else if (sensor.equals("status")) {
+		//{"sensor":"status"} 이런식으로 요청
+		// coap://192.168.3.133:5683/gyroscope?sensor=gyroscope&yawAngle=yaw&pitchAngle=pitch&rollAngle=roll 이런식으로 요청
 
-		}
-		JSONObject responseJsonObject = new JSONObject();
-		responseJsonObject.put("result", "success");
-		responseJsonObject.put("yawAngle", String.valueOf(currYawAngle));
-		responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle));
-		responseJsonObject.put("rollAngle", String.valueOf(currRollAngle));
-		String responseJson = responseJsonObject.toString();
-		exchange.respond(responseJson);
-		}catch(Exception e){
-		JSONObject responseJsonObject = new JSONObject();
-		responseJsonObject.put("result", "fail");
-		String responseJson = responseJsonObject.toString();
-		exchange.respond(responseJson);
+		try {
+			String requestJson = exchange.getRequestText();
+			if (requestJson.equals("")) {
+				String sensor1 = exchange.getRequestOptions().getUriQuery().get(0).split("=")[1];
+				String yawAngle1 = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
+				String pitchAngle1 = exchange.getRequestOptions().getUriQuery().get(2).split("=")[1];
+				String rollAngle1 = exchange.getRequestOptions().getUriQuery().get(3).split("=")[1];
+				//System.out.println("key1 :" + key1);
+				//System.out.println("key2 :" + key2);
+
+				if (sensor1.equals("gyroscope")) {
+					currYawAngle = Double.parseDouble(yawAngle1);
+					currPitchAngle = Double.parseDouble(pitchAngle1);
+					currRollAngle = Double.parseDouble(rollAngle1);
+					GyroMotions.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
+				} else if (sensor1.equals("status")) {
+
+				} else {
+					exchange.respond("fail");
+				}
+			} else {
+				JSONObject requestJsonObject = new JSONObject(requestJson);
+				String sensor = requestJsonObject.getString("sensor");
+				if (sensor.equals("gyroscope")) {
+					double yawAngle = Double.parseDouble(requestJsonObject.getString("yawAngle"));
+					double pitchAngle = Double.parseDouble(requestJsonObject.getString("pitchAngle"));
+					double rollAngle = Double.parseDouble(requestJsonObject.getString("rollAngle"));
+					currYawAngle = yawAngle;
+					currPitchAngle = pitchAngle;
+					currRollAngle = rollAngle;
+					GyroMotions.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
+				} else if (sensor.equals("status")) {
+
+				}
+				JSONObject responseJsonObject = new JSONObject();
+				responseJsonObject.put("result", "success");
+				responseJsonObject.put("yawAngle", String.valueOf(currYawAngle));
+				responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle));
+				responseJsonObject.put("rollAngle", String.valueOf(currRollAngle));
+				String responseJson = responseJsonObject.toString();
+				exchange.respond(responseJson);
+			}
+
+		} catch (Exception e) {
+			JSONObject responseJsonObject = new JSONObject();
+			responseJsonObject.put("result", "fail");
+			String responseJson = responseJsonObject.toString();
+			exchange.respond(responseJson);
 		}
 
 	}
