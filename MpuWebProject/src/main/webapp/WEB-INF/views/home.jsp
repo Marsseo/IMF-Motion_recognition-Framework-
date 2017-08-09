@@ -81,7 +81,7 @@
 
 										</li>
 										<li>
-											<a href="leave">
+											<a href="<%=application.getContextPath()%>/leave">
 												<i class="halflings-icon off"></i>
 												회원탈퇴
 											</a>
@@ -94,14 +94,14 @@
 								</div>
 								
 							</ul>
-							<a class="btn btn-primary" href="fb/login"
+							<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
 									style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0) "
 								>
 									<!-- <i class="fa fa-user fa-fw"></i> -->
 									회원가입
 								</a>
 								<c:if test="${member.memail==null}">
-									<a class="btn btn-primary" href="login"
+									<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
 										style=" line-height:30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)" 
 									>
 										<!-- <i class="fa fa-user fa-fw"></i> -->
@@ -109,7 +109,7 @@
 									</a>
 								</c:if>
 								<c:if test="${member.memail!=null}">
-									<a class="btn btn-primary" href="logout"
+									<a class="btn btn-primary" href="<%=application.getContextPath()%>/logout"
 										style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 									>
 										<!-- <i class="fa fa-lock"> </i> -->
@@ -177,7 +177,7 @@
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li>
-											<a href="gyroTest">
+											<a href="<%=application.getContextPath()%>/gyroTest">
 												<i class="icon-tasks"></i>
 												<span class="hidden-tablet">Gyro Test</span>
 											</a>
