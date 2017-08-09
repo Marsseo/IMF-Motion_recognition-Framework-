@@ -52,6 +52,7 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handleGET(CoapExchange exchange) {
+		System.out.println("Get방식");
 		JSONObject responseJsonObject = new JSONObject();
 		responseJsonObject.put("yawAngle", String.valueOf(currYawAngle) );
 		responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle) );
@@ -63,6 +64,7 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handlePOST(CoapExchange exchange) {
+		System.out.println("post 방식");
 		//{"sensor":"gyroscope","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
 	//{"sensor":"status"} 이런식으로 요청
 	
