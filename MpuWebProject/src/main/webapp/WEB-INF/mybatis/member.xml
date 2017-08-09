@@ -6,20 +6,20 @@
 <mapper namespace="member">
 	<insert id="insert" parameterType="com.mycompany.myapp.dto.Member">
 		insert into member(
-		memail, mname)
+		mid, memail, mname)
 		<!-- moriginalfilename, msavedfilename, mfilecontent, mlevel) -->
 		values(
-		#{memail} , #{mname})<!-- , 
+		#{mid}, #{memail} , #{mname})<!-- , 
 		#{moriginalfilename}, #{msavedfilename} , #{mfilecontent}, #{mlevel}) -->
 
 	</insert>
 
 	<select id="selectAll" parameterType="com.mycompany.myapp.dto.Member">
-		select memail, mname, 
+		select mid, memail, mname, 
 		moriginalfilename, msavedfilename, mfilecontent, mlevel
 		from
 		member
-		order by memail desc
+		order by mid desc
 	</select>
 
 	<select id="selectByPage" parameterType="map"
@@ -43,9 +43,9 @@
 	</select>
 	
 <!-- 	<select id="selectByMemail" resultType="com.mycompany.myapp.dto.Member" -->
-	<select id="selectByMemail" resultType="com.mycompany.myapp.dto.Member"
+	<select id="selectByMid" resultType="com.mycompany.myapp.dto.Member"
 		parameterType="String">
-		select * from member where memail=#{memail}
+		select * from member where mid=#{mid}
 	</select>
 
 	<update id="update" parameterType="com.mycompany.myapp.dto.Member">

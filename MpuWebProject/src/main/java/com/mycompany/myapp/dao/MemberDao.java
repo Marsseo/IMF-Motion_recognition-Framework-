@@ -6,6 +6,6 @@ import com.mycompany.myapp.dto.Member;
 
 
 public interface MemberDao {
-	public Member memberSelectByMemail(String memail);
+	public Member memberSelectByMid(String mid);
 	public String memberInsert(Member member);
 }
