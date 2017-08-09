@@ -28,7 +28,7 @@ import org.json.JSONObject;
  */
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.133";
+	public static String ipAdress = "192.168.3.109";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -129,6 +129,7 @@ public class MPU6050Example {
 			
 			try {
 				distance("ifraredray");
+				distance("ultrasonic");
 			} catch (Exception ex) {
 				Logger.getLogger(MPU6050Example.class.getName()).log(Level.SEVERE, null, ex);
 			}

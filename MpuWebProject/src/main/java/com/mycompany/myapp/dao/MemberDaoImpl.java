@@ -20,10 +20,9 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public Member memberSelectByMid(String mid){
-//		System.out.println(memail);
+
 		Member member=sqlSessionTemplate.selectOne("member.selectByMid", mid);
-//		int member=sqlSessionTemplate.selectOne("member.countAll", memail);
-//		System.out.println(member);
+
 		return member;
 	}
 

@@ -17,6 +17,7 @@
 				rel='stylesheet' type='text/css'
 			>
 		<!-- end: CSS -->
+		
 		<link href="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<script src="<%= application.getContextPath() %>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
 		<script src="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
@@ -35,8 +36,10 @@
 	</head>
 <body>
 
-		<div id="container"></div>
+		<jsp:include page="home.jsp" flush="false"></jsp:include>
 
+		<div id="container"></div>
+		
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/dat.gui.min.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/OrbitControls.js"></script>
