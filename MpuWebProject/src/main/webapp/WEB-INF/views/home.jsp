@@ -220,6 +220,12 @@
 												<span class="hidden-tablet">UltraSonic, Infrared light</span>
 											</a>
 										</li>
+										<li class="item-256">
+											<a href="<%=application.getContextPath()%>/gyroExplore">
+												<i class="icon-tasks"></i>
+												<span class="hidden-tablet">Gyro Explore</span>
+											</a>
+										</li>
 									</ul>
 								</li>
 								<li class="item-282 deeper dropdown">
