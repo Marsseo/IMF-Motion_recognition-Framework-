@@ -34,4 +34,10 @@ public class MemberDaoImpl implements MemberDao {
 		return member.getMid();
 	}
 	
+	@Override
+	public void memberDelete(String mid) {
+		logger.info("daoimpl"+mid);
+		
+		sqlSessionTemplate.delete("member.delete",mid);
+	}
 }

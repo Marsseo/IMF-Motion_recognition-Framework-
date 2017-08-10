@@ -102,7 +102,8 @@ public class HomeController {
 
 			// 전송
 			model.addAttribute("member", member);
-
+			
+			
 			logger.info("Home");
 			System.out.println("------------------------------------------");
 			System.out.println("프로필출력");
@@ -124,6 +125,8 @@ public class HomeController {
 			}
 			// 2. 회원가입이 되어있는 경우
 			else {
+				String log="login";
+				model.addAttribute("log",log);
 				return "home";
 			}
 

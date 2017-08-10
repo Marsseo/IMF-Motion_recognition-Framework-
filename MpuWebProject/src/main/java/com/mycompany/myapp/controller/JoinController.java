@@ -69,6 +69,12 @@ public class JoinController {
 		return "redirect:/";
 	}
 
+	@RequestMapping("leave")
+	public String leave(String mid){
+		logger.info("컨트롤러에서 leave ");
+		service.memberDelete(mid);
+		return "redirect:/";
+	}
 	
 	
 }

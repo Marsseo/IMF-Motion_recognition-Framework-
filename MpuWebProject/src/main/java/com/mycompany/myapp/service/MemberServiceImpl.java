@@ -23,5 +23,11 @@ public class MemberServiceImpl implements MemberService {
 		dao.memberInsert(member);
 		
 	}
+	
+	@Override
+	public void memberDelete(String mid) {
+		dao.memberDelete(mid);
+		
+	}
 
 }

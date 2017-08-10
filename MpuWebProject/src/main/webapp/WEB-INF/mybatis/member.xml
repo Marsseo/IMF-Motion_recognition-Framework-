@@ -61,7 +61,7 @@
 
 	<delete id="delete" parameterType="String">
 		delete from member
-		where memail=#{memail}
+		where mid=#{mid}
 	</delete>
 
 

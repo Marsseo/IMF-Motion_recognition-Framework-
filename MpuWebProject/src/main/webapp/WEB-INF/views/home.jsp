@@ -8,9 +8,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <title>Home</title>
-<%-- <link href="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> --%>
+<link href="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <script src="<%=application.getContextPath()%>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+
+
 
 
 <!--Three.js 삽입  -->
@@ -22,10 +24,10 @@
 
 
 <!-- start: CSS -->
-<%-- <link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet"> --%>
-<%-- <link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet"> --%>
-<%-- <link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
+<%-- <link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet" type="text/css">
+<link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet" type="text/css">
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
 	rel='stylesheet' type='text/css'
@@ -45,6 +47,29 @@
 
 <link href="<%=application.getContextPath()%>/resources/css/font-awesome.css" rel="stylesheet" type="text/css" />
 <link href="<%=application.getContextPath()%>/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/myjs.js"></script>
+
+<script type="text/javascript">
+	function leave() {
+		if (confirm("정말 탈퇴하시겠습니까?") == true) { // 확인
+			$.ajax({
+				url : "leave",
+				method : "post",
+				data : {
+					"mid" : "${member.mid}"
+				},
+				success : function(data) {
+
+					location.href = ""
+
+				}
+			});
+		} else {
+			return;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -76,46 +101,53 @@
 												<a>환영합니다.</a>
 											</c:if>
 											<c:if test="${member.memail!=null}">
-												<a>${member.memail}</a>
+												<a>${member.mname}</a>
 											</c:if>
 
 										</li>
 										<li>
-											<a href="<%=application.getContextPath()%>/leave">
+										<c:if test="${log=='login'}">
+											<a class="btn-leave" onclick="javascript:leave();">
 												<i class="halflings-icon off"></i>
 												회원탈퇴
 											</a>
+											</c:if>
 										</li>
 									</ul>
 								</li>
 								<!-- end: User Dropdown -->
 								<div style="float: left">
-									<img src="http://graph.facebook.com/${profile.getId()}/picture" />
+									<c:if test="${log!='login'}">
+										<a style="line-height: 45px">로그인해주세요</a>
+									</c:if>
+									<c:if test="${log=='login'}">
+										<img src="http://graph.facebook.com/${profile.getId()}/picture" />
+									</c:if>
 								</div>
-								
+
 							</ul>
 							<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
-									style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0) "
+								style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
+							>
+								<!-- <i class="fa fa-user fa-fw"></i> -->
+								회원가입
+							</a>
+							<c:if test="${member.memail==null}">
+								<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
+									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 								>
 									<!-- <i class="fa fa-user fa-fw"></i> -->
-									회원가입
+									로그인
 								</a>
-								<c:if test="${member.memail==null}">
-									<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
-										style=" line-height:30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)" 
-									>
-										<!-- <i class="fa fa-user fa-fw"></i> -->
-										로그인
-									</a>
-								</c:if>
-								<c:if test="${member.memail!=null}">
-									<a class="btn btn-primary" href="<%=application.getContextPath()%>/logout"
-										style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
-									>
-										<!-- <i class="fa fa-lock"> </i> -->
-										로그아웃
-									</a>
-								</c:if>
+							</c:if>
+							<c:if test="${member.memail!=null}">
+								<a class="btn btn-primary" href="<%=application.getContextPath()%>/logout"
+									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
+								>
+									<!-- <i class="fa fa-lock"> </i> -->
+									로그아웃
+								</a>
+							</c:if>
 							<div class="clearfix"></div>
 						</div>
 						<!-- end: Header Menu -->
@@ -183,7 +215,7 @@
 											</a>
 										</li>
 										<li class="item-256">
-											<a href="<%=application.getContextPath()%>/chart">
+											<a href="<%=application.getContextPath()%>/gyroTest">
 												<i class="icon-tasks"></i>
 												<span class="hidden-tablet">UltraSonic, Infrared light</span>
 											</a>
@@ -200,19 +232,12 @@
 
 							<div class="clearfix"></div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
-
-	<%-- 
-	<jsp:include page="join.jsp" flush="false">
-	<jsp:param value="3" name="month"/>
-
-	</jsp:include>
- --%>
 
 
 	<!-- start: JavaScript-->

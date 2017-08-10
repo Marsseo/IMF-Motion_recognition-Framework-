@@ -35,13 +35,16 @@ public class LoginController {
 
 	@RequestMapping("/login")
 	public String login() {
+		
 		return "login";
 		
 	}
 	@RequestMapping("/logout")
-	public String logout(SessionStatus sessionStatus) {
+	public String logout(SessionStatus sessionStatus, Model model) {
 		sessionStatus.setComplete();
-
+		
+		String log="logout";
+		model.addAttribute("log",log);
 		return "home";
 		
 	}
