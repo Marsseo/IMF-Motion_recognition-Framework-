@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="../home.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +25,16 @@
 				$("#spanFileName").text(originalfilename);
 			}
 		}
+		function fileDelete() {
+			$("#spanFileName").text("");
+		}
+		function btnCancel() {
+			location.href="boardDetail?bno=${board.bno}&pageNo=${pageNo}";
+		}
 	</script>
 </head>
 <body>
-	<div style="max-width: 1000px; margin: auto;">
+	<div style="max-width: 1000px; margin: auto;  margin-top: 50px">
 	<h4>게시물 등록</h4>
 	<hr />
 	<form method="post" action="boardUpdate" style="padding: 0px 20px" 
@@ -46,7 +53,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-user"></span>
 				</span> <input type="text" class="form-control" placeholder="작성자"
-					name="bwriter" value="${board.bwriter}"  maxlength="8" />
+					name="bwriter" value="${board.bwriter}"  maxlength="8"  readonly/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -74,13 +81,15 @@
 				</span> 
 				<div class="form-control"  style="height: 47px;">
 					<span id="spanFileName">${board.boriginalfilename}</span>
-					<label for="battach" class="btn btn-default">변경</label>
-					<input id="battach" type="file" style="visibility: hidden;" name="battach" onchange="fileChange()" multiple />			
+					<label for="battach" class="btn btn-default">변경</label>		
+					<input type="button" value="삭제" class="btn btn-default" onclick="fileDelete()"  />		
+					<input id="battach" type="file" style="visibility: hidden;" name="battach" onchange="fileChange()" multiple />		
 				</div>
 			</div>
 		</div>
 		<div align="right">
 		<input type="hidden" class="form-control"  name="pageNo"  id="pageNo" value="${pageNo}"/>		
+		<input type="button" class="btn btn-success" value="취소" onclick="btnCancel()"/>
 		<input type="submit" class="btn btn-info" value="등록" />
 		</div>
 	</form>

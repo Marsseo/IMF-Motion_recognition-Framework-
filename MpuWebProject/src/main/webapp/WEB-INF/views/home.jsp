@@ -73,6 +73,7 @@
 </head>
 
 <body>
+	<input type="hidden" class="form-control"  name="mid"  id="mid" value="${member.mid }"/>
 	<!-- start: Header -->
 	<div id="menu" class="nav-down">
 		<nav class="navbar navbar-default" role="navigation">

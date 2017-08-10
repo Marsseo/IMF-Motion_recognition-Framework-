@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="../home.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,13 +37,17 @@
 			$("#bpassword").attr("placeholder", "비밀번호를 입력하세요!");	
 			$("#bpassword").focus();
 			return ;
+		} else if( $("#bcontent").val() == "") {
+			$("#bcontent").attr("placeholder", "내용을 입력하세요!");	
+			$("#bcontent").focus();
+			return ;
 		}
 		return $("#form1").submit();
 	}
 	</script>
 </head>
 <body>
-	<div style="max-width: 1000px; margin: auto;">
+	<div style="max-width: 1000px; margin: auto;  margin-top: 50px">
 	<h4>게시물 등록</h4>
 	<hr />
 	<form method="post" action="boardWrite" style="padding: 0px 20px"
@@ -60,7 +65,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-user"></span>
 				</span> <input type="text" class="form-control" placeholder="작성자"
-					name="bwriter" id="bwriter" maxlength="8"/>
+					name="bwriter" id="bwriter"  value="${member.mname }"maxlength="8" readOnly/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -77,7 +82,7 @@
 					class="glyphicon glyphicon-pencil"></span>
 				</span>
 				<p><textArea rows="10" cols="30" class="form-control" placeholder="내용" 
-					name="bcontent"></textArea></p>
+					name="bcontent" id="bcontent"></textArea></p>
 			</div>
 		</div>
 		<div class="form-group">
@@ -91,6 +96,7 @@
 		<div align="right">
 		<a class="btn btn-success" href="boardList" >취소</a>
 		<input type="button" class="btn btn-info" value="등록"  onclick="writeChk()"/>
+		 <input type="hidden" class="form-control" name="mid" id="mid"  value="${member.mid }"/>
 		</div>
 	</form>
 	</div>

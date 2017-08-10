@@ -16,6 +16,7 @@ public class Board {
 	private String boriginalfilename;
 	private String bsavedfilename;
 	private String bfilecontent;
+	private String mid;
 	MultipartFile battach;
 
 	private int count;
@@ -26,6 +27,14 @@ public class Board {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 	public MultipartFile getBattach() {

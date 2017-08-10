@@ -9,6 +9,7 @@ public class BoardComment {
 	private String bcpassword;
 	private Date bcdate;
 	private String bccomment;
+	private String mid;
 	
 	public String getBcpassword() {
 		return bcpassword;
@@ -18,6 +19,12 @@ public class BoardComment {
 	}
 	public int getBno() {
 		return bno;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 	public void setBno(int bno) {
 		this.bno = bno;

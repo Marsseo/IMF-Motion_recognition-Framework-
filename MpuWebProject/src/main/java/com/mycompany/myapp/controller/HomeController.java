@@ -29,7 +29,7 @@ import com.mycompany.myapp.service.MemberService;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes({ "profile" })
+@SessionAttributes({ "member" })
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
