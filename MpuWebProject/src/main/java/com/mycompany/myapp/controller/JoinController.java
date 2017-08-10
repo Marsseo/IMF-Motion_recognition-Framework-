@@ -66,7 +66,7 @@ public class JoinController {
 		
 		service.memberJoin(member);
 		
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
 	@RequestMapping("leave")

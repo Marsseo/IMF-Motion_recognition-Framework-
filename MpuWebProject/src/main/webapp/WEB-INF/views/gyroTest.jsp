@@ -47,13 +47,13 @@ body {
 	<jsp:include page="home.jsp" flush="false"></jsp:include>
 
 
-	<div align="left" style="width: 100%">
-		<div style="width: 30%;height: 100%">
+	<div  style="width: 100%">
+		<div style="width: 30%; float: right">
 			<div style="height: 30%" id="gyroChartContainer" ></div>
 			<div style="height: 30%" id="ultrasonicChartContainer"></div>
 			<div style="height: 30%" id="ifraredrayChartContainer"></div>
 		</div>
-		<div style="width: 70%" id="container"></div>
+		<div style="width: 70%; float: left" id="container"></div>
 		
 	</div>
 
@@ -83,12 +83,13 @@ body {
 				//
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
 				camera.position.z = 1750;
-				camera.position.set( 1500, 500, 0 );
+				camera.position.set( 1500, 450, 0 );
 				controls = new THREE.OrbitControls( camera, container );
 				scene = new THREE.Scene();
 				group = new THREE.Group();
 				scene.add( group );
 				scene.add( new THREE.AxisHelper( 1000 ) );
+				scene.position.z = 300;
 				
 				var mesh = new THREE.Mesh( new THREE.BoxGeometry( r, 0.05*r, 0.7*r ) );				
 				var helper = new THREE.BoxHelper( mesh );
@@ -181,9 +182,18 @@ body {
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
+				w=window.innerWidth;
+				h=window.innerHeight;
+				camera.left = w / - 2 * viewSize;
+			    camera.right = w / 2 * viewSize;
+			    camera.top = h / 2 * viewSize;
+			    camera.bottom = h / - 2 * viewSize;
+			    camera.updateProjectionMatrix();
+			    renderer.setSize( w, h );
+			    
+				/* camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight ); */
 			}
 			function animate() {
 				requestAnimationFrame( animate );

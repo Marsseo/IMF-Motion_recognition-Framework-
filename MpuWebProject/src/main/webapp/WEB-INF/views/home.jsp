@@ -98,10 +98,10 @@
 											<a>Account Settings</a>
 										</li>
 										<li class="item-206">
-											<c:if test="${member.memail==null}">
+											<c:if test="${log!='login'}">
 												<a>환영합니다.</a>
 											</c:if>
-											<c:if test="${member.memail!=null}">
+											<c:if test="${log=='login'}">
 												<a>${member.mname}</a>
 											</c:if>
 
@@ -133,7 +133,7 @@
 								<!-- <i class="fa fa-user fa-fw"></i> -->
 								회원가입
 							</a>
-							<c:if test="${member.memail==null}">
+							<c:if test="${log!='login'}">
 								<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
 									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 								>
@@ -141,7 +141,7 @@
 									로그인
 								</a>
 							</c:if>
-							<c:if test="${member.memail!=null}">
+							<c:if test="${log=='login'}">
 								<a class="btn btn-primary" href="<%=application.getContextPath()%>/logout"
 									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 								>

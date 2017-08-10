@@ -38,7 +38,7 @@ body {
 <body>
 	<div id="fb-root"></div>
 
-	<div id="status">${member.memail}</div>
+	
 	<div class="container-fluid-full">
 		<div class="row-fluid">
 			<div class="row-fluid">
