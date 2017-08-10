@@ -29,8 +29,10 @@ public class ButtonResource extends CoapResource {
 	@Override
 	public void handleGET(CoapExchange exchange) {
 
+		System.out.println("버튼 클릭");
 		String sensor = exchange.getRequestOptions().getUriQuery().get(0).split("=")[1];
 		String status = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
+		System.out.println("버튼 상태   "+status);
 		
 		if (sensor.equals("button")) {
 			currStatus=status;

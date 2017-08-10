@@ -7,26 +7,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 public class GyroMotions implements TriggerMotionInterface {
 
 	public static boolean MotionListCollecting = false;
-	public static boolean adjustingYawAxis=false;
-	public static double YawAxisValueForAdjusting=0.0;
+	public static boolean adjustingYawAxis = false;
+	public static double YawAxisValueForAdjusting = 0.0;
 
-	public static List<Double> listYawAngles = new ArrayList<>();
-	public static List<Double> listRollAngles = new ArrayList<>();
-	public static List<Double> listPitchAngles = new ArrayList<>();
-	public static List<Double> listYawDifferences = new ArrayList<>();
-	public static List<Double> listRollDifferences = new ArrayList<>();
-	public static List<Double> listPitchDifferences = new ArrayList<>();
+	public static List<Double> listYawAngles = new Vector<>();
+	public static List<Double> listRollAngles = new Vector<>();
+	public static List<Double> listPitchAngles = new Vector<>();
+	public static List<Double> listYawDifferences = new Vector<>();
+	public static List<Double> listRollDifferences = new Vector<>();
+	public static List<Double> listPitchDifferences = new Vector<>();
 
-	public static List<Double> listYawAngle = new ArrayList<>();
-	public static List<Double> listRollAngle = new ArrayList<>();
-	public static List<Double> listPitchAngle = new ArrayList<>();
-	public static List<Double> listYawDifference = new ArrayList<>();
-	public static List<Double> listRollDifference = new ArrayList<>();
-	public static List<Double> listPitchDifference = new ArrayList<>();
+	public static List<Double> listYawAngle = new Vector<>();
+	public static List<Double> listRollAngle = new Vector<>();
+	public static List<Double> listPitchAngle = new Vector<>();
+	public static List<Double> listYawDifference = new Vector<>();
+	public static List<Double> listRollDifference = new Vector<>();
+	public static List<Double> listPitchDifference = new Vector<>();
 
 	public static int listLength = 10;
 	public static double initialValue = 0.0;
@@ -130,35 +131,55 @@ public class GyroMotions implements TriggerMotionInterface {
 		}
 
 		if (MotionListCollecting == true) {
-			
-			if(!adjustingYawAxis){
-				YawAxisValueForAdjusting=yaw-180;
-				adjustingYawAxis=true;
-			}else{
 
-			listYawAngle.add(yaw-YawAxisValueForAdjusting);
-			listRollAngle.add(roll);
-			listPitchAngle.add(pitch);
-
-			if (listYawAngle.size() >= 2) {
-				double nextValue = listYawAngle.get(listYawAngle.size() - 1);
-				double preValue = listYawAngle.get(listYawAngle.size() - 2);
-				listYawDifference.add(nextValue - preValue);
-				nextValue = listRollAngle.get(listRollAngle.size() - 1);
-				preValue = listRollAngle.get(listRollAngle.size() - 2);
-				listRollDifference.add(nextValue - preValue);
-				nextValue = listPitchAngle.get(listPitchAngle.size() - 1);
-				preValue = listPitchAngle.get(listPitchAngle.size() - 2);
-				listPitchDifference.add(nextValue - preValue);
-
+			if (adjustingYawAxis == false) {
+				YawAxisValueForAdjusting = 180 - yaw;
+				adjustingYawAxis = true;
 			} else {
-				listYawDifference.add(initialValue);
-				listRollDifference.add(initialValue);
-				listPitchDifference.add(initialValue);
+
+				listRollAngle.add(roll);
+				listPitchAngle.add(pitch);
+
+				if (YawAxisValueForAdjusting < 0) {
+					System.out.println("1번 1번 1번");  ///////////////////////삭제각
+					if (yaw <= Math.abs(YawAxisValueForAdjusting)) {
+						listYawAngle.add(360 + YawAxisValueForAdjusting + yaw);
+
+					} else {
+						listYawAngle.add(yaw + YawAxisValueForAdjusting);
+					}
+
+				} else if (YawAxisValueForAdjusting > 0) {
+					System.out.println("2번 2번 2번");  ///////////////////////삭제각
+					if (yaw> 360-YawAxisValueForAdjusting) {
+						listYawAngle.add(YawAxisValueForAdjusting + yaw-360);
+
+					} else {
+						listYawAngle.add(yaw + YawAxisValueForAdjusting);
+					}
+
+				}
+				System.out.println(listYawAngle.get(listYawAngle.size()-1));  ///////////////////////삭제각
+
+				if (listYawAngle.size() >= 2) {
+					double nextValue = listYawAngle.get(listYawAngle.size() - 1);
+					double preValue = listYawAngle.get(listYawAngle.size() - 2);
+					listYawDifference.add(nextValue - preValue);
+					nextValue = listRollAngle.get(listRollAngle.size() - 1);
+					preValue = listRollAngle.get(listRollAngle.size() - 2);
+					listRollDifference.add(nextValue - preValue);
+					nextValue = listPitchAngle.get(listPitchAngle.size() - 1);
+					preValue = listPitchAngle.get(listPitchAngle.size() - 2);
+					listPitchDifference.add(nextValue - preValue);
+
+				} else {
+					listYawDifference.add(initialValue);
+					listRollDifference.add(initialValue);
+					listPitchDifference.add(initialValue);
+				}
 			}
-			}
-		}else{
-			adjustingYawAxis=false;
+		} else {
+			adjustingYawAxis = false;
 		}
 	}
 
@@ -208,8 +229,11 @@ public class GyroMotions implements TriggerMotionInterface {
 	}
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
-		
-		for(double k : listYawAngle){
+
+		for (double k : listYawAngle) {
+			System.out.println(k);
+		}
+		for (double k : listYawDifference) {
 			System.out.println(k);
 		}
 
@@ -417,17 +441,17 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	@Override
 	public void triggerIR(int step, double distance) {
-		System.out.println(distance);
+		//System.out.println(distance); //삭제가가가가가각
 		if (step == 0) {
 			if (distance < 10) {
+				emptingCollectedList();
 				emptingContinuedList();
 				System.out.println("Motion On");
 				MotionCheck.MotionRecognitionStatus(1);
-				emptingCollectedList();
 				MotionListCollecting = true;
 
 			}
-		}else if(step ==1){
+		} else if (step == 1) {
 			if (distance < 10) {
 				emptingContinuedList();
 				System.out.println("Motion Recognition");

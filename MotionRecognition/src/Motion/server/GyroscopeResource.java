@@ -63,7 +63,7 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handlePOST(CoapExchange exchange) {
-		System.out.println("post 방식");
+		//System.out.println("post 방식");
 		//{"sensor":"gyroscope","yawAngle":"100","pitchAngle":"100","rollAngle":"100"} 이런식으로
 		//{"sensor":"status"} 이런식으로 요청
 		// coap://192.168.3.133:5683/gyroscope?sensor=gyroscope&yawAngle=yaw&pitchAngle=pitch&rollAngle=roll 이런식으로 요청
