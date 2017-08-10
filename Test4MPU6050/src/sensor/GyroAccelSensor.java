@@ -4,7 +4,6 @@ import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +46,7 @@ public class GyroAccelSensor {
 	private int packetSize=42;
 	private byte buffer[]= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	byte fifoBuffer[] = new byte[64];
+	Quaternion q;
 	float ypr[] = new float[3];
 	
 	public double getDmpValue() throws IOException {
@@ -210,9 +210,11 @@ public class GyroAccelSensor {
 		//DMP 활성화
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
 					Mpu6050RegisterValues.MPU6050_USERCTRL_DMP_EN_BIT);
-		//DMP reset
+		//FIFO reset
 		mpu6050.write(Mpu6050Registers.MPU6050_RA_FIFO_EN,
 					Mpu6050RegisterValues.MPU6050_USERCTRL_DMP_RESET_BIT);
+		//DMP initialize
+		
 
 		
 		System.out.println("Calibration started (3초간 움직이지 마세요)");
