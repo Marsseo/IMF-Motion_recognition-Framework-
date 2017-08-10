@@ -215,7 +215,7 @@
 											</a>
 										</li>
 										<li class="item-256">
-											<a href="<%=application.getContextPath()%>/gyroTest">
+											<a href="<%=application.getContextPath()%>/chart">
 												<i class="icon-tasks"></i>
 												<span class="hidden-tablet">UltraSonic, Infrared light</span>
 											</a>

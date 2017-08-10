@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GyroCotroller {
-	@RequestMapping("/chart")
+	@RequestMapping("/gyroTest")
 	public String gyroTest(){
-		return "chart";
+		return "gyroTest";
 	}
 
 }

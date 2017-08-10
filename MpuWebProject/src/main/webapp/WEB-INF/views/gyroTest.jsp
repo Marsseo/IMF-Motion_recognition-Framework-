@@ -1,51 +1,70 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@taglib prefix="c" uri= "http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<title>JSP Page</title>
-		<!-- start: CSS -->
-			<link id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
-			<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet">
-			<link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet">
-			<link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
-			<link
-				href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
-				rel='stylesheet' type='text/css'
-			>
-		<!-- end: CSS -->
-		
-		<link href="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<script src="<%= application.getContextPath() %>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
-		<script src="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				color: #cccccc;
-				font-family:Monospace;
-				font-size:13px;
-				text-align:center;
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-			}
-		</style>
-	</head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>JSP Page</title>
+<!-- start: CSS -->
+<link id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+<link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
+	rel='stylesheet' type='text/css'
+>
+<!-- end: CSS -->
+
+<link href="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="<%=application.getContextPath()%>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<style>
+body {
+	color: #cccccc;
+	font-family: Monospace;
+	font-size: 13px;
+	text-align: center;
+	background-color: #000000;
+	margin: 0px;
+	overflow: hidden;
+}
+</style>
+<!--  하이차트 start -->
+<script src="<%=application.getContextPath()%>/resources/highcharts/code/highcharts.js"></script>
+<script src="<%=application.getContextPath()%>/resources/highcharts/code/themes/gray.js"></script>
+<script src="<%=application.getContextPath()%>/resources/highcharts/code/highcharts-more.js"></script>
+<script src="<%=application.getContextPath()%>/resources/js/ultrasonicChart.js"></script>
+<script src="<%=application.getContextPath()%>/resources/js/ifraredrayChart.js"></script>
+<script src="<%=application.getContextPath()%>/resources/js/gyroChart.js"></script>
+<!-- 하이차트 end -->
+</head>
 <body>
 
-		<jsp:include page="home.jsp" flush="false"></jsp:include>
+	<jsp:include page="home.jsp" flush="false"></jsp:include>
 
-		<div id="container"></div>
+
+	<div align="left" style="width: 100%">
+		<div style="width: 30%;height: 100%">
+			<div style="height: 30%" id="gyroChartContainer" ></div>
+			<div style="height: 30%" id="ultrasonicChartContainer"></div>
+			<div style="height: 30%" id="ifraredrayChartContainer"></div>
+		</div>
+		<div style="width: 70%" id="container"></div>
 		
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/dat.gui.min.js"></script>
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/OrbitControls.js"></script>
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/stats.min.js"></script>
+	</div>
 
-		<script>
+
+
+	<script src="<%=application.getContextPath()%>/resources/js/threejs/libs/dat.gui.min.js"></script>
+	<script src="<%=application.getContextPath()%>/resources/js/threejs/three.js"></script>
+	<script src="<%=application.getContextPath()%>/resources/js/threejs/controls/OrbitControls.js"></script>
+	<script src="<%=application.getContextPath()%>/resources/js/threejs/libs/stats.min.js"></script>
+
+	<script>
 			var group = new Array();
 			var camera, scene, renderer;
 			var positions, colors;
