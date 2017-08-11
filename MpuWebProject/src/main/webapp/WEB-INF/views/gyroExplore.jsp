@@ -40,9 +40,7 @@
 		<div id="info"></div>
 		
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
-
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/FlyControls.js"></script>
-
+		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/FlyControls2.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/Detector.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/stats.min.js"></script>
 
@@ -54,7 +52,7 @@
 			var geometry, objects;
 			var controls, clock = new THREE.Clock();
 			
-			var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
+			//var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
 			
 			init();
 			animate();
@@ -86,7 +84,7 @@
 				];
 				var material = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
 				var i, j, mesh, lod;
-				for ( j = 0; j < 3000; j ++ ) {
+				for ( j = 0; j < 2000; j ++ ) {
 					lod = new THREE.LOD();
 					for ( i = 0; i < geometry.length; i ++ ) {
 						mesh = new THREE.Mesh( geometry[ i ][ 0 ], material );
@@ -130,7 +128,7 @@
 				renderer.render( scene, camera );
 			}			
 			
-			function requestGyroSensorData(){
+			/*function requestGyroSensorData(){
 				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
@@ -143,7 +141,7 @@
 				pitchAngle = prepitchAngle;
 				rollAngle = prerollAngle;
 				
-			}
+			}*/
 		</script>
 </body>
 </html>

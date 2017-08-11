@@ -39,7 +39,7 @@ public class GyroscopeResource extends CoapResource {
 			}
 
 		};
-		//thread.start();
+		thread.start();
 
 	}
 

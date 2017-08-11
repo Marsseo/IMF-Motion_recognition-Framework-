@@ -197,9 +197,9 @@ body {
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x = prepitchAngle/200; /* 빨강 y값 */
-				group.rotation.y = preyawAngle/200; //초록 z값
-				group.rotation.z = prerollAngle/200; //파랑 x값
+				group.rotation.x += prepitchAngle/2000; /* 빨강 y값 */
+				group.rotation.y += preyawAngle/2000; //초록 z값
+				group.rotation.z += prerollAngle/2000; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;

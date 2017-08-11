@@ -13,16 +13,6 @@
 <script src="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 
 
-
-
-<!--Three.js 삽입  -->
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.min.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.module.js"></script>
-
-
-
-
 <!-- start: CSS -->
 <%-- <link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
