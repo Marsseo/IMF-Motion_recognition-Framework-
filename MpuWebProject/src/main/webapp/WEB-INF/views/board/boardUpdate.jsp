@@ -27,10 +27,13 @@
 		}
 		function fileDelete() {
 			$("#spanFileName").text("");
+			$("#boriginalfilename").val("");
+			$("#bsavedfilename").val("");
+			$("#bfilecontent").val("");
 		}
 		function btnCancel() {
 			location.href="boardDetail?bno=${board.bno}&pageNo=${pageNo}";
-		}
+		} 
 	</script>
 </head>
 <body>
@@ -70,7 +73,7 @@
 					class="glyphicon glyphicon-pencil"></span>
 				</span>
 				<textArea rows="10" cols="30" class="form-control" placeholder="내용" 
-					name="bcontent">${board.bcontent} </textArea>
+					name="bcontent">${board.bcontent} </textArea>${board.battach }
 			</div>
 		</div>
 		<div class="form-group">
@@ -80,10 +83,14 @@
 					</span>
 				</span> 
 				<div class="form-control"  style="height: 47px;">
+					<input type="hidden" class="btn btn-default"  name="boriginalfilename"  id="boriginalfilename"  value="${board.boriginalfilename }" />					
+					<input type="hidden" class="btn btn-default"  name="bsavedfilename" id="bsavedfilename" value="${board.bsavedfilename }" />					
+					<input type="hidden" class="btn btn-default"  name="bfilecontent"  id="bfilecontent" value="${board.bfilecontent }" />					
+									
 					<span id="spanFileName">${board.boriginalfilename}</span>
 					<label for="battach" class="btn btn-default">변경</label>		
 					<input type="button" value="삭제" class="btn btn-default" onclick="fileDelete()"  />		
-					<input id="battach" type="file" style="visibility: hidden;" name="battach" onchange="fileChange()" multiple />		
+					<input id="battach" type="file" style="visibility: hidden;" name="battach" onchange="fileChange()" multiple value="${board.battach }" />		
 				</div>
 			</div>
 		</div>

@@ -16,7 +16,7 @@ import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.json.JSONObject;
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.109";
+	public static String ipAdress = "192.168.3.133";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;

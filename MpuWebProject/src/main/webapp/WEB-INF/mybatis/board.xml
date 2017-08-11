@@ -65,13 +65,8 @@
 	
 	<!-- 게시글 수정 -->
 	<update id="update" parameterType="com.mycompany.myapp.dto.Board">
-		<if test="boriginalfilename != null">
 		update board set btitle=#{btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=current_timestamp, boriginalfilename=#{boriginalfilename}, 
 		bsavedfilename=#{bsavedfilename}, bfilecontent=#{bfilecontent} where bno=#{bno}
-		</if>				
-		<if test="boriginalfilename == null">
-		update board set btitle=#{btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=current_timestamp where bno=#{bno}
-		</if>
 	</update>
 	
 	<!-- 게시글 추천수 -->

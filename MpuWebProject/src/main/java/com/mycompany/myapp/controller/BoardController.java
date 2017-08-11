@@ -27,14 +27,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mycompany.myapp.dto.Board;
 import com.mycompany.myapp.dto.BoardComment;
-import com.mycompany.myapp.dto.Member;
 import com.mycompany.myapp.service.BoardService;
 
 @Controller
 @SessionAttributes({ "member" })
 public class BoardController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
-	private Member member;
 
 	@Resource(name = "boardServiceImpl")
 	private BoardService service;
@@ -79,7 +77,6 @@ public class BoardController {
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("pageNo", pageNo);
-//		System.out.println("id: " + member.getMid());
 
 		// view 이름 리턴
 		return "board/boardList";
@@ -128,7 +125,6 @@ public class BoardController {
 
 		return "redirect:/board/boardList";
 	}
-
 	/*
 	 * 
 	 * boardDetail
@@ -139,8 +135,9 @@ public class BoardController {
 		if (mid != "") {
 			service.getBoardHit(bno, mid);
 		}
-		return "redirect:/board/boardDetail?bno="+bno+"&pageNo="+pageNo;
+		return "redirect:/board/boardDetail?bno=" + bno + "&pageNo=" + pageNo;
 	}
+
 	@RequestMapping("/board/boardDetail")
 	public String boardDetailGet(int bno, int pageNo, Model model) {
 		Board board = null;
@@ -153,45 +150,16 @@ public class BoardController {
 		content = content.replace("  ", "&nbsp;&nbsp;");
 		content = content.replace("\n", "<br/>");
 		board.setBcontent(content);
-		
+
 		List<BoardComment> list = service.boardCommentList(bno);
-		
+
 		// view 로 넘겨줄 데이터
 		model.addAttribute("list", list);
 		model.addAttribute("board", board);
 		model.addAttribute("pageNo", pageNo);
 		return "board/boardDetail";
 	}
-//		@RequestMapping("/board/boardDetail")
-//		public String boardDetailGet(String mid, int bno, int pageNo, Model model) {
-//			Board board = null;
-//			System.out.println("mid: " + mid);
-//			System.out.println("bno: " + bno);
-//			System.out.println("pageNo: " + pageNo);
-//			if (mid != null) {
-//				System.out.println("member: " +mid );
-//				board = service.getBoard(bno, mid);
-//			} else {
-//				System.out.println("member null");
-//				board = service.getBoard(bno);
-//			}
-//			String content = board.getBcontent();
-//			content = content.replace("<", "&lt;");
-//			content = content.replace(">", "&gt;");
-//			content = content.replace("  ", "&nbsp;&nbsp;");
-//			content = content.replace("\n", "<br/>");
-//			board.setBcontent(content);
-//			
-//			List<BoardComment> list = service.boardCommentList(bno);
-//			
-//			// view 로 넘겨줄 데이터
-//			model.addAttribute("list", list);
-//			model.addAttribute("board", board);
-//			model.addAttribute("pageNo", pageNo);
-//			model.addAttribute("mid", mid);
-//			return "board/boardDetail";
-//		}
-
+	
 	@RequestMapping("/board/boardCheckBpassword")
 	public String boardCheckBpassword(int bno, String bpassword, Model model) {
 		String result = service.boardCheckBpassword(bno, bpassword);
@@ -204,7 +172,14 @@ public class BoardController {
 		service.boardDelete(bno);
 		return "redirect:/board/boardList";
 	}
-
+	
+	@RequestMapping("/board/boardLike")
+	public String boardLike(int bno, int pageNo, String mid, Model model) {
+		Board board = service.getBoardLike(bno, mid);
+		model.addAttribute("board", board);
+		return "redirect:/board/boardDetail?bno=" + bno + "&pageNo=" + pageNo + "&mid=" + mid;
+	}
+	
 	@RequestMapping(value = "/board/boardUpdate", method = RequestMethod.GET)
 	public String boardUpdateGet(int bno, int pageNo, Model model) {
 		Board board = service.getBoard(bno);
@@ -213,18 +188,10 @@ public class BoardController {
 		return "board/boardUpdate";
 	}
 
-	@RequestMapping("/board/boardLike")
-	public String boardLike(int bno, int pageNo, String mid, Model model) {
-		Board board = service.getBoardLike(bno, mid);
-		model.addAttribute("board", board);
-		return "redirect:/board/boardDetail?bno=" + bno + "&pageNo=" + pageNo + "&mid=" + mid;
-	}
-
 	@RequestMapping(value = "/board/boardUpdate", method = RequestMethod.POST)
-	public String boardUpdatePost(Board board, HttpServletRequest req, int pageNo)
+	public String boardUpdatePost(Board board, int pageNo)
 			throws IllegalStateException, IOException {
 		// 첨부 파일이 변경되었는지 검사
-		System.out.println("~~~:" + !board.getBattach().isEmpty());
 		if (!board.getBattach().isEmpty()) {
 			// 첨부 파일을 서버 로컬 시스템에 저장
 			String realPath = servletContext.getRealPath("/WEB-INF/upload/");
@@ -236,12 +203,7 @@ public class BoardController {
 			board.setBoriginalfilename(fileName);
 			board.setBfilecontent(board.getBattach().getContentType());
 			board.setBsavedfilename(savedFileName);
-			System.out.println("사진 있음");
-		} else {
-			board.setBoriginalfilename("");
-			board.setBfilecontent("");
-			board.setBsavedfilename("");
-		}
+		} 
 		// 게시물 수정 처리
 		service.boardUpdate(board);
 

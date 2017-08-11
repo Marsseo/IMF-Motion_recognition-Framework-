@@ -198,7 +198,7 @@
 					<c:if test="${comment.mid != member.mid}">
 						<tr >		
 							<td style="width: 15%; ">
-							<img src="http://graph.facebook.com/${member.mid }/picture" class="img-circle"/>&nbsp; ${comment.bcwriter}
+							<img src="http://graph.facebook.com/${comment.mid }/picture" class="img-circle"/>&nbsp; ${comment.bcwriter}
 							</td>
 							<td style="width: 70%" colspan=2><p>${comment.bccomment}</p>
 								<input type="hidden" class="form-control"  name="bcno"  id="bcno" value="${comment.bcno }"/>
@@ -223,7 +223,7 @@
 				<input type="hidden" class="form-control"  name="bno"  id="bno" value="${board.bno}"/>							
 			</div>
 		</div>
-		<c:if test="${member.mid == board.mid}" >		
+		<c:if test="${member.mid != null}" >		
 		<div class="form-group" align="right">
 			<input type="password" id="bcpassword" placeholder="비밀번호"	name="bcpassword"  style="width: 150px; height: 33px;"  maxlength="10"/>
 			<input type="button" class="btn btn-success" value="등록"  onclick="handleBtnComment()" />		
