@@ -30,7 +30,7 @@ import com.mycompany.myapp.dto.Member;
 import com.mycompany.myapp.service.MemberService;
 
 @Controller
-@SessionAttributes({"member"})
+@SessionAttributes({"member", "log"})
 public class JoinController {
 	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 
@@ -70,8 +70,11 @@ public class JoinController {
 	}
 
 	@RequestMapping("leave")
-	public String leave(String mid){
+	public String leave(String mid, SessionStatus sessionStatus, Model model ){
 		logger.info("컨트롤러에서 leave ");
+		sessionStatus.setComplete();
+		String log="logout";
+		model.addAttribute("log",log);
 		service.memberDelete(mid);
 		return "redirect:/";
 	}

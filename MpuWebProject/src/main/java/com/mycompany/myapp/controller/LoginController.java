@@ -28,7 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.mycompany.myapp.dto.Member;
 
 @Controller
-@SessionAttributes({"member"})
+@SessionAttributes({ "member" ,"log"})
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 

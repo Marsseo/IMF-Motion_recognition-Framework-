@@ -44,9 +44,9 @@ body {
 </head>
 <body>
 
-	<jsp:include page="home.jsp" flush="false"></jsp:include>
-
-
+	<jsp:include page="home.jsp" flush="true">
+		<jsp:param value="log" name="login"/>
+</jsp:include>
 	<div  style="width: 100%">
 		<div style="width: 30%; float: right">
 			<div style="height: 30%" id="gyroChartContainer" ></div>

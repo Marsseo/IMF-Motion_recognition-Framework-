@@ -29,11 +29,11 @@ import com.mycompany.myapp.service.MemberService;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes({ "member" })
+@SessionAttributes({ "member" ,"log"})
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
+	String log="log";
 	@Resource(name = "memberServiceImpl")
 	private MemberService service;
 
@@ -68,7 +68,7 @@ public class HomeController {
 	public String fb(HttpServletRequest request, Model model) throws IOException {
 		String accessToken = (String) request.getSession().getAttribute("facebookToken");
 		Facebook facebook = new FacebookTemplate(accessToken);
-
+	
 		if (facebook.isAuthorized()) {
 
 			// 페이스북에서 프로필을 읽어온다.
@@ -125,7 +125,7 @@ public class HomeController {
 			}
 			// 2. 회원가입이 되어있는 경우
 			else {
-				String log="login";
+				log="login";
 				model.addAttribute("log",log);
 				return "home";
 			}
@@ -137,7 +137,8 @@ public class HomeController {
 	}
 
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
+		/*model.addAttribute("log",log);*/
 		return "home";
 	}
 	

@@ -54,7 +54,7 @@
 	function leave() {
 		if (confirm("정말 탈퇴하시겠습니까?") == true) { // 확인
 			$.ajax({
-				url : "leave",
+				url : "http://localhost:8080/MpuWebProject/leave",
 				method : "post",
 				data : {
 					"mid" : "${member.mid}"
@@ -98,16 +98,16 @@
 											<a>Account Settings</a>
 										</li>
 										<li class="item-206">
-											<c:if test="${log!='login'}">
+											<c:if test="${member.mid==null}">
 												<a>환영합니다.</a>
 											</c:if>
-											<c:if test="${log=='login'}">
+											<c:if test="${member.mid!=null}">
 												<a>${member.mname}</a>
 											</c:if>
 
 										</li>
 										<li>
-										<c:if test="${log=='login'}">
+										<c:if test="${member.mid!=null}">
 											<a class="btn-leave" onclick="javascript:leave();">
 												<i class="halflings-icon off"></i>
 												회원탈퇴
@@ -122,17 +122,19 @@
 										<a style="line-height: 45px">로그인해주세요</a>
 									</c:if>
 									<c:if test="${log=='login'}">
-										<img src="http://graph.facebook.com/${profile.getId()}/picture" />
+										<img src="http://graph.facebook.com/${member.getMid()}/picture" />
 									</c:if>
 								</div>
 
 							</ul>
+							<c:if test="${member.mid==null}">
 							<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
 								style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 							>
 								<!-- <i class="fa fa-user fa-fw"></i> -->
 								회원가입
 							</a>
+							</c:if>
 							<c:if test="${log!='login'}">
 								<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
 									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
@@ -247,6 +249,7 @@
 	</div>
 
 
+<div> log=${log}</div>
 	<!-- start: JavaScript-->
 
 	<script src="<%=application.getContextPath()%>/resources/js/jquery-1.9.1.min.js"></script>
