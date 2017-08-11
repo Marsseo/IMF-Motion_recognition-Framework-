@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-//받을때 0도와 360도 변환되는 구간을 처리하는 코드
-//지그재그 코드 수정
+
+
 
 public class GyroMotions implements TriggerMotionInterface {
 
