@@ -16,7 +16,7 @@ import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.json.JSONObject;
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.133";
+	public static String ipAdress = "192.168.3.109";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
@@ -49,66 +49,40 @@ public class MPU6050Example {
 		mpu6050.startUpdatingThread();
 		time = System.currentTimeMillis();
 
-		ts.setGpioPinListenerDigital(new GpioPinListenerDigital() {
-			@Override
-			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+//		ts.setGpioPinListenerDigital(new GpioPinListenerDigital() {
+//			@Override
+//			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 //				if(event.getState() == PinState.HIGH) {
 //					System.out.println("off");
 //				} else {
 //					System.out.println("on");
 //				}
-
-				jsonObject = new JSONObject();
-				jsonObject.put("sensor", "button");
-				jsonObject.put("status", ts.getStatus());
-				json = jsonObject.toString();
-
-				coapClient = new CoapClient();
-				coapClient.setURI("coap://" + ipAdress + "/button");
-				coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
-				coapClient.shutdown();
-			}
-		});
+//
+//				jsonObject = new JSONObject();
+//				jsonObject.put("sensor", "button");
+//				jsonObject.put("status", ts.getStatus());
+//				json = jsonObject.toString();
+//
+//				coapClient = new CoapClient();
+//				coapClient.setURI("coap://" + ipAdress + "/button");
+//				coapResponse = coapClient.post(json, MediaTypeRegistry.APPLICATION_JSON);
+//				coapClient.shutdown();
+//			}
+//		});
 
 		while (true) {
 
 			Tools.log("-----------------------------------------------------");
-//
-//			// Accelerometer
-//			Tools.log("Accelerometer:");
-//			double[] accelAngles = mpu6050.getAccelAngles();
-//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(accelAngles[0]),
-//							MPU6050.angleToString(accelAngles[1]), MPU6050.angleToString(accelAngles[2])));
-//
-//			double[] accelAccelerations = mpu6050.getAccelAccelerations();
-//			Tools.log("\tAccelerations: " + MPU6050.xyzValuesToString(MPU6050.accelToString(accelAccelerations[0]),
-//							MPU6050.accelToString(accelAccelerations[1]), MPU6050.accelToString(accelAccelerations[2])));
-//
-//			// Gyroscope
-//			Tools.log("Gyroscope:");
-//			double[] gyroAngles = mpu6050.getGyroAngles();
-//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(gyroAngles[0]),
-//							MPU6050.angleToString(gyroAngles[1]), MPU6050.angleToString(gyroAngles[2])));
-//
-//			double[] gyroAngularSpeeds = mpu6050.getGyroAngularSpeeds();
-//			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angularSpeedToString(gyroAngularSpeeds[0]),
-//							MPU6050.angularSpeedToString(gyroAngularSpeeds[1]), MPU6050.angularSpeedToString(gyroAngularSpeeds[2])));
-//
-//			// Filtered angles
+
 			Tools.log("Filtered angles:");
 			double[] filteredAngles = mpu6050.getFilteredAngles();
 			
 
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
+			
 			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
 			
-			try {
-				distance("ifraredray");
-				distance("ultrasonic");
-			} catch (Exception ex) {
-				Logger.getLogger(MPU6050Example.class.getName()).log(Level.SEVERE, null, ex);
-			}
 
 //			button();
 //			
@@ -118,21 +92,7 @@ public class MPU6050Example {
 //			} catch (Exception ex) {	ex.printStackTrace();}
 //			
 			Tools.sleepMilliseconds(100);
-			/*
-			currtime = System.currentTimeMillis();
-			System.out.println(currtime-time);
-			if((currtime-time)>=60000){
-				try {
-					mpu6050.stopUpdatingThread();
-				} catch (InterruptedException ex) {
-					Logger.getLogger(MPU6050Example.class.getName()).log(Level.SEVERE, null, ex);
-				}
-				mpu6050=new MPU6050();
-				mpu6050.startUpdatingThread();
-				time = System.currentTimeMillis();
-			}
-
-			 */
+			
 		}
 
 	}

@@ -13,16 +13,6 @@
 <script src="<%=application.getContextPath()%>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 
 
-
-
-<!--Three.js 삽입  -->
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.min.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/three.module.js"></script>
-
-
-
-
 <!-- start: CSS -->
 <%-- <link href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
@@ -61,7 +51,7 @@
 				},
 				success : function(data) {
 
-					location.href = ""
+					location.href = "http://localhost:8080/MpuWebProject/"
 
 				}
 			});
@@ -73,7 +63,7 @@
 </head>
 
 <body>
-	<input type="hidden" class="form-control"  name="mid"  id="mid" value="${member.mid }"/>
+<%-- 	<input type="hidden" class="form-control"  name="mid"  id="mid" value="${member.mid }"/> --%>
 	<!-- start: Header -->
 	<div id="menu" class="nav-down">
 		<nav class="navbar navbar-default" role="navigation">
@@ -101,13 +91,13 @@
 											<c:if test="${member.mid==null}">
 												<a>환영합니다.</a>
 											</c:if>
-											<c:if test="${member.mid!=null}">
+											<c:if test="${log=='login'}">
 												<a>${member.mname}</a>
 											</c:if>
 
 										</li>
 										<li>
-										<c:if test="${member.mid!=null}">
+										<c:if test="${log=='login'}">
 											<a class="btn-leave" onclick="javascript:leave();">
 												<i class="halflings-icon off"></i>
 												회원탈퇴
@@ -119,7 +109,7 @@
 								<!-- end: User Dropdown -->
 								<div style="float: left">
 									<c:if test="${log!='login'}">
-										<a style="line-height: 45px">로그인해주세요</a>
+										<a style="line-height: 40px">로그인해주세요</a>
 									</c:if>
 									<c:if test="${log=='login'}">
 										<img src="http://graph.facebook.com/${member.getMid()}/picture" />
@@ -207,22 +197,22 @@
 								</li>
 								<li class="item-254 deeper dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										Products
+										Simulation
 										<span class="toggle-arrow"></span>
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li>
 											<a href="<%=application.getContextPath()%>/gyroTest">
 												<i class="icon-tasks"></i>
-												<span class="hidden-tablet">Gyro Test</span>
+												<span class="hidden-tablet">Gyro, UltraSonic, Infrared light Test</span>
 											</a>
 										</li>
-										<li class="item-256">
-											<a href="<%=application.getContextPath()%>/chart">
+										<%-- <li class="item-256">
+											<a href="<%=application.getContextPath()%>/main">
 												<i class="icon-tasks"></i>
-												<span class="hidden-tablet">UltraSonic, Infrared light</span>
+												<span class="hidden-tablet">main</span>
 											</a>
-										</li>
+										</li> --%>
 										<li class="item-256">
 											<a href="<%=application.getContextPath()%>/gyroExplore">
 												<i class="icon-tasks"></i>
@@ -249,7 +239,7 @@
 	</div>
 
 
-<div> log=${log}</div>
+
 	<!-- start: JavaScript-->
 
 	<script src="<%=application.getContextPath()%>/resources/js/jquery-1.9.1.min.js"></script>

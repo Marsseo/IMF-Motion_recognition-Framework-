@@ -127,7 +127,7 @@ public class HomeController {
 			else {
 				log="login";
 				model.addAttribute("log",log);
-				return "home";
+				return "main";
 			}
 
 		} else {
@@ -139,7 +139,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model) {
 		/*model.addAttribute("log",log);*/
-		return "home";
+		return "main";
 	}
 	
 	

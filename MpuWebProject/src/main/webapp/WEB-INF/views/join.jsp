@@ -56,7 +56,7 @@ body {
 					</div>
 
 					<hr>
-					<form class="form-horizontal" action="home" method="post">
+					<!-- <form class="form-horizontal" action="home" method="post">
 						<fieldset>
 							<div class="input-prepend" title="Username">
 								<span class="add-on">
@@ -82,7 +82,7 @@ body {
 								<button type="submit" class="btn btn-primary">Login</button>
 							</div>
 							<div class="clearfix"></div>
-					</form>
+					</form> -->
 					<hr>
 				</div>
 				<!-- /span -->

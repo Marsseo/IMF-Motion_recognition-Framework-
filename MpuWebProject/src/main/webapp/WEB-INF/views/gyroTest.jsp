@@ -44,14 +44,14 @@ body {
 </head>
 <body>
 
-	<jsp:include page="home.jsp" flush="true">
-		<jsp:param value="log" name="login"/>
-</jsp:include>
+	<jsp:include page="home.jsp" flush="false"></jsp:include>
+		
+
 	<div  style="width: 100%">
 		<div style="width: 30%; float: right">
-			<div style="height: 30%" id="gyroChartContainer" ></div>
-			<div style="height: 30%" id="ultrasonicChartContainer"></div>
-			<div style="height: 30%" id="ifraredrayChartContainer"></div>
+			<div style="height: 300px" id="gyroChartContainer" ></div>
+			<div style="height: 300px" id="ultrasonicChartContainer"></div>
+			<div style="height: 300px" id="ifraredrayChartContainer"></div>
 		</div>
 		<div style="width: 70%; float: left" id="container"></div>
 		
@@ -197,9 +197,9 @@ body {
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x = prepitchAngle/200; /* 빨강 y값 */
-				group.rotation.y = preyawAngle/200; //초록 z값
-				group.rotation.z = prerollAngle/200; //파랑 x값
+				group.rotation.x += prepitchAngle/2000; /* 빨강 y값 */
+				group.rotation.y += preyawAngle/2000; //초록 z값
+				group.rotation.z += prerollAngle/2000; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;

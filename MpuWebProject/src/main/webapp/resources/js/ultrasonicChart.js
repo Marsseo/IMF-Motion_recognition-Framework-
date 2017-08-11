@@ -9,6 +9,7 @@ $(function() {
 			events: {
 				load: requestUltrasonicData
 			}
+			
 		},
 		colors: ['yellow'],
 		title: {

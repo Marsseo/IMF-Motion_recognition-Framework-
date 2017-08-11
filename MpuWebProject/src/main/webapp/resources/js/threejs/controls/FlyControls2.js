@@ -3,7 +3,9 @@
  */
 
 THREE.FlyControls = function ( object, domElement ) {
-
+	
+	var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
+	
 	this.object = object;
 
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
@@ -20,7 +22,9 @@ THREE.FlyControls = function ( object, domElement ) {
 	// disable default target object behavior
 
 	// internals
-
+	
+	requestGyroSensorData();
+	
 	this.tmpQuaternion = new THREE.Quaternion();
 
 	this.mouseStatus = 0;
@@ -39,9 +43,9 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	};
 
-
+	
 	this.mousedown = function( event ) {
-
+		console.log("ddd       "+(pitchAngle-prepitchAngle)+"        "+(rollAngle-prerollAngle));
 		if ( this.domElement !== document ) {
 
 			this.domElement.focus();
@@ -71,7 +75,7 @@ THREE.FlyControls = function ( object, domElement ) {
 	};
 
 	this.mousemove = function( event ) {
-
+		
 		if ( ! this.dragToLook || this.mouseStatus > 0 ) {
 
 			var container = this.getContainerDimensions();
@@ -81,7 +85,7 @@ THREE.FlyControls = function ( object, domElement ) {
 			this.moveState.yawLeft   = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth  ) / halfWidth;
 			this.moveState.pitchDown =   ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
 
-			this.updateRotationVector();
+			
 
 		}
 
@@ -137,8 +141,8 @@ THREE.FlyControls = function ( object, domElement ) {
 
 		var forward = ( this.moveState.forward || ( this.autoForward && ! this.moveState.back ) ) ? 1 : 0;
 
-		this.moveVector.x = ( - this.moveState.left    + this.moveState.right );
-		this.moveVector.y = ( - this.moveState.down    + this.moveState.up );
+		//this.moveVector.x = ( - (pitchAngle-prepitchAngle)/200 );
+		//this.moveVector.y = ( - (rollAngle-prerollAngle)/200 );
 		this.moveVector.z = ( - forward + this.moveState.back );
 
 		//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
@@ -147,9 +151,9 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	this.updateRotationVector = function() {
 
-		this.rotationVector.x = ( - this.moveState.pitchDown + this.moveState.pitchUp );
-		this.rotationVector.y = ( - this.moveState.yawRight  + this.moveState.yawLeft );
-		this.rotationVector.z = ( - this.moveState.rollRight + this.moveState.rollLeft );
+		this.rotationVector.x = ( -(prerollAngle)/200 );
+		this.rotationVector.y = ( (prepitchAngle)/200 );
+		//this.rotationVector.z = ( -(preyawAngle)/100 );
 
 		//console.log( 'rotate:', [ this.rotationVector.x, this.rotationVector.y, this.rotationVector.z ] );
 
@@ -190,6 +194,20 @@ THREE.FlyControls = function ( object, domElement ) {
 		event.preventDefault();
 
 	}
+	
+	function requestGyroSensorData(){
+		var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
+		ws.onmessage = function(event){
+			var data = JSON.parse(event.data);
+			preyawAngle = data.yawAngle-180;
+			prepitchAngle = data.pitchAngle-180;
+			prerollAngle = data.rollAngle-180;
+		};
+		yawAngle = preyawAngle;
+		pitchAngle = prepitchAngle;
+		rollAngle = prerollAngle;
+		
+	}
 
 	this.dispose = function() {
 
@@ -198,16 +216,12 @@ THREE.FlyControls = function ( object, domElement ) {
 		this.domElement.removeEventListener( 'mousemove', _mousemove, false );
 		this.domElement.removeEventListener( 'mouseup', _mouseup, false );
 
-		window.removeEventListener( 'keydown', _keydown, false );
-		window.removeEventListener( 'keyup', _keyup, false );
 
 	};
 
 	var _mousemove = bind( this, this.mousemove );
 	var _mousedown = bind( this, this.mousedown );
 	var _mouseup = bind( this, this.mouseup );
-	var _keydown = bind( this, this.keydown );
-	var _keyup = bind( this, this.keyup );
 
 	this.domElement.addEventListener( 'contextmenu', contextmenu, false );
 
@@ -215,10 +229,9 @@ THREE.FlyControls = function ( object, domElement ) {
 	this.domElement.addEventListener( 'mousedown', _mousedown, false );
 	this.domElement.addEventListener( 'mouseup',   _mouseup, false );
 
-	window.addEventListener( 'keydown', _keydown, false );
-	window.addEventListener( 'keyup',   _keyup, false );
 
 	this.updateMovementVector();
 	this.updateRotationVector();
-
+	
+	
 };
