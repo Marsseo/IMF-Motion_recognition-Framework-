@@ -91,13 +91,13 @@
 											<c:if test="${member.mid==null}">
 												<a>환영합니다.</a>
 											</c:if>
-											<c:if test="${member.mid!=null}">
+											<c:if test="${log=='login'}">
 												<a>${member.mname}</a>
 											</c:if>
 
 										</li>
 										<li>
-										<c:if test="${member.mid!=null}">
+										<c:if test="${log=='login'}">
 											<a class="btn-leave" onclick="javascript:leave();">
 												<i class="halflings-icon off"></i>
 												회원탈퇴
@@ -208,9 +208,9 @@
 											</a>
 										</li>
 										<%-- <li class="item-256">
-											<a href="<%=application.getContextPath()%>/chart">
+											<a href="<%=application.getContextPath()%>/main">
 												<i class="icon-tasks"></i>
-												<span class="hidden-tablet">UltraSonic, Infrared light</span>
+												<span class="hidden-tablet">main</span>
 											</a>
 										</li> --%>
 										<li class="item-256">

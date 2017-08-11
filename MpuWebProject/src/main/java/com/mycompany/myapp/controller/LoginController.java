@@ -45,7 +45,7 @@ public class LoginController {
 		
 		String log="logout";
 		model.addAttribute("log",log);
-		return "home";
+		return "main";
 		
 	}
 	
