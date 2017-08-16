@@ -41,12 +41,26 @@ body {
 <script src="<%=application.getContextPath()%>/resources/js/ifraredrayChart.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/gyroChart.js"></script>
 <!-- 하이차트 end -->
+<script>
+		function handleIP(){
+			if( $("#ip").val()=="") {
+				$("#ip").attr("placeholder", "CoAP server IP");
+				$("#ip").focus();
+				return ;
+			}
+			return $("#form").submit();
+		}
+</script>
+
 </head>
 <body>
 
 	<jsp:include page="home.jsp" flush="false"></jsp:include>
 		
-
+	<form method="post" id="form" style="height: 40px;">
+		<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 200px; height: 40px; margin-top:10px"  maxlength="15"/>
+		<input type="button" class="btn btn-success" value="IP설정"  style="margin-top:2px" onclick="handleIP()" />
+	</form>
 	<div  style="width: 100%">
 		<div style="width: 30%; float: right">
 			<div style="height: 300px" id="gyroChartContainer" ></div>
@@ -76,7 +90,7 @@ body {
 			init();
 			requestGyroSensorData();
 			animate();
-			
+			window.addEventListener( 'resize', onWindowResize, true );
 			function init() {
 
 				container = document.getElementById( 'container' );
@@ -179,11 +193,10 @@ body {
 				
 				//
 				
-				window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function onWindowResize() {
-				w=window.innerWidth;
-				h=window.innerHeight;
+				w=container.innerWidth;
+				h=container.innerHeight;
 				camera.left = w / - 2 * viewSize;
 			    camera.right = w / 2 * viewSize;
 			    camera.top = h / 2 * viewSize;
@@ -197,9 +210,9 @@ body {
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x += prepitchAngle/2000; // 빨강 y값 
-				group.rotation.y += preyawAngle/2000; //초록 z값
-				group.rotation.z += prerollAngle/2000; //파랑 x값
+				group.rotation.x = prepitchAngle/2000; // 빨강 y값 
+				group.rotation.y = preyawAngle/2000; //초록 z값
+				group.rotation.z = prerollAngle/2000; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;

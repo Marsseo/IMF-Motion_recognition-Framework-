@@ -24,6 +24,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.mycompany.myapp.controller.GyroCotroller;
+
 @Component
 public class UltrasonicSensorHandler extends TextWebSocketHandler implements ApplicationListener{
 	
@@ -36,7 +38,7 @@ public class UltrasonicSensorHandler extends TextWebSocketHandler implements App
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://192.168.3.109/ultrasonic");
+		coapClient.setURI("coap://"+GyroCotroller.getIpAddress()+"/ultrasonic");
 		coapObserveRelation = coapClient.observe(new CoapHandler() {
 			
 			@Override
