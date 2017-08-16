@@ -95,9 +95,9 @@ public class HomeController {
 			
 			member.setMid(profile.getId());
 			
-			
+/*			
 			System.out.println(profile.getName());
-			System.out.println(profile.getId());
+			System.out.println(profile.getId());*/
 			
 
 			// 전송

@@ -137,7 +137,7 @@
 								<a class="btn btn-primary" href="<%=application.getContextPath()%>/logout"
 									style="line-height: 30px; background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
 								>
-									<!-- <i class="fa fa-lock"> </i> -->
+									<i class="fa fa-lock"> </i>
 									로그아웃
 								</a>
 							</c:if>
@@ -156,7 +156,7 @@
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li class="item-106">
-											<a href="/demo">Highcharts demos</a>
+											<a href="<%=application.getContextPath()%>/demo">Demo</a>
 										</li>
 										<li class="item-107">
 											<a href="/stock/demo">Highstock demos</a>
@@ -223,7 +223,7 @@
 								</li>
 								<li class="item-282 deeper dropdown">
 									<a href="<%=application.getContextPath()%>/board/boardList">
-										<span class="hidden-tablet"> Board</span>
+										<span class="hidden-tablet">Question Board</span>
 									</a>
 
 								</li>
