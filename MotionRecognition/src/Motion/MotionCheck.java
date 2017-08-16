@@ -16,6 +16,7 @@ public class MotionCheck {
 	public static double irDistance=1000000;
 	public static double ultrasonicDistance;
 	public static int motionOn = 0;
+	public static String finalMotion="";
 
 	public static List yawRollPitchRangeList = new ArrayList<>();
 	public static List<List> differenceResultList = new ArrayList<>();
@@ -95,6 +96,7 @@ public class MotionCheck {
 
 				while (true) {
 					if (motionOn == 0) {
+						
 						System.out.println("모션준비 1단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: triggerOnMotionList){
 						//	trigger.triggerMotion(0);
@@ -109,6 +111,7 @@ public class MotionCheck {
 					}
 					
 					else if(motionOn == 1){
+						finalMotion="";
 						try {
 							Thread.sleep(500);
 						} catch (Exception e) {
@@ -134,7 +137,7 @@ public class MotionCheck {
 									motion.gyroMotion(differenceResultList,motionMap);
 								}
 								if(!motionMap.isEmpty()){
-									String finalMotion=gyroMotions.motionDecision(motionMap);
+									finalMotion=gyroMotions.motionDecision(motionMap);
 									actionInterfaceImpl.action(finalMotion);
 								}
 								

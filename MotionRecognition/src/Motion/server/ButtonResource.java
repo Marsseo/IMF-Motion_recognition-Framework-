@@ -47,7 +47,7 @@ public class ButtonResource extends CoapResource {
 	@Override
 	public void handlePOST(CoapExchange exchange) {
 		//{"sensor":"button","status":"on"} 이런식으로
-	//{"sensor":"status"} 이런식으로 요청
+		//{"sensor":"status"} 이런식으로 요청
 
 		try{
 		String requestJson = exchange.getRequestText();

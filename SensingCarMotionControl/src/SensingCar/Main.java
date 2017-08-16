@@ -13,6 +13,7 @@ public class Main {
 		
 		main=new Motion.Main(new Action());
 		MotionCheck.triggerOnMotionList.add(new Controller());
+		
 		System.out.print("시작스");
 		
 		main.start();
