@@ -33,10 +33,14 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	private CoapClient coapClient;
 	private CoapObserveRelation coapObserveRelation;
 	
+	
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
 		coapClient.setURI("coap://192.168.3.109/gyroscope");
+		
+		System.out.println("test"+coapClient.getURI());
+		
 		coapObserveRelation = coapClient.observe(new CoapHandler() {
 			
 			@Override
