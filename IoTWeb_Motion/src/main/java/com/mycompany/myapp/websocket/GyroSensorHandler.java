@@ -80,7 +80,7 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOGGER.info("");
+		LOGGER.info(GyroCotroller.getIpAddress());
 		list.add(session);
 	}
 	

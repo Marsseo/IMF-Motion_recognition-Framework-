@@ -60,12 +60,13 @@ body {
 	<form method="post" id="form" style="height: 40px;">
 		<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 200px; height: 40px; margin-top:10px"  maxlength="15"/>
 		<input type="button" class="btn btn-success" value="IP설정"  style="margin-top:2px" onclick="handleIP()" />
+		<input type="text" id="ipDisplay" value="${ip}" style="width: 200px; height: 40px; margin-top:10px" readOnly />
 	</form>
-	<div  style="width: 100%">
+	<div  style="width: 100%; height: 10%">
 		<div style="width: 30%; float: right">
-			<div style="height: 300px" id="gyroChartContainer" ></div>
-			<div style="height: 300px" id="ultrasonicChartContainer"></div>
-			<div style="height: 300px" id="ifraredrayChartContainer"></div>
+			<div id="gyroChartContainer" ></div>
+			<div id="ultrasonicChartContainer"></div>
+			<div id="ifraredrayChartContainer"></div>
 		</div>
 		<div style="width: 70%; float: left" id="container"></div>
 		
@@ -90,7 +91,7 @@ body {
 			init();
 			requestGyroSensorData();
 			animate();
-			window.addEventListener( 'resize', onWindowResize, true );
+
 			function init() {
 
 				container = document.getElementById( 'container' );
@@ -192,7 +193,7 @@ body {
 				container.appendChild( renderer.domElement );
 				
 				//
-				
+				window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function onWindowResize() {
 				w=container.innerWidth;
@@ -204,20 +205,20 @@ body {
 			    camera.updateProjectionMatrix();
 			    renderer.setSize( w, h );
 			    
-				/* camera.aspect = window.innerWidth / window.innerHeight;
+				/*camera.aspect = container.innerWidth / container.innerHeight;
 				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight ); */
+				renderer.setSize( window.innerWidth, window.innerHeight );*/
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x = prepitchAngle/2000; // 빨강 y값 
-				group.rotation.y = preyawAngle/2000; //초록 z값
-				group.rotation.z = prerollAngle/2000; //파랑 x값
+				group.rotation.x = prepitchAngle/1000; // 빨강 y값 
+				group.rotation.y = preyawAngle/1000; //초록 z값
+				group.rotation.z = prerollAngle/1000; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;
 				render();
-				
+				window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function render() {
 				renderer.render( scene, camera );
@@ -231,11 +232,13 @@ body {
 					prepitchAngle = data.pitchAngle-180;
 					prerollAngle = data.rollAngle-180;
 					console.log("ddd   "+preyawAngle+"  "+prepitchAngle+"  "+prerollAngle);
+					
+					
+					yawAngle = preyawAngle;
+					pitchAngle = prepitchAngle;
+					rollAngle = prerollAngle;
 				};
-				yawAngle = preyawAngle;
-				pitchAngle = prepitchAngle;
-				rollAngle = prerollAngle;
-				
+								
 			}
 		</script>
 </body>
