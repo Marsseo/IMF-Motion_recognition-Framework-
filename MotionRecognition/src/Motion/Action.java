@@ -2,7 +2,7 @@ package Motion;
 
 public class Action implements ActionInterface {
 	
-	public static String motionResult="";
+	
 
 	@Override
 	public void action(String finalMotion) {

@@ -182,11 +182,12 @@
 				<div class="master-title">Make your data come alive</div>
 				<div class="master-sub-title">Highcharts makes it easy for developers to set up interactive charts in their web pages</div>
 				<p class="button-row">
-					<a class="button" href="/demo">View demo</a>
-					<a class="secondary-link" href="http://shop.highsoft.com/">Get a license</a>
+					<a class="button" href="<%=application.getContextPath()%>/demo">View demo</a>
+					<a class="secondary-link" href="https://github.com/Marsseo/IoTFinalProject">View on Github</a>
 				</p>
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

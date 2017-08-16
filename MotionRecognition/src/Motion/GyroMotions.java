@@ -233,10 +233,10 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 
-		for (double k : listYawAngle) {
+		for (double k : listYawAngle) { //삭제각
 			System.out.println(k);
 		}
-		for (double k : listYawDifference) {
+		for (double k : listYawDifference) {  //삭제각
 			System.out.println(k);
 		}
 
@@ -421,6 +421,7 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	@Override
 	public void triggerButton(int step, String buttonStatus) {
+		//모션이 취해지지 않았을경우
 		if (step == 0) {
 			if (buttonStatus.equals("on")) {
 				emptingContinuedList();
