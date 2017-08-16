@@ -43,16 +43,21 @@ public class MotionCheck {
 		
 		double[] left={180,270,90,270,0,0,4,80,0,1,0,0};
 		double[] right={90,180,90,270,0,0,4,80,0,1,0,0};
-		double[] up={-360,360,90,270,0,0,0,3,0.5,80,0,0};
-		double[] down={-360,360,90,270,0,0,0,3,0.5,80,0,0};
-		double[] zigzag={-360,360,90,270,0,0,4,80,4,80,0,0};
-		double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
+		double[] up={140,220,90,270,0,0,0,3,2,80,0,0};
+		double[] down={140,220,90,270,0,0,0,3,2,80,0,0};
+		double[] zigzag={90,180,90,270,0,0,4,80,4,80,0,0};
+		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,0.5,80};
+		//double[] n;
+	//	double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
 		
+	
 		yawRollPitchRangeList.add(left); //0번
 		yawRollPitchRangeList.add(right);//1번
 		yawRollPitchRangeList.add(up); //2번
 		yawRollPitchRangeList.add(down); //3번
 		yawRollPitchRangeList.add(zigzag); //4번
+		yawRollPitchRangeList.add(pitchRotation); //5번
+		
 		gyroMotionList.add(new GyroMotionImpl_Up());
 		gyroMotionList.add(new GyroMotionImpl_Left());
 		gyroMotionList.add(new GyroMotionImpl_Right());
@@ -60,7 +65,8 @@ public class MotionCheck {
 		gyroMotionList.add(new GyroMotionImpl_ZigZag());
 		gyroMotionList.add(new GyroMotionImpl_Circle());
 		gyroMotionList.add(new GyroMotionImpl_N());
-		
+		gyroMotionList.add(new GyroMotionImpl_LeftDown());
+		gyroMotionList.add(new GyroMotionImpl_PitchRotation());
 		triggerOnMotionList.add(gyroMotions);
 		triggerOffMotionList.add(gyroMotions);
 	}
@@ -91,7 +97,7 @@ public class MotionCheck {
 					if (motionOn == 0) {
 						System.out.println("모션준비 1단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: triggerOnMotionList){
-							trigger.triggerMotion(0);
+						//	trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
 							trigger.triggerIR(0,irDistance);
 						}
@@ -109,7 +115,7 @@ public class MotionCheck {
 						}
 					System.out.println("모션을 취하는중 2단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: triggerOffMotionList){
-							trigger.triggerMotion(1);
+						//	trigger.triggerMotion(1);
 							trigger.triggerButton(1,buttonStatus);
 							trigger.triggerIR(1, irDistance);
 						}

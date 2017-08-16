@@ -1,5 +1,6 @@
 package Motion.server;
 
+import Motion.Action;
 import Motion.GyroMotions;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
@@ -72,9 +73,17 @@ public class GyroscopeResource extends CoapResource {
 			String requestJson = exchange.getRequestText();
 			if (requestJson.equals("")) {
 				String sensor1 = exchange.getRequestOptions().getUriQuery().get(0).split("=")[1];
-				String yawAngle1 = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
-				String pitchAngle1 = exchange.getRequestOptions().getUriQuery().get(2).split("=")[1];
-				String rollAngle1 = exchange.getRequestOptions().getUriQuery().get(3).split("=")[1];
+				String yawAngle1="";
+				String pitchAngle1="";
+				String rollAngle1="";
+				System.out.println("개이득    :"+exchange.getRequestOptions().getURIQueryCount()); //삭제각
+				
+				if(exchange.getRequestOptions().getURIQueryCount()>1){
+					yawAngle1 = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
+				pitchAngle1 = exchange.getRequestOptions().getUriQuery().get(2).split("=")[1];
+				 rollAngle1 = exchange.getRequestOptions().getUriQuery().get(3).split("=")[1];
+				}
+				
 				//System.out.println("key1 :" + key1);
 				//System.out.println("key2 :" + key2);
 
@@ -84,6 +93,8 @@ public class GyroscopeResource extends CoapResource {
 					currRollAngle = Double.parseDouble(rollAngle1);
 					GyroMotions.gyroAddData(currYawAngle, currPitchAngle, currRollAngle);
 				} else if (sensor1.equals("status")) {
+					
+					exchange.respond(String.valueOf(Action.motionResult));
 
 				} else {
 					exchange.respond("fail");

@@ -1,6 +1,8 @@
 package Motion;
 
 public class Action implements ActionInterface {
+	
+	public static String motionResult="";
 
 	@Override
 	public void action(String finalMotion) {
@@ -25,6 +27,12 @@ public class Action implements ActionInterface {
 				break;
 				case "n":
 				System.out.println("----------------------N 모션 인식");
+				break;
+				case "pitchRightRotation":
+				System.out.println("----------------------pitchRightRotation 모션 인식");
+				break;
+				case "pitchLeftRotation":
+				System.out.println("----------------------pitchLeftRotation 모션 인식");
 				break;
 			default:
 				System.out.println("----------------------모션 매칭 실패");
