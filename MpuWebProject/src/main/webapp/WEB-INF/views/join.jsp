@@ -42,7 +42,7 @@ body {
 			<div class="row-fluid">
 				<div class="login-box">
 					<div class="icons">
-						<a href="http://localhost:8080/MpuWebProject/">
+						<a href="http://localhost:8080/IoTWeb_Motion/">
 							<i class="halflings-icon home"></i>
 						</a>
 					</div>

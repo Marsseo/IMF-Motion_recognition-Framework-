@@ -42,7 +42,7 @@ public class HomeController {
 		FacebookConnectionFactory connectionFactory = new FacebookConnectionFactory("1541339359250690",
 				"9477d672e7f7aec8cc02f4c7a17f3552");
 		OAuth2Parameters params = new OAuth2Parameters();
-		params.setRedirectUri("http://localhost:8080/MpuWebProject/fb/callback");
+		params.setRedirectUri("http://localhost:8080/IoTWeb_Motion/fb/callback");
 		params.setScope("public_profile, email");
 		OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
 		String authorizeUrl = oauthOperations.buildAuthorizeUrl(params);
@@ -57,7 +57,7 @@ public class HomeController {
 
 		OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode,
-				"http://localhost:8080/MpuWebProject/fb/callback", null);
+				"http://localhost:8080/IoTWeb_Motion/fb/callback", null);
 		String token = accessGrant.getAccessToken();
 		request.getSession().setAttribute("facebookToken", token);
 

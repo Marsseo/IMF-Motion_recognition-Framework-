@@ -44,14 +44,14 @@
 	function leave() {
 		if (confirm("정말 탈퇴하시겠습니까?") == true) { // 확인
 			$.ajax({
-				url : "http://localhost:8080/MpuWebProject/leave",
+				url : "http://localhost:8080/IoTWeb_Motion/leave",
 				method : "post",
 				data : {
 					"mid" : "${member.mid}"
 				},
 				success : function(data) {
 
-					location.href = "http://localhost:8080/MpuWebProject/"
+					location.href = "http://localhost:8080/IoTWeb_Motion/"
 
 				}
 			});
@@ -72,7 +72,7 @@
 				<div class="collapse navbar-collapse">
 					<div id="menu-container">
 						<div style="text-align: center; margin-right: 100px; float: left">
-							<a style="line-height: 2" href="http://localhost:8080/MpuWebProject/"> IoT0619 </a>
+							<a style="line-height: 2" href="http://localhost:8080/IoTWeb_Motion/"> IoT0619 </a>
 						</div>
 
 						<div id="menu-second" class="hidden-xs">
