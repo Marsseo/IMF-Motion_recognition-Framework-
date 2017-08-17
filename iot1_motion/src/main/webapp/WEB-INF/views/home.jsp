@@ -61,6 +61,14 @@
 		}
 	}
 	
+	function handleIP(){
+		if( $("#ip").val()=="") {
+			$("#ip").attr("placeholder", "CoAP server IP");
+			$("#ip").focus();
+			return ;
+		}
+		return $("#form").submit();
+	}
 	
 </script>
 </head>
@@ -242,7 +250,16 @@
 											<span class="hidden-tablet">Member Board</span>
 										</a>
 									</li>
-								</c:if>	
+								</c:if>
+								<c:if test="${log=='login'}">
+										<li class="item-282 deeper dropdown">
+											<form method="post" id="form" style="height: 30px;">
+												<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 120px; height: 30px; margin-top:10px"  maxlength="15"/>
+												<input type="button" class="btn btn-success" value="IP설정"  style="margin-top:2px" onclick="handleIP()" />
+												<input type="text" id="ipDisplay" value="${ip}" style="background-color:black; width: 120px; height: 30px; margin-top:10px" readOnly />
+											</form>
+										</li>
+								</c:if>
 							</ul>
 							<div class="clearfix"></div>
 						</div>

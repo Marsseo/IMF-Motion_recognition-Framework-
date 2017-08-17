@@ -85,12 +85,12 @@ public class MPU6050Example {
 			
 
 			button();
-//			
-//			try {
-//				distance("ultrasonic");
-//				distance("ifraredray");
-//			} catch (Exception ex) {	ex.printStackTrace();}
-//			
+			
+			try {
+				distance("ultrasonic");
+				distance("ifraredray");
+			} catch (Exception ex) {	ex.printStackTrace();}
+			
 			Tools.sleepMilliseconds(100);
 			
 		}
