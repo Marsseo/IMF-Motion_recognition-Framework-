@@ -23,7 +23,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import com.mycompany.myapp.controller.GyroCotroller;
+
+import com.mycompany.myapp.controller.HomeController;
 
 @Component
 public class GyroSensorHandler extends TextWebSocketHandler implements ApplicationListener{
@@ -38,7 +39,7 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://"+GyroCotroller.getIpAddress()+"/gyroscope");
+		coapClient.setURI("coap://"+HomeController.getIpAddress()+"/gyroscope");
 		
 		System.out.println("test"+coapClient.getURI());
 		
@@ -80,7 +81,7 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOGGER.info(GyroCotroller.getIpAddress());
+		LOGGER.info(HomeController.getIpAddress());
 		list.add(session);
 	}
 	

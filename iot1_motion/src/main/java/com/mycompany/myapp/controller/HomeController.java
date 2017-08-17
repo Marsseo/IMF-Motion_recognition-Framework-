@@ -18,6 +18,7 @@ import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -34,6 +35,9 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	String log="log";
+	
+	private static String ipAddress="";
+	
 	@Resource(name = "memberServiceImpl")
 	private MemberService service;
 
@@ -136,11 +140,22 @@ public class HomeController {
 
 	}
 
-	@RequestMapping("/")
-	public String home(Model model) {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String homeGet(Model model) {
 		/*model.addAttribute("log",log);*/
 		return "main";
 	}
 	
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public String gyroTestPost(String ip, Model model){
+		
+		ipAddress = ip;
+		model.addAttribute("ipAddress", ipAddress);
+		return "main";
+	}
+	
+	public static String getIpAddress() {
+		return ipAddress;
+	}
 	
 }

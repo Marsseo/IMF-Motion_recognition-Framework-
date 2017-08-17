@@ -24,7 +24,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.mycompany.myapp.controller.GyroCotroller;
+import com.mycompany.myapp.controller.HomeController;
 
 @Component
 public class IfraredraySensorHandler extends TextWebSocketHandler implements ApplicationListener{
@@ -38,7 +38,7 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://"+GyroCotroller.getIpAddress()+"/ifraredray");
+		coapClient.setURI("coap://"+HomeController.getIpAddress()+"/ifraredray");
 		coapObserveRelation = coapClient.observe(new CoapHandler() {
 			
 			@Override

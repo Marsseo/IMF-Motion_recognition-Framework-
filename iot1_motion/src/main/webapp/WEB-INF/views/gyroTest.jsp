@@ -41,27 +41,11 @@ body {
 <script src="<%=application.getContextPath()%>/resources/js/ifraredrayChart.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/gyroChart.js"></script>
 <!-- 하이차트 end -->
-<script>
-		function handleIP(){
-			if( $("#ip").val()=="") {
-				$("#ip").attr("placeholder", "CoAP server IP");
-				$("#ip").focus();
-				return ;
-			}
-			return $("#form").submit();
-		}
-</script>
-
 </head>
 <body>
 
 	<jsp:include page="home.jsp" flush="false"></jsp:include>
 		
-	<form method="post" id="form" style="height: 40px;">
-		<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 200px; height: 40px; margin-top:10px"  maxlength="15"/>
-		<input type="button" class="btn btn-success" value="IP설정"  style="margin-top:2px" onclick="handleIP()" />
-		<input type="text" id="ipDisplay" value="${ip}" style="width: 200px; height: 40px; margin-top:10px" readOnly />
-	</form>
 	<div  style="width: 100%; height: 10%">
 		<div style="width: 30%; float: right">
 			<div id="gyroChartContainer" ></div>

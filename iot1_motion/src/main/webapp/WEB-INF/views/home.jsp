@@ -41,23 +41,33 @@
 <script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/myjs.js"></script>
 
 <script type="text/javascript">
+
 	function leave() {
 		if (confirm("정말 탈퇴하시겠습니까?") == true) { // 확인
 			$.ajax({
-				url : "http://localhost:8080/IoTWeb_Motion/leave",
+				url : "http://localhost:8080/iot1_motion/leave",
 				method : "post",
 				data : {
 					"mid" : "${member.mid}"
 				},
 				success : function(data) {
 
-					location.href = "http://localhost:8080/IoTWeb_Motion/"
+					location.href = "http://localhost:8080/iot1_motion/"
 
 				}
 			});
 		} else {
 			return;
 		}
+	}
+	
+	function handleIP(){
+		if( $("#ip").val()=="") {
+			$("#ip").attr("placeholder", "CoAP server IP");
+			$("#ip").focus();
+			return ;
+		}
+		return $("#form").submit();
 	}
 </script>
 </head>
@@ -72,7 +82,7 @@
 				<div class="collapse navbar-collapse">
 					<div id="menu-container">
 						<div style="text-align: center; margin-right: 100px; float: left">
-							<a style="line-height: 2" href="http://localhost:8080/IoTWeb_Motion/"> IoT0619 </a>
+							<a style="line-height: 2" href="http://localhost:8080/iot1_motion/"> IoT0619 </a>
 						</div>
 
 						<div id="menu-second" class="hidden-xs">
@@ -219,13 +229,26 @@
 												<span class="hidden-tablet">Gyro Explore</span>
 											</a>
 										</li>
+										<li class="item-256">
+											<a href="<%=application.getContextPath()%>/video">
+												<i class="icon-tasks"></i>
+												<span class="hidden-tablet">video control</span>
+											</a>
+										</li>
 									</ul>
 								</li>
 								<li class="item-282 deeper dropdown">
 									<a href="<%=application.getContextPath()%>/board/boardList">
 										<span class="hidden-tablet">Question Board</span>
 									</a>
-
+							
+								</li>
+								<li class="item-103 deeper dropdown" style="margin-top:8px ; margin-left:50px">
+									<form method="post" id="form" style="height: 40px;">
+										<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 120px; height: 30px; "  maxlength="15"/>
+										<input type="button" class="btn btn-success" value="IP설정"  onclick="handleIP()" />
+										<input type="text" id="ipDisplay" value="${ipAddress}" style="width: 100px; height: 30px; " readOnly />
+									</form>
 								</li>
 							</ul>
 
