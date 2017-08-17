@@ -51,12 +51,10 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 				double yawAngle = Double.parseDouble(jsonObject.getString("yawAngle"));
 				double pitchAngle = Double.parseDouble(jsonObject.getString("pitchAngle"));
 				double rollAngle = Double.parseDouble(jsonObject.getString("rollAngle"));
-				String motion = jsonObject.getString("motion");
 				jsonObject.put("time", getUTCTime(new Date().getTime()));
 				jsonObject.put("yawAngle", yawAngle);
 				jsonObject.put("pitchAngle", pitchAngle);
 				jsonObject.put("rollAngle", rollAngle);
-				jsonObject.put("motion", motion);
 				json = jsonObject.toString();
 				try {
 				for(WebSocketSession session:list){

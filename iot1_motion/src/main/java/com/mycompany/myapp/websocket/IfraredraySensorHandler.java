@@ -38,7 +38,7 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://192.168.3.133/ifraredray");
+		coapClient.setURI("coap://192.168.3.109/ifraredray");
 		coapObserveRelation = coapClient.observe(new CoapHandler() {
 			
 			@Override
