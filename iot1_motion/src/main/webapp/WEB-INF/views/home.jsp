@@ -243,13 +243,6 @@
 									</a>
 							
 								</li>
-								<li class="item-103 deeper dropdown" style="margin-top:8px ; margin-left:50px">
-									<form method="post" id="form" style="height: 40px;">
-										<input type="text" id="ip" placeholder="CoAP server IP"	name="ip"  style="width: 120px; height: 30px; "  maxlength="15"/>
-										<input type="button" class="btn btn-success" value="IP설정"  onclick="handleIP()" />
-										<input type="text" id="ipDisplay" value="${ipAddress}" style="width: 100px; height: 30px; " readOnly />
-									</form>
-								</li>
 								<c:if test="${member.mlevel >= 4}">
 									<li class="item-282 deeper dropdown">
 										<a href="<%=application.getContextPath()%>/admin/memberList">
@@ -258,7 +251,6 @@
 									</li>
 								</c:if>	
 							</ul>
-
 							<div class="clearfix"></div>
 						</div>
 
