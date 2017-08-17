@@ -66,6 +66,12 @@
 				}
 			});
 		}
+		function handleBtnDeleteAdmin() {			
+			check = confirm("삭제하시겠습니까?");
+			if (check) { 
+				location.href="boardDelete?bno=${board.bno}";
+			 }
+		}
 		function handleBtnLike() {
 			console.log($("#mid").val());
 			if($("#mid").val()==""){		
@@ -110,7 +116,7 @@
 				url: "boardCommentCheckBpassword",
 				method: "post",
 				data: {"bcno":bcno, "bcpassword":bcpassword},
-				success: function(data) {console.log("1");
+				success: function(data) {
 					if(data.result =="success") {
 						console.log("success");
 						check = confirm("삭제하시겠습니까?");
@@ -129,11 +135,23 @@
 				}
 			});
 		}
+		function handleBtnCommentDeleteAdmin(bcno, select) {
+			check = confirm("삭제하시겠습니까?");
+			if (check && select == 'delete') { 
+				console.log("success");
+				location.href="boardCommentDelete?bno=${board.bno}&pageNo=${pageNo}&bcno=" + bcno;
+			 } 
+		}
 	</script>
 </head>
 <body>
 	<div style="max-width: 1000px; margin: auto; margin-top: 50px">	
 	<h4><a href="boardList?pageNo=${pageNo}" class="btn btn-default"  id="list">목록</a> ${board.btitle}</h4>
+	<c:if test="${member.mlevel == 5}">
+		<div class="form-group" align="right">
+			<input type="button" class="btn btn-warning btn-sm" value="게시글 삭제(관리자)"    onclick="handleBtnDeleteAdmin()"/>	
+		</div>	
+	</c:if>
 	<hr />
 	<form method="post"  id="form1" action="boardCommentWrite" style="padding: 0px 20px"
 		enctype="multipart/form-data">
@@ -190,7 +208,12 @@
 							<td style="width: 65%; border-right: 0px"><p>${comment.bccomment}</p></td>
 							<td style="width: 5%; border-left: 0px" >
 								<input type="hidden" class="form-control"  name="bcno" id="bcno" value="${comment.bcno }"/>
-								<input type="button" class="btn btn-danger btn-xs" value="삭제"    onclick="handleBtnCommentUD(${comment.bcno },'delete')"/>
+								<input type="button" class="btn btn-danger btn-xs" value="삭제"  onclick="handleBtnCommentUD(${comment.bcno },'delete')"/>
+								<c:if test="${member.mlevel == 5}">
+									<div class="form-group" align="right">
+										<input type="button" class="btn btn-warning btn-xs" value="삭제(관리자)"  style="float: left"  onclick="handleBtnCommentDeleteAdmin(${comment.bcno },'delete')"/>	
+									</div>	
+								</c:if>				
 							</td>
 							<td style="width: 15%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
 						</tr>		
@@ -202,7 +225,12 @@
 							</td>
 							<td style="width: 70%" colspan=2><p>${comment.bccomment}</p>
 								<input type="hidden" class="form-control"  name="bcno"  id="bcno" value="${comment.bcno }"/>
-							</td>
+								<c:if test="${member.mlevel == 5}">
+									<div class="form-group" align="right">
+										<input type="button" class="btn btn-warning btn-xs" value="삭제(관리자)"    onclick="handleBtnCommentDeleteAdmin(${comment.bcno },'delete')"/>	
+									</div>	
+								</c:if>								
+							</td>							
 							<td style="width: 15%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
 						</tr>		
 					</c:if>						

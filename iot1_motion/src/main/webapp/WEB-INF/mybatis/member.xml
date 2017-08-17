@@ -15,8 +15,7 @@
 	</insert>
 
 	<select id="selectAll" parameterType="com.mycompany.myapp.dto.Member">
-		select mid, memail, mname, 
-		moriginalfilename, msavedfilename, mfilecontent, mlevel
+		select mid, memail, mname, mlevel
 		from
 		member
 		order by mid desc
@@ -38,9 +37,6 @@
 
 	</select>
 
-	<select id="countAll" resultType="int">
-		select count(*) from member
-	</select>
 	
 <!-- 	<select id="selectByMemail" resultType="com.mycompany.myapp.dto.Member" -->
 	<select id="selectByMid" resultType="com.mycompany.myapp.dto.Member"
@@ -65,14 +61,27 @@
 	</delete>
 
 
-
-
-
-
-
-
-
-
+	<!-- 회원 리스트 -->
+	<select id="selectPage" parameterType="map"
+		resultType="com.mycompany.myapp.dto.Member">	
+		select *
+		from ( select rownum as r, mid, mname, memail, mlevel 
+			from ( select mid, mname, memail, mlevel 
+				from member order by mlevel desc, mname asc  
+			) 
+			where rownum &lt;=#{endNum}
+		)
+		where r &gt;=#{startNum}
+	</select>
+	
+	<!-- 회원 리스트 카운트 -->
+	<select id="countAll" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<update id="updateGrade">
+		update member set mlevel=#{mlevel} where mid=#{mid}	
+	</update>
 
 
 

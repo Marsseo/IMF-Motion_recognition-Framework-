@@ -6,9 +6,9 @@
 	<!-- 프로젝트를 개발하는 회사의 도메인 -->
 	<groupId>com.mycompany</groupId>
 	<!--웹어플리케이션의 식별명(중복 불가) -->
-	<artifactId>MpuWebProject</artifactId>
+	<artifactId>iot1_motion</artifactId>
 	<!--프로젝트의 식별명(중복 불가) -->
-	<name>MpuWebProject</name>
+	<name>iot1_motion</name>
 	<!--프로젝트의 최종 산출물의 형태 -->
 	<packaging>war</packaging>
 	<!--프로젝트의 버전 -->

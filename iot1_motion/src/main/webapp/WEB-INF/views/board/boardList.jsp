@@ -87,7 +87,7 @@
 							<c:if test="${b.count > 0}" >
 								<span class="glyphicon glyphicon-comment" aria-hidden="true"  style="color: #BDBDBD"></span>&nbsp; ${b.count}
 							</c:if>
-							<c:if test="${b.blikecount >= 10}">
+							<c:if test="${b.blikecount >= 2}">
 								<span class="glyphicon glyphicon-star" aria-hidden="true" style="color: orange"></span>&nbsp;
 							</c:if>
 						</a>
