@@ -61,14 +61,7 @@
 		}
 	}
 	
-	function handleIP(){
-		if( $("#ip").val()=="") {
-			$("#ip").attr("placeholder", "CoAP server IP");
-			$("#ip").focus();
-			return ;
-		}
-		return $("#form").submit();
-	}
+	
 </script>
 </head>
 
