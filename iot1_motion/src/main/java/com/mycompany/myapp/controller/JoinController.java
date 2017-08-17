@@ -39,8 +39,7 @@ public class JoinController {
 	
 	@RequestMapping("/join")
 	public String join() {
-		return "join";
-		
+		return "join";		
 	}
 	
 	@RequestMapping("join/insert")
@@ -50,19 +49,20 @@ public class JoinController {
 		
 		member.setMname(name);
 		member.setMemail(email);
+		member.setMlevel("1");
 		
 		member.setMid(mid);
 		
-		logger.info("join");
-		System.out.println("프로필출력");
-		System.out.println(profile.getEmail());
-		System.out.println(profile.getName());
-		System.out.println(profile.getId());
-		System.out.println("------------------------------------------");
-		System.out.println("멤버출력");
-		System.out.println(member.getMemail());
-		System.out.println(member.getMname());
-		System.out.println(member.getMid());
+//		logger.info("join");
+//		System.out.println("프로필출력");
+//		System.out.println(profile.getEmail());
+//		System.out.println(profile.getName());
+//		System.out.println(profile.getId());
+//		System.out.println("------------------------------------------");
+//		System.out.println("멤버출력");
+//		System.out.println(member.getMemail());
+//		System.out.println(member.getMname());
+//		System.out.println(member.getMid());
 		
 		service.memberJoin(member);
 		
