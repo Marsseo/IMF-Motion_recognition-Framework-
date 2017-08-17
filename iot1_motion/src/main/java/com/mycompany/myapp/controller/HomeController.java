@@ -140,22 +140,12 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping("/")
 	public String homeGet(Model model) {
 		/*model.addAttribute("log",log);*/
 		return "main";
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String gyroTestPost(String ip, Model model){
-		
-		ipAddress = ip;
-		model.addAttribute("ipAddress", ipAddress);
-		return "main";
-	}
 	
-	public static String getIpAddress() {
-		return ipAddress;
-	}
 	
 }
