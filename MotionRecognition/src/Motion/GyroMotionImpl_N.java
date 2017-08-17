@@ -23,6 +23,7 @@ public class GyroMotionImpl_N implements GyroMotionInterface{
 						step1=false;
 						step2=true;
 						System.out.println("Step1");
+						nCount++;
 					}
 			
 			}else if(step2==true){
@@ -30,12 +31,13 @@ public class GyroMotionImpl_N implements GyroMotionInterface{
 					step2=false;	
 					step3=true;    
 					System.out.println("Step2");
+					nCount++;
 					}
 				
 			}else if(step3==true){
 				if (count[2] < 0&&count[1]==0) {
-					nCount=10000;
-					System.out.println("Step3");
+					nCount++;
+					
 				}
 			}
 			

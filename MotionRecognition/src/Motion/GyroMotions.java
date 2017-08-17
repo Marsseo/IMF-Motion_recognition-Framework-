@@ -233,12 +233,13 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 
-		for (double k : listYawAngle) { //삭제각
+/*		for (double k : listYawAngle) { //삭제각
 			System.out.println(k);
 		}
 		for (double k : listYawDifference) {  //삭제각
 			System.out.println(k);
 		}
+		*/
 
 		//메소드에서  리턴해줄  리스트 생성
 		List<List> differenceInRangeResultList = new ArrayList<>();
