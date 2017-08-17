@@ -11,10 +11,10 @@ public class GyroMotionImpl_PitchRotation implements GyroMotionInterface{
 	public void gyroMotion(List<List> differenceResultList, Map<String, Integer> motionMap) {
 		int pitchRightRotationCount=0;
 		int pitchLeftRotationCount=0;
-		List<double[]> factorsInRange = differenceResultList.get(5);
-		for (int j = 0; j < factorsInRange.size(); j++) {
+		List<double[]> factorsInRangeRight = differenceResultList.get(5);
+		for (int j = 0; j < factorsInRangeRight.size(); j++) {
 
-			double[] count = factorsInRange.get(j);
+			double[] count = factorsInRangeRight.get(j);
 			if (count[3] > 0&&count[2]!=0&&count[1]!=0) {
 						//System.out.println(count[2]);
 						//System.out.println("down");

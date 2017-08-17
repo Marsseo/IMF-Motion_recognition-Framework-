@@ -46,6 +46,7 @@ public class GyroMotionImpl_Circle implements GyroMotionInterface{
 				if (count[1] >0&&count[2]<0) {
 					System.out.println("Step4");
 				//	circleCount++;
+				circleCount=10000;
 				}
 			}
 			

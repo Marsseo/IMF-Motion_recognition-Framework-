@@ -46,7 +46,7 @@ public class MotionCheck {
 		double[] right={90,180,90,270,0,0,4,80,0,1,0,0};
 		double[] up={140,220,90,270,0,0,0,3,2,80,0,0};
 		double[] down={140,220,90,270,0,0,0,3,2,80,0,0};
-		double[] zigzag={90,180,90,270,0,0,4,80,4,80,0,0};
+		double[] zigzag={90,200,90,270,0,0,4,80,2,80,0,0};
 		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,0.5,80};
 		//double[] n;
 	//	double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
@@ -64,7 +64,7 @@ public class MotionCheck {
 		gyroMotionList.add(new GyroMotionImpl_Right());
 		gyroMotionList.add(new GyroMotionImpl_Down());
 		gyroMotionList.add(new GyroMotionImpl_ZigZag());
-		gyroMotionList.add(new GyroMotionImpl_Circle());
+		//gyroMotionList.add(new GyroMotionImpl_Circle());
 		gyroMotionList.add(new GyroMotionImpl_N());
 		gyroMotionList.add(new GyroMotionImpl_LeftDown());
 		gyroMotionList.add(new GyroMotionImpl_PitchRotation());
