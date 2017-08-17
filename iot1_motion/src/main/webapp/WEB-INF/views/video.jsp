@@ -12,11 +12,24 @@
 		<script src="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 		
 	</head>
-<body> 
+<body>
+ 
 <jsp:include page="home.jsp" flush="false"></jsp:include>
-
-<video src="<%=application.getContextPath()%>/resources/img/video.mp4" controls autoplay >HTML5 Video is required for this example</video>
-
-
+<video id="video" src="<%=application.getContextPath()%>/resources/img/video.mp4" controls autoplay >HTML5 Video is required for this example</video>
+	<script type="text/javascript">
+	var videocontrol = document.getElementById("video");
+	var motion;
+	function motionControl(){
+		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
+		ws.onmessage = function(event){
+			var data = JSON.parse(event.data);
+			motion = data.motion;
+			console.log("ddd   "+motion);	
+		};
+		if(motion=="zigzag") videocontrol.play();
+		else if(motion=="pitchRightRotation") videocontrol.pause();
+	}
+	
+	</script>
 </body>
 </html>

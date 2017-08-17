@@ -43,16 +43,16 @@ body {
 <!-- 하이차트 end -->
 </head>
 <body>
-
+	<div>
 	<jsp:include page="home.jsp" flush="false"></jsp:include>
-		
-	<div  style="width: 100%; height: 10%">
+	</div>
+	<div  style="width: 100%;">
 		<div style="width: 30%; float: right">
-			<div id="gyroChartContainer" ></div>
-			<div id="ultrasonicChartContainer"></div>
-			<div id="ifraredrayChartContainer"></div>
+			<div style="height:250px" id="gyroChartContainer" ></div>
+			<div style="height:250px" id="ultrasonicChartContainer"></div>
+			<div style="height:250px" id="ifraredrayChartContainer"></div>
 		</div>
-		<div style="width: 70%; float: left" id="container"></div>
+		<div style="width: 70%; float: left;" id="container"></div>
 		
 	</div>
 
@@ -71,7 +71,7 @@ body {
 			var particleCount = 500;
 			var r = 800;
 			var rHalf = r / 2;
-			var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
+			var yawAngle=0, pitchAngle=0, rollAngle=0;
 			init();
 			requestGyroSensorData();
 			animate();
@@ -195,13 +195,14 @@ body {
 			}
 			function animate() {
 				requestAnimationFrame( animate );
-				group.rotation.x = prepitchAngle/1000; // 빨강 y값 
-				group.rotation.y = preyawAngle/1000; //초록 z값
-				group.rotation.z = prerollAngle/1000; //파랑 x값
+				group.rotation.x = pitchAngle; // 빨강 y값 
+				group.rotation.y = yawAngle; //초록 z값
+				//group.rotation.z = rollAngle; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;
 				render();
+				
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function render() {
@@ -212,15 +213,11 @@ body {
 				var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
-					preyawAngle = data.yawAngle-180;
-					prepitchAngle = data.pitchAngle-180;
-					prerollAngle = data.rollAngle-180;
-					console.log("ddd   "+preyawAngle+"  "+prepitchAngle+"  "+prerollAngle);
+					yawAngle = (data.yawAngle-180)/10+1;
+					pitchAngle = (data.pitchAngle-180)/10+1;
+					rollAngle = (data.rollAngle-180)/10+1;
+					console.log("ddd   "+yawAngle+"  "+pitchAngle+"  "+rollAngle);
 					
-					
-					yawAngle = preyawAngle;
-					pitchAngle = prepitchAngle;
-					rollAngle = prerollAngle;
 				};
 								
 			}

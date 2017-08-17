@@ -24,7 +24,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.mycompany.myapp.controller.HomeController;
 
 @Component
 public class GyroSensorHandler extends TextWebSocketHandler implements ApplicationListener{
@@ -39,7 +38,7 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	@PostConstruct
 	public void init(){
 		coapClient = new CoapClient();
-		coapClient.setURI("coap://"+HomeController.getIpAddress()+"/gyroscope");
+		coapClient.setURI("coap://192.168.3.109/gyroscope");
 		
 		System.out.println("test"+coapClient.getURI());
 		
@@ -52,7 +51,6 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 				double yawAngle = Double.parseDouble(jsonObject.getString("yawAngle"));
 				double pitchAngle = Double.parseDouble(jsonObject.getString("pitchAngle"));
 				double rollAngle = Double.parseDouble(jsonObject.getString("rollAngle"));
-
 				jsonObject.put("time", getUTCTime(new Date().getTime()));
 				jsonObject.put("yawAngle", yawAngle);
 				jsonObject.put("pitchAngle", pitchAngle);
@@ -81,7 +79,7 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOGGER.info(HomeController.getIpAddress());
+		LOGGER.info("");
 		list.add(session);
 	}
 	
