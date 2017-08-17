@@ -41,7 +41,7 @@ $(function() {
 });
 
 function requestGyroData(){
-	var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor");
+	var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
 	ws.onmessage = function(event){
 		var data = JSON.parse(event.data);
 		var series1 = gyroChart.series[0];

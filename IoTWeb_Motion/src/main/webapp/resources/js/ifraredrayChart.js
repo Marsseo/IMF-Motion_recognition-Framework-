@@ -35,7 +35,7 @@ $(function() {
 });
 
 function requestIfraredrayData(){
-	var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/Ifraredray");
+	var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/Ifraredray");
 	ws.onmessage = function(event){
 		var data = JSON.parse(event.data);
 		var series = ifraredrayChart.series[0];
