@@ -84,7 +84,7 @@ public class MPU6050Example {
 			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
 			
 
-//			button();
+			button();
 //			
 //			try {
 //				distance("ultrasonic");
