@@ -54,15 +54,19 @@
 				<input type="hidden"  name="type" value="1"/>
 				<table class="table table-bordered table-hover" style="width: 1000px; text-align: center; border: 0px;">
 					<tr class="info">
-						<td style="width: 20%;  border-left: 0px; border-right: 0px">아이디</td>
-						<td style="width: 20%;  border-left: 0px; border-right: 0px">이름</td>
-						<td style="width: 20%;  border-left: 0px; border-right: 0px">이메일</td>
-						<td style="width: 10%;  border-left: 0px; border-right: 0px">등급</td>
-						<td style="width: 30%;  border-left: 0px; border-right: 0px">등급수정</td>
+						<td style="width: 15%; border-left: 0px; border-right: 0px">&nbsp;</td>
+						<td style="width: 15%; border-left: 0px; border-right: 0px">아이디</td>
+						<td style="width: 15%; border-left: 0px; border-right: 0px">이름</td>
+						<td style="width: 15%; border-left: 0px; border-right: 0px">이메일</td>
+						<td style="width: 10%; border-left: 0px; border-right: 0px">등급</td>
+						<td style="width: 30%; border-left: 0px; border-right: 0px">등급수정</td>
 					</tr>
 					<c:forEach var="m" items="${list}">
 						<tr>
-							<td style=" border-left: 0px; border-right: 0px; height: 45px; vertical-align:middle;">${m.mid}</td>
+							<td style=" border-left: 0px; border-right: 0px; vertical-align:middle; height: 55px; ">
+								<img src="http://graph.facebook.com/${m.mid }/picture" class="img-circle"  style="height: 35px;" alt=""/>
+							</td>
+							<td style=" border-left: 0px; border-right: 0px; vertical-align:middle;">${m.mid}</td>
 							<td style=" border-left: 0px; border-right: 0px; vertical-align:middle;">${m.mname}</td>
 							<td style=" border-left: 0px; border-right: 0px; vertical-align:middle;">${m.memail}</td>
 							<td style=" border-left: 0px; border-right: 0px; vertical-align:middle;">${m.mlevel}</td>
