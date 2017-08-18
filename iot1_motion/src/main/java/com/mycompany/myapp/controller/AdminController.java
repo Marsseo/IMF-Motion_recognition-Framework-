@@ -3,11 +3,7 @@ package com.mycompany.myapp.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,17 +14,12 @@ import com.mycompany.myapp.service.AdminService;
 import com.mycompany.myapp.service.MemberService;
 
 @Controller
-
-public class AdminController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+public class AdminController {	
 
 	@Resource(name = "adminServiceImpl")
 	private AdminService service;
 	@Resource(name = "memberServiceImpl")
 	private MemberService mservice;
-
-	@Autowired
-	private ServletContext servletContext;
 
 	@RequestMapping("/admin/memberList")
 	public String memberList(@RequestParam(defaultValue = "1") int pageNo, Model model) {
