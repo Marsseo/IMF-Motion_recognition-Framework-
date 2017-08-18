@@ -84,13 +84,13 @@ public class MPU6050Example {
 			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
 			
 
-//			button();
-//			
-//			try {
-//				distance("ultrasonic");
-//				distance("ifraredray");
-//			} catch (Exception ex) {	ex.printStackTrace();}
-//			
+			button();
+			
+			try {
+				distance("ultrasonic");
+				distance("ifraredray");
+			} catch (Exception ex) {	ex.printStackTrace();}
+			
 			Tools.sleepMilliseconds(100);
 			
 		}

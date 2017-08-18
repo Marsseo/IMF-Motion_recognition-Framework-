@@ -55,9 +55,9 @@ public class GyroscopeResource extends CoapResource {
 		//System.out.println("Get방식");
 
 		JSONObject responseJsonObject = new JSONObject();
-		responseJsonObject.put("yawAngle", String.valueOf(currYawAngle));
-		responseJsonObject.put("pitchAngle", String.valueOf(currPitchAngle));
-		responseJsonObject.put("rollAngle", String.valueOf(currRollAngle));
+		responseJsonObject.put("yawAngle", String.valueOf(Math.round(currYawAngle*100)/100.));
+		responseJsonObject.put("pitchAngle", String.valueOf(Math.round(currPitchAngle*100)/100.));
+		responseJsonObject.put("rollAngle", String.valueOf(Math.round(currRollAngle*100)/100.));
 
 		String responseJson = responseJsonObject.toString();
 		exchange.respond(responseJson);

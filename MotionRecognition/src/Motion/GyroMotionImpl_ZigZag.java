@@ -17,23 +17,25 @@ public class GyroMotionImpl_ZigZag implements GyroMotionInterface{
 		for (int j = 0; j < factorsInRange.size(); j++) {
 
 			double[] count = factorsInRange.get(j);
-			if(step1==true){
-			if (count[1] <0&&count[2]!=0) {
+		//	if(step1==true){
+			if (count[1] <0&&count[2]==0) {
 						step1=false;
 						step2=true;
 						System.out.println("Step1");
+						zigzagCount++;
 					}
 			
-			}else if(step2==true){
+			if(step2==true){
 				if (count[1] > 0&&count[2]>0) {
 					step2=false;	
 					step3=true;    
 					System.out.println("Step2");
+					zigzagCount++;
 					}
 				
 			}else if(step3==true){
-				if (count[1] <0&&count[2]!=0) {
-					zigzagCount=10000;
+				if (count[1] <0&&count[2]==0) {
+					zigzagCount++;
 					System.out.println("Step3");
 				}
 			}
