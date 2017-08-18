@@ -14,19 +14,32 @@ public class GyroMotionImpl_V implements GyroMotionInterface{
 		boolean step1=true;
 		boolean step2=false;
 		boolean step3=false;
+		boolean rightCheck = false;
 		List<double[]> factorsInRange = differenceResultList.get(6);
 		for (int j = 0; j < factorsInRange.size(); j++) {
 
 			double[] count = factorsInRange.get(j);
-		//	if(step1==true){
+			if(step1==true){
 			if (count[1] > 0&&count[2]>0) {
-						step1=false;
-						step2=true;
-						System.out.println("Step1");
+						
+						rightCheck = false;
 						nCount++;
+					}else if (count[1] > 0&&count[2]<0) {
+					if (rightCheck) {
+						step1 = false;
+						step2 = true;
+						System.out.println("V - Step1");
+						nCount++;
+						nCount++;
+						
+					}else{
+					rightCheck = true;
 					}
-			
-			if(step2==true){
+				} else {
+					rightCheck = false;
+				}
+			}
+			else if(step2==true){
 				if (count[1] > 0&&count[2]<0) {
 					step2=false;	
 					step3=true;    
@@ -37,8 +50,13 @@ public class GyroMotionImpl_V implements GyroMotionInterface{
 			}
 			
 		}
-		if(step2==true)
+		
+		
+		if(step3==true){
 		motionMap.put("v", nCount);
+		}else{
+			motionMap.put("v", 0);
+		}
 	}
 
 }

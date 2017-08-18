@@ -42,13 +42,14 @@ public class MotionCheck {
 
 		gyroMotions= new GyroMotions();
 		
-		double[] left={180,270,160,200,0,0,4,80,0,1,0,0};
-		double[] right={90,180,160,200,0,0,4,80,0,1,0,0};
+		double[] left={180,270,165,195,0,0,4,80,0,0.8,0,0};
+		double[] right={90,180,165,195,0,0,4,80,0,0.8,0,0};
 		double[] up={140,220,90,270,0,0,0,3,2,80,0,0};
 		double[] down={140,220,90,270,0,0,0,3,2,80,0,0};
-		double[] zigzag={90,190,90,270,0,0,4,80,2,80,0,0};
-		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,0.5,80};
+		double[] zigzag={90,190,150,270,0,0,4,80,0.5,80,0,0};
+		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,3,80};
 		double[] v={160,270,90,270,0,0,4,80,2,80,0,0};
+		double[] n={90,190,90,190,0,0,4,80,0.8,80,0,0};
 		//double[] n;
 	//	double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
 		
@@ -60,6 +61,7 @@ public class MotionCheck {
 		yawRollPitchRangeList.add(zigzag); //4번
 		yawRollPitchRangeList.add(pitchRotation); //5번
 		yawRollPitchRangeList.add(v); //6번
+		yawRollPitchRangeList.add(n); //7번
 		
 		gyroMotionList.add(new GyroMotionImpl_Up());
 		gyroMotionList.add(new GyroMotionImpl_Left());
