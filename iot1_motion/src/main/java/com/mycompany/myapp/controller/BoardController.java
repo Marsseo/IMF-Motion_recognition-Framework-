@@ -23,14 +23,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mycompany.myapp.dto.Board;
 import com.mycompany.myapp.dto.BoardComment;
 import com.mycompany.myapp.service.BoardService;
 
 @Controller
-@SessionAttributes({ "member" })
 public class BoardController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
 
@@ -106,8 +104,7 @@ public class BoardController {
 		File file = new File(realPath);
 
 		if (fileName != "") {
-			boolean tt = file.mkdirs();
-
+			file.mkdirs();
 			Board.getBattach().transferTo(file);
 
 			// 파일 데이터 저장

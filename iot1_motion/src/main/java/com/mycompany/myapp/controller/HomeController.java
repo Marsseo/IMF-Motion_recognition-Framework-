@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.mycompany.myapp.dao.MemberDaoImpl;
 import com.mycompany.myapp.dto.Member;
 import com.mycompany.myapp.service.MemberService;
 
@@ -33,7 +32,6 @@ import com.mycompany.myapp.service.MemberService;
 @SessionAttributes({ "member" ,"log", "id"})
 public class HomeController {
 	
-
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	String log="log";
 	

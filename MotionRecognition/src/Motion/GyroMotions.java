@@ -144,7 +144,7 @@ public class GyroMotions implements TriggerMotionInterface {
 				listPitchAngle.add(pitch);
 
 				if (YawAxisValueForAdjusting < 0) {
-					System.out.println("1번 1번 1번");  ///////////////////////삭제각
+				//	System.out.println("1번 1번 1번");  ///////////////////////삭제각
 					if (yaw <= Math.abs(YawAxisValueForAdjusting)) {
 						listYawAngle.add(360 + YawAxisValueForAdjusting + yaw);
 
@@ -153,7 +153,7 @@ public class GyroMotions implements TriggerMotionInterface {
 					}
 
 				} else if (YawAxisValueForAdjusting > 0) {
-					System.out.println("2번 2번 2번");  ///////////////////////삭제각
+				//	System.out.println("2번 2번 2번");  ///////////////////////삭제각
 					if (yaw> 360-YawAxisValueForAdjusting) {
 						listYawAngle.add(YawAxisValueForAdjusting + yaw-360);
 
@@ -162,7 +162,7 @@ public class GyroMotions implements TriggerMotionInterface {
 					}
 
 				}
-				System.out.println(listYawAngle.get(listYawAngle.size()-1));  ///////////////////////삭제각
+			//	System.out.println(listYawAngle.get(listYawAngle.size()-1));  ///////////////////////삭제각
 
 				if (listYawAngle.size() >= 2) {
 					double nextValue = listYawAngle.get(listYawAngle.size() - 1);
@@ -233,12 +233,6 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	public static List Range(List<double[]> yawRollPitchRangeList) {
 
-		for (double k : listYawAngle) { //삭제각
-			System.out.println(k);
-		}
-		for (double k : listYawDifference) {  //삭제각
-			System.out.println(k);
-		}
 
 		//메소드에서  리턴해줄  리스트 생성
 		List<List> differenceInRangeResultList = new ArrayList<>();
@@ -421,6 +415,16 @@ public class GyroMotions implements TriggerMotionInterface {
 
 	@Override
 	public void triggerButton(int step, String buttonStatus) {
+		/*
+if(!listYawAngles.isEmpty()){
+			System.out.println("YawAngle:  "+listYawAngles.get(listYawAngles.size()-1));
+	
+			System.out.println("PitchAngle:  "+listPitchAngles.get(listPitchAngles.size()-1));
+		
+			System.out.println("RollAngle:  "+listRollAngles.get(listRollAngles.size()-1));
+}
+		*/		
+				
 		//모션이 취해지지 않았을경우
 		if (step == 0) {
 			if (buttonStatus.equals("on")) {
@@ -429,8 +433,16 @@ public class GyroMotions implements TriggerMotionInterface {
 				MotionCheck.MotionRecognitionStatus(1);
 				emptingCollectedList();
 				MotionListCollecting = true;
-			}
+			} 
 		} else if (step == 1) {
+			if(!listYawDifference.isEmpty()){
+			System.out.println("YawAngle:  "+listYawDifference.get(listYawDifference.size()-1));
+	
+			System.out.println("PitchAngle:  "+listPitchDifference.get(listPitchDifference.size()-1));
+		
+			System.out.println("RollAngle:  "+listRollDifference.get(listRollDifference.size()-1));
+}
+			
 			if (buttonStatus.equals("off")) {
 				emptingContinuedList();
 				System.out.println("Motion Recognition");
