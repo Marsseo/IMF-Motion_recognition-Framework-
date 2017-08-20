@@ -1,13 +1,13 @@
 package Motion.server;
 
-import Motion.GyroMotions;
-import Motion.MotionCheck;
 import Motion.mqtt.Distributor;
+import static Motion.server.GyroscopeResource.currPitchAngle;
+import static Motion.server.GyroscopeResource.currRollAngle;
+import static Motion.server.GyroscopeResource.currYawAngle;
 import static Motion.server.IRResource.irDistance;
 import static Motion.server.UltrasonicResource.ultraDistance;
 import java.util.logging.Level;
 import org.eclipse.californium.core.CoapResource;
-import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
@@ -19,9 +19,6 @@ public class MQTTResource extends CoapResource {
 	private static final Logger logger = LoggerFactory.getLogger(MQTTResource.class);
 
 	private static MQTTResource instance;
-	public static double currYawAngle;
-	public static double currRollAngle;
-	public static double currPitchAngle;
 		
 	private Distributor mqtt;
 	private String mqttId;
