@@ -15,7 +15,8 @@
 <body>
  
 <jsp:include page="home.jsp" flush="false"></jsp:include>
-<video id="video" src="<%=application.getContextPath()%>/resources/img/video.mp4" controls autoplay >HTML5 Video is required for this example</video>
+<video id="video" src="<%=application.getContextPath()%>/resources/img/video.mp4" controls autoplay ></video>
+	
 	<script type="text/javascript">
 	var videocontrol = document.getElementById("video");
 	var motion;
