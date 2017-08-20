@@ -294,7 +294,12 @@
 		    <artifactId>httpmime</artifactId>
 		    <version>4.5.3</version>
 		</dependency>
-
+		<!-- MQTT -->	
+		<dependency>
+		    <groupId>org.eclipse.paho</groupId>
+		    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
 
 	</dependencies>
 

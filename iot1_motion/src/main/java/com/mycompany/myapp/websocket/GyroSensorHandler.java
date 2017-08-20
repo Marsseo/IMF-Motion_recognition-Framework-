@@ -12,6 +12,11 @@ import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +29,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.mycompany.myapp.controller.HomeController;
+
 
 @Component
 public class GyroSensorHandler extends TextWebSocketHandler implements ApplicationListener{
@@ -31,55 +38,104 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 	private static final Logger LOGGER = LoggerFactory.getLogger(GyroSensorHandler.class);
 	
 	private List<WebSocketSession> list = new Vector<>();
-	private CoapClient coapClient;
-	private CoapObserveRelation coapObserveRelation;
 	
+	private String url = "tcp://106.253.56.122:1883";
+	private String myClientId;
+	private String topicRequest;
+	private String topicResponse;
+	
+	private int qos = 1;
+	private MqttClient mqttClient;
+
+	private MqttCallback callback = new MqttCallback(){
+		
+		@Override
+		public void deliveryComplete(IMqttDeliveryToken imdt) {
+			
+		}
+		@Override
+		public void messageArrived(String string, MqttMessage mm) throws Exception {
+			
+						
+			String json = new String(mm.getPayload());
+			JSONObject jsonObject = new JSONObject(json);
+			double yawAngle = Double.parseDouble(jsonObject.getString("yawAngle"));
+			double pitchAngle = Double.parseDouble(jsonObject.getString("pitchAngle"));
+			double rollAngle = Double.parseDouble(jsonObject.getString("rollAngle"));
+			jsonObject.put("time", getUTCTime(new Date().getTime()));
+			jsonObject.put("yawAngle", yawAngle);
+			jsonObject.put("pitchAngle", pitchAngle);
+			jsonObject.put("rollAngle", rollAngle);
+			json = jsonObject.toString();
+			
+			try {
+			for(WebSocketSession session:list){
+				
+				session.sendMessage(new TextMessage(json));
+				
+			}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}				
+			
+		}
+
+		@Override
+		public void connectionLost(Throwable thrwbl) {
+			try {
+				close();
+			} catch (MqttException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+	};
+	
+	
+	public void close() throws MqttException{
+		if(mqttClient !=null){
+			mqttClient.disconnect();
+			mqttClient.close();
+			mqttClient = null;
+		}
+	}
+	
+	public void subscribe() throws MqttException{
+		mqttClient.subscribe(topicResponse);
+	}
+	
+	public void publish(String targetClientId, String text) throws MqttException{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("text", text);
+		String json = jsonObject.toString();
+		
+		MqttMessage mqttMessage = new MqttMessage(json.getBytes());
+		mqttMessage.setQos(qos);
+		mqttClient.publish(topicRequest , mqttMessage);
+	}
 	
 	@PostConstruct
-	public void init(){
-		coapClient = new CoapClient();
-		coapClient.setURI("coap://192.168.3.109/gyroscope");
+	public void init() throws MqttException{
 		
-		System.out.println("test"+coapClient.getURI());
 		
-		coapObserveRelation = coapClient.observe(new CoapHandler() {
-			
-			@Override
-			public void onLoad(CoapResponse response) {
-				String json = response.getResponseText();
-				JSONObject jsonObject = new JSONObject(json);
-				double yawAngle = Double.parseDouble(jsonObject.getString("yawAngle"));
-				double pitchAngle = Double.parseDouble(jsonObject.getString("pitchAngle"));
-				double rollAngle = Double.parseDouble(jsonObject.getString("rollAngle"));
-				jsonObject.put("time", getUTCTime(new Date().getTime()));
-				jsonObject.put("yawAngle", yawAngle);
-				jsonObject.put("pitchAngle", pitchAngle);
-				jsonObject.put("rollAngle", rollAngle);
-				json = jsonObject.toString();
-				try {
-				for(WebSocketSession session:list){
-					
-					session.sendMessage(new TextMessage(json));
-					
-				}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-			@Override
-			public void onError() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		this.myClientId = MqttClient.generateClientId();
+		this.topicRequest = "/Hwasung Seo/gyro/request";
+		this.topicResponse = "/Hwasung Seo/gyro/response";
+
+		mqttClient = new MqttClient(url, myClientId);
+		
+		mqttClient.setCallback(callback);
+		
+		mqttClient.connect();
+		
+		subscribe();
+		
 	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOGGER.info("");
+		
 		list.add(session);
 	}
 	
@@ -110,8 +166,12 @@ public class GyroSensorHandler extends TextWebSocketHandler implements Applicati
 		
 		
 		if(event instanceof ContextClosedEvent){
-			coapObserveRelation.proactiveCancel();
-			coapClient.shutdown();
+			try {
+				close();
+			} catch (MqttException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

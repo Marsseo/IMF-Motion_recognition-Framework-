@@ -1,9 +1,12 @@
 package Motion.server;
 
 import Motion.MotionCheck;
+import Motion.mqtt.Distributor;
+import java.util.logging.Level;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +41,7 @@ public class UltrasonicResource extends CoapResource {
 			}
 			
 		}; 
-		thread.start();
+		//thread.start();
 		
 	}
 

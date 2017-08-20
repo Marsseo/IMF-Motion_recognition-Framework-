@@ -1,11 +1,13 @@
 package Motion.server;
 
-import Motion.Action;
 import Motion.GyroMotions;
 import Motion.MotionCheck;
+import Motion.mqtt.Distributor;
+import java.util.logging.Level;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,7 @@ public class GyroscopeResource extends CoapResource {
 	public static double currYawAngle;
 	public static double currRollAngle;
 	public static double currPitchAngle;
-
+	
 	public GyroscopeResource() throws Exception {
 		super("gyroscope");
 		instance = this;
@@ -31,9 +33,11 @@ public class GyroscopeResource extends CoapResource {
 			@Override
 			public void run() {
 				while (true) {
-					try {
+					try {					
+						
 						changed();
 						Thread.sleep(500);
+						
 					} catch (Exception e) {
 						LOGGER.info(e.toString());
 					}
@@ -41,7 +45,7 @@ public class GyroscopeResource extends CoapResource {
 			}
 
 		};
-		thread.start();
+		//thread.start();
 
 	}
 
@@ -52,7 +56,6 @@ public class GyroscopeResource extends CoapResource {
 
 	@Override
 	public void handleGET(CoapExchange exchange) {
-		//System.out.println("Get방식");
 
 		JSONObject responseJsonObject = new JSONObject();
 		responseJsonObject.put("yawAngle", String.valueOf(Math.round(currYawAngle*100)/100.));
@@ -61,6 +64,7 @@ public class GyroscopeResource extends CoapResource {
 
 		String responseJson = responseJsonObject.toString();
 		exchange.respond(responseJson);
+		
 	}
 
 	@Override
@@ -133,5 +137,7 @@ public class GyroscopeResource extends CoapResource {
 		}
 
 	}
+	
+	
 
 }

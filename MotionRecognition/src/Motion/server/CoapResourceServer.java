@@ -37,6 +37,7 @@ public class CoapResourceServer {
 		coapServer.add(new UltrasonicResource());
 		coapServer.add(new IRResource());
 		coapServer.add(new ButtonResource());
+		coapServer.add(new MQTTResource());
 	}
 
 	public static void start() {

@@ -30,14 +30,14 @@ import com.mycompany.myapp.service.MemberService;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes({ "member" ,"log", "ip"})
+@SessionAttributes({ "member" ,"log", "id"})
 public class HomeController {
 	
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	String log="log";
 	
-	private static String ipAddress="";
+	private static String mqttId="";
 	
 	@Resource(name = "memberServiceImpl")
 	private MemberService service;
@@ -96,7 +96,7 @@ public class HomeController {
 			member.setMlevel("1");
 			
 			member.setMid(profile.getId());
-			
+			mqttId = profile.getName();
 /*			
 			System.out.println(profile.getName());
 			System.out.println(profile.getId());*/
@@ -130,7 +130,6 @@ public class HomeController {
 				log="login";
 				model.addAttribute("log",log);
 				model.addAttribute("member", member);
-				model.addAttribute("ip", ipAddress);
 				
 				return "main";
 			}
@@ -141,24 +140,17 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping("/")
 	public String homeGet(Model model) {
 		/*model.addAttribute("log",log);*/
 		return "main";
 	}
 	
 	
-	public static String getIpAddress() {
-		return ipAddress;
+	public static String getMqttId() {
+		
+		return mqttId;
 	}
 
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String homePost(String ip, Model model){
-		
-		ipAddress = ip;
-		model.addAttribute("ip", ipAddress);
-		
-		return "main";
-	}
 }
