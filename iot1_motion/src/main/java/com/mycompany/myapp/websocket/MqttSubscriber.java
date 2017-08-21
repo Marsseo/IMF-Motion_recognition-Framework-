@@ -1,8 +1,5 @@
 package com.mycompany.myapp.websocket;
 
-import java.util.Date;
-import java.util.TimeZone;
-
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -27,11 +24,9 @@ public class MqttSubscriber {
 			
 		}
 		@Override
-		public void messageArrived(String string, MqttMessage mm) throws Exception {
-			
+		public void messageArrived(String string, MqttMessage mm) throws Exception {			
 			String json = new String(mm.getPayload());
-			System.out.println(json);
-			
+			System.out.println(json);			
 		}
 
 		@Override
@@ -41,8 +36,7 @@ public class MqttSubscriber {
 			} catch (MqttException ex) {
 				ex.printStackTrace();
 			}
-		}
-		
+		}		
 	};
 	
 	public MqttSubscriber( String sensor ) throws MqttException {
@@ -51,10 +45,8 @@ public class MqttSubscriber {
 		this.topicRequest = "/Hwasung Seo/"+sensor+"/request";
 		this.topicResponse = "/Hwasung Seo/"+sensor+"/response";
 	
-		mqttClient = new MqttClient(url, myClientId);
-		
-		mqttClient.setCallback(callback);
-		
+		mqttClient = new MqttClient(url, myClientId);		
+		mqttClient.setCallback(callback);		
 		mqttClient.connect();
 	}
 	
@@ -83,15 +75,12 @@ public class MqttSubscriber {
 	
 		
 	public static void main(String[] args) throws Exception{
-		MqttSubscriber subscriber = new MqttSubscriber("ultrasonic");
-				
+		MqttSubscriber subscriber = new MqttSubscriber("ultrasonic");				
 		
 		subscriber.subscribe();
 		System.out.println("start subscriber");
-
 		System.out.println("press any keys...");
 		System.in.read();
 		Thread.sleep(1000);
-	}
-	
+	}	
 }

@@ -24,11 +24,9 @@ public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	/*************************************************************************************
-	 * 
+	/*
 	 * Board
-	 * 
-	 *************************************************************************************/
+	 */
 	@Override
 	public int boardInsert(Board board) {
 		sqlSessionTemplate.insert("board.insert", board);
@@ -70,7 +68,7 @@ public class BoardDaoImpl implements BoardDao {
 			Hitcount hitcount = new Hitcount();
 			hitcount.setBno(bno);
 			hitcount.setMid(mid);
-//			hitcount.setMid(mname);
+			// hitcount.setMid(mname);
 			sqlSessionTemplate.insert("hitcount.insert", hitcount);
 		}
 	}
@@ -144,11 +142,9 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
-	/*************************************************************************************
-	 * 
+	/*
 	 * BoardComment
-	 * 
-	 *************************************************************************************/
+	 */
 
 	@Override
 	public int boardCommentInsert(BoardComment comment) {

@@ -32,29 +32,30 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.mycompany.myapp.controller.HomeController;
 
 @Component
-public class IfraredraySensorHandler extends TextWebSocketHandler implements ApplicationListener{
-	
+public class IfraredraySensorHandler extends TextWebSocketHandler implements ApplicationListener {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(IfraredraySensorHandler.class);
-	
+
 	private List<WebSocketSession> list = new Vector<>();
-	
+
 	private String url = "tcp://106.253.56.122:1883";
 	private String myClientId;
 	private String topicRequest;
 	private String topicResponse;
-	
+
 	private int qos = 1;
 	private MqttClient mqttClient;
 
-	private MqttCallback callback = new MqttCallback(){
-		
+	private MqttCallback callback = new MqttCallback() {
+
 		@Override
 		public void deliveryComplete(IMqttDeliveryToken imdt) {
-			
+
 		}
+
 		@Override
 		public void messageArrived(String string, MqttMessage mm) throws Exception {
-			
+
 			String json = new String(mm.getPayload());
 			JSONObject jsonObject = new JSONObject(json);
 			double distance = Double.parseDouble(jsonObject.getString("distance"));
@@ -62,16 +63,12 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 			jsonObject.put("distance", distance);
 			json = jsonObject.toString();
 			try {
-			for(WebSocketSession session:list){
-				
-				session.sendMessage(new TextMessage(json));
-				
-			}
+				for (WebSocketSession session : list) {
+					session.sendMessage(new TextMessage(json));
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
-			
+			}
 		}
 
 		@Override
@@ -82,91 +79,81 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 				ex.printStackTrace();
 			}
 		}
-		
 	};
-	
-	
-	public void close() throws MqttException{
-		if(mqttClient !=null){
+
+	public void close() throws MqttException {
+		if (mqttClient != null) {
 			mqttClient.disconnect();
 			mqttClient.close();
 			mqttClient = null;
 		}
 	}
-	
-	public void subscribe() throws MqttException{
+
+	public void subscribe() throws MqttException {
 		mqttClient.subscribe(topicResponse);
 	}
-	
-	public void publish(String targetClientId, String text) throws MqttException{
+
+	public void publish(String targetClientId, String text) throws MqttException {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("text", text);
 		String json = jsonObject.toString();
-		
+
 		MqttMessage mqttMessage = new MqttMessage(json.getBytes());
 		mqttMessage.setQos(qos);
-		mqttClient.publish(topicRequest , mqttMessage);
+		mqttClient.publish(topicRequest, mqttMessage);
 	}
-	
+
 	@PostConstruct
-	public void init() throws MqttException{
-		
-		
+	public void init() throws MqttException {
+
 		this.myClientId = MqttClient.generateClientId();
 		this.topicRequest = "/Hwasung Seo/ifraredray/request";
 		this.topicResponse = "/Hwasung Seo/ifraredray/response";
-	
+
 		mqttClient = new MqttClient(url, myClientId);
-		
 		mqttClient.setCallback(callback);
-		
 		mqttClient.connect();
-		
 		subscribe();
-		
-			
 	}
-	
+
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		LOGGER.info("");
 		list.add(session);
 	}
-	
+
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		LOGGER.info("");		
+		LOGGER.info("");
 	}
-	
-	
+
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		LOGGER.info("");
 		list.remove(session);
 	}
-	
-	public long getUTCTime(long localTime){
+
+	public long getUTCTime(long localTime) {
 		long utcTime = 0;
 		TimeZone tz = TimeZone.getDefault();
-		try{
+		try {
 			int offset = tz.getOffset(localTime);
 			utcTime = localTime + offset;
-		}catch(Exception e){}
+		} catch (Exception e) {
+		}
 		return utcTime;
 	}
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
-		
-		
-		if(event instanceof ContextClosedEvent){
+
+		if (event instanceof ContextClosedEvent) {
 			try {
 				close();
 			} catch (MqttException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 }

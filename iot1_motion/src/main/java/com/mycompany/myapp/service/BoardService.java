@@ -17,7 +17,6 @@ public interface BoardService {
 	public void boardDelete(int bno);
 	public void boardUpdate(Board Board);
 	public Board getBoardLike(int bno, String mid);
-
 	
 	// search
 	public List<Board> boardSearchListPage(int pageNo, int rowsPerPage, String category, String bsearch);

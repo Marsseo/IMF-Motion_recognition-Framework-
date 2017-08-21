@@ -39,9 +39,7 @@ public class BoardController {
 	private ServletContext servletContext;
 
 	/*
-	 * 
 	 * boardList
-	 * 
 	 */
 	@RequestMapping("/board/boardList")
 	public String boardList(@RequestParam(defaultValue = "1") int pageNo, Model model) {
@@ -81,9 +79,7 @@ public class BoardController {
 	}
 
 	/*
-	 * 
 	 * boardWrite
-	 * 
 	 */
 	@RequestMapping(value = "/board/boardWrite", method = RequestMethod.GET)
 	public String boardWriteGet() {
@@ -97,7 +93,6 @@ public class BoardController {
 		// 파일의 정보 얻기
 		String fileName = Board.getBattach().getOriginalFilename();
 		String contentType = Board.getBattach().getContentType();
-		// long fileSize = board.getBattach().getSize();
 		// 파일을 서버 하드 디스크에 저장
 		// 실제 경로를 대입해줌
 		String realPath = servletContext.getRealPath("/WEB-INF/upload/" + fileName);
@@ -122,10 +117,9 @@ public class BoardController {
 
 		return "redirect:/board/boardList";
 	}
+
 	/*
-	 * 
 	 * boardDetail
-	 * 
 	 */
 	@RequestMapping("/board/hitcount")
 	public String boardHitcount(String mid, int bno, int pageNo, Model model) {
@@ -156,7 +150,7 @@ public class BoardController {
 		model.addAttribute("pageNo", pageNo);
 		return "board/boardDetail";
 	}
-	
+
 	@RequestMapping("/board/boardCheckBpassword")
 	public String boardCheckBpassword(int bno, String bpassword, Model model) {
 		String result = service.boardCheckBpassword(bno, bpassword);
@@ -169,14 +163,14 @@ public class BoardController {
 		service.boardDelete(bno);
 		return "redirect:/board/boardList";
 	}
-	
+
 	@RequestMapping("/board/boardLike")
 	public String boardLike(int bno, int pageNo, String mid, Model model) {
 		Board board = service.getBoardLike(bno, mid);
 		model.addAttribute("board", board);
 		return "redirect:/board/boardDetail?bno=" + bno + "&pageNo=" + pageNo + "&mid=" + mid;
 	}
-	
+
 	@RequestMapping(value = "/board/boardUpdate", method = RequestMethod.GET)
 	public String boardUpdateGet(int bno, int pageNo, Model model) {
 		Board board = service.getBoard(bno);
@@ -186,8 +180,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/board/boardUpdate", method = RequestMethod.POST)
-	public String boardUpdatePost(Board board, int pageNo)
-			throws IllegalStateException, IOException {
+	public String boardUpdatePost(Board board, int pageNo) throws IllegalStateException, IOException {
 		// 첨부 파일이 변경되었는지 검사
 		if (!board.getBattach().isEmpty()) {
 			// 첨부 파일을 서버 로컬 시스템에 저장
@@ -200,7 +193,7 @@ public class BoardController {
 			board.setBoriginalfilename(fileName);
 			board.setBfilecontent(board.getBattach().getContentType());
 			board.setBsavedfilename(savedFileName);
-		} 
+		}
 		// 게시물 수정 처리
 		service.boardUpdate(board);
 
@@ -288,9 +281,7 @@ public class BoardController {
 	}
 
 	/*
-	 * 
 	 * BoardComment
-	 * 
 	 */
 	@RequestMapping(value = "/board/boardCommentWrite", method = RequestMethod.GET)
 	public String boardCommentWrite() {
