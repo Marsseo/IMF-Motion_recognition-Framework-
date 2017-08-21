@@ -1,5 +1,11 @@
 package Motion;
 
+import Motion.Interfaces.ActionInterface;
+/**
+ * 
+ * @author CheolMin Kim
+ */
+
 public class Action implements ActionInterface {
 	
 	

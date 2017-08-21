@@ -1,8 +1,8 @@
 package Motion.server;
 
 import Motion.Action;
-import Motion.GyroMotions;
-import Motion.MotionCheck;
+import Motion.run.GyroMotions;
+import Motion.run.MotionCheck;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
