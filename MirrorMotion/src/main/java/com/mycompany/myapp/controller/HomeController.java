@@ -29,12 +29,6 @@ public class HomeController {
 	
 	public static Motion.Main main;
 	
-/*	@Autowired
-	private Action action;
-
-	@Autowired
-	private ActionInterface actioninterface;
-	*/
     
 	@RequestMapping("/")
 	public String home() throws Exception  {
