@@ -51,9 +51,7 @@
 					"mid" : "${member.mid}"
 				},
 				success : function(data) {
-
 					location.href = "http://localhost:8080/iot1_motion/"
-
 				}
 			});
 		} else {
@@ -65,7 +63,6 @@
 </head>
 
 <body>
-<%-- 	<input type="hidden" class="form-control"  name="mid"  id="mid" value="${member.mid }"/> --%>
 	<!-- start: Header -->
 	<div id="menu" class="nav-down">
 		<nav class="navbar navbar-default" role="navigation">
@@ -83,7 +80,6 @@
 								<li class="item-112 deeper dropdown">
 									<a style="width: 100px; height: 50px; vertical-align: middle;" class="dropdown-toggle" data-toggle="dropdown" href="#">
 										<img src="<%=application.getContextPath()%>/resources/img/student-32.png"></img>
-
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li class="item-206">
@@ -96,7 +92,6 @@
 											<c:if test="${log=='login'}">
 												<a>${member.mname}</a>
 											</c:if>
-
 										</li>
 										<li>
 										<c:if test="${log=='login'}">
@@ -121,8 +116,7 @@
 							</ul>
 							<c:if test="${member.mid==null}">
 							<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
-								style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
-							>
+								style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)">							
 								<!-- <i class="fa fa-user fa-fw"></i> -->
 								회원가입
 							</a>
@@ -148,9 +142,7 @@
 						<!-- end: Header Menu -->
 
 						<div id="menu-main">
-
 							<ul class="nav navbar-nav">
-
 								<li class="item-103 deeper dropdown">
 									<a href="#" class="dropdown-toggle " data-toggle="dropdown">
 										Demo
@@ -209,12 +201,6 @@
 												<span class="hidden-tablet">Gyro, UltraSonic, Infrared light Test</span>
 											</a>
 										</li>
-										<%-- <li class="item-256">
-											<a href="<%=application.getContextPath()%>/main">
-												<i class="icon-tasks"></i>
-												<span class="hidden-tablet">main</span>
-											</a>
-										</li> --%>
 										<li class="item-256">
 											<a href="<%=application.getContextPath()%>/gyroExplore">
 												<i class="icon-tasks"></i>
@@ -232,8 +218,7 @@
 								<li class="item-282 deeper dropdown">
 									<a href="<%=application.getContextPath()%>/board/boardList">
 										<span class="hidden-tablet">Question Board</span>
-									</a>
-							
+									</a>							
 								</li>
 								<c:if test="${member.mlevel >= 4}">
 									<li class="item-282 deeper dropdown">
@@ -241,37 +226,26 @@
 											<span class="hidden-tablet">Member Board</span>
 										</a>
 									</li>
-								</c:if>
-								
+								</c:if>								
 							</ul>
 							<div class="clearfix"></div>
 						</div>
-
 					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
 
-
-
 	<!-- start: JavaScript-->
 
 	<script src="<%=application.getContextPath()%>/resources/js/jquery-1.9.1.min.js"></script>
 	<script src="<%=application.getContextPath()%>/resources/js/jquery-migrate-1.0.0.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery-ui-1.10.0.custom.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.ui.touch-punch.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/modernizr.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/bootstrap.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.cookie.js"></script>
-
 	<script src='<%=application.getContextPath()%>/resources/js/fullcalendar.min.js'></script>
-
 	<script src='<%=application.getContextPath()%>/resources/js/jquery.dataTables.min.js'></script>
 
 	<script src="<%=application.getContextPath()%>/resources/js/excanvas.js"></script>
@@ -281,35 +255,21 @@
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.flot.resize.min.js"></script>
 
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.chosen.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.uniform.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.cleditor.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.noty.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.elfinder.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.raty.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.iphone.toggle.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.uploadify-3.1.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.gritter.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.imagesloaded.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.masonry.min.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.knob.modified.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.sparkline.min.js"></script>
-
+	
 	<script src="<%=application.getContextPath()%>/resources/js/counter.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/retina.js"></script>
-
 	<script src="<%=application.getContextPath()%>/resources/js/custom.js"></script>
 	<!-- end: JavaScript-->
 </body>

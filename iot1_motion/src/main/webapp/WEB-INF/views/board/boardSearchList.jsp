@@ -44,8 +44,6 @@
 	function handleLoginCheck() {
 		if($("#bcwriter").val()==""){
 			alert("로그인 후 이용하세요~");				
-			/* 로그인 버튼으로 이동 */
-			document.getElementById('list').focus();
 			return;
 		} 
 		location.href="boardWrite";
