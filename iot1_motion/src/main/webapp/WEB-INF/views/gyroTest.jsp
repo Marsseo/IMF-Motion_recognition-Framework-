@@ -213,9 +213,9 @@ body {
 				var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
-					yawAngle = (data.yawAngle-180)/10+1;
-					pitchAngle = (data.pitchAngle-180)/10+1;
-					rollAngle = (data.rollAngle-180)/10+1;
+					yawAngle = (data.yawAngle-180)< 5 ? 1 : (data.yawAngle-180);
+					pitchAngle = (data.pitchAngle-180)< 3 ? 1 : (data.pitchAngle-180);
+					rollAngle = (data.rollAngle-180)< 3 ? 1 : (data.rollAngle-180);
 					console.log("ddd   "+yawAngle+"  "+pitchAngle+"  "+rollAngle);
 					
 				};

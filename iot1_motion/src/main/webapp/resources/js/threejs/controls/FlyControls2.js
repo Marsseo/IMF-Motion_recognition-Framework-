@@ -4,7 +4,7 @@
 
 THREE.FlyControls = function ( object, domElement ) {
 	
-	var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
+	var yawAngle=0, pitchAngle=0, rollAngle=0;
 	
 	this.object = object;
 
@@ -45,7 +45,7 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	
 	this.mousedown = function( event ) {
-		console.log("ddd       "+(pitchAngle-prepitchAngle)+"        "+(rollAngle-prerollAngle));
+		
 		if ( this.domElement !== document ) {
 
 			this.domElement.focus();
@@ -74,22 +74,7 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	};
 
-	this.mousemove = function( event ) {
-		
-		if ( ! this.dragToLook || this.mouseStatus > 0 ) {
-
-			var container = this.getContainerDimensions();
-			var halfWidth  = container.size[ 0 ] / 2;
-			var halfHeight = container.size[ 1 ] / 2;
-
-			this.moveState.yawLeft   = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth  ) / halfWidth;
-			this.moveState.pitchDown =   ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
-
-			
-
-		}
-
-	};
+	
 
 	this.mouseup = function( event ) {
 
@@ -151,8 +136,8 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	this.updateRotationVector = function() {
 
-		this.rotationVector.x = ( -(prerollAngle)/200 );
-		this.rotationVector.y = ( (prepitchAngle)/200 );
+		this.rotationVector.x = ( -(rollAngle)/200 );
+		this.rotationVector.y = ( (pitchAngle)/200 );
 		//this.rotationVector.z = ( -(preyawAngle)/100 );
 
 		//console.log( 'rotate:', [ this.rotationVector.x, this.rotationVector.y, this.rotationVector.z ] );
@@ -199,13 +184,10 @@ THREE.FlyControls = function ( object, domElement ) {
 		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
 		ws.onmessage = function(event){
 			var data = JSON.parse(event.data);
-			preyawAngle = data.yawAngle-180;
-			prepitchAngle = data.pitchAngle-180;
-			prerollAngle = data.rollAngle-180;
+			yawAngle = (data.yawAngle-180)< 5 ? 1 : (data.yawAngle-180);
+			pitchAngle = (data.pitchAngle-180)<3 ? 1 : (data.pitchAngle-180);
+			rollAngle = (data.rollAngle-180)<3 ? 1 : (data.rollAngle-180);
 		};
-		yawAngle = preyawAngle;
-		pitchAngle = prepitchAngle;
-		rollAngle = prerollAngle;
 		
 	}
 

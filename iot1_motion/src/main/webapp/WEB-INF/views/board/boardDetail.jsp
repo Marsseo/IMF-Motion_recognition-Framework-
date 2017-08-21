@@ -26,11 +26,9 @@
 			$.ajax({
 				url: "boardCheckBpassword",
 				method: "post",
-				// data: "bno=${board.bno}&bpassword="+bpassword,
 				data: {"bno":"${board.bno}", "bpassword":bpassword},
 				success: function(data) {
 					if(data.result =="success") {
-						// console.log("success");
 						location.href="boardUpdate?bno=${board.bno}&pageNo=${pageNo}&mid=${member.mid}";
 					} else {
 						$("#bpassword").val("");
@@ -98,13 +96,10 @@
 		function handleLoginCheck() {
 			if($("#mid").val()==""){
 				alert("로그인 후 이용하세요~");				
-				/* 로그인 버튼으로 이동 */
-				document.getElementById('list').focus();
 			} 
 		}
 		
-		/* 덧글 수정/삭제 */
-	
+		/* 덧글 수정/삭제 */	
 		function handleBtnCommentUD(bcno, select) {
 			var bcpassword = $("#bcpassword").val();
 			if( bcpassword =="") {
@@ -182,7 +177,6 @@
 			<div class="btn btn-danger" style="border-radius: 50px; width: 100px; height: 100px; line-height: 30px; " onclick="handleBtnLike()">
 				${board.blikecount}<br/>
 				<span class="glyphicon glyphicon-heart" aria-hidden="true"  style="color: yellow; font-size: 45px"></span>
-				<!-- <img src="../resources/image/thumbsup.png" style="width: 30px; height: 30px;"/> -->
 			</div>			
 		</div>
 		<hr/>

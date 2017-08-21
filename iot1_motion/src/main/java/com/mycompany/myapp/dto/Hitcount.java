@@ -20,6 +20,4 @@ public class Hitcount {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-
-
 }
