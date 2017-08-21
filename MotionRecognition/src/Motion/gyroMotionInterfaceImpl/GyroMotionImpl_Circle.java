@@ -10,6 +10,12 @@ import java.util.Map;
  */
 
 public class GyroMotionImpl_Circle implements GyroMotionInterface{
+	
+	/**
+	 * It is ovverided method that writes an algorithm to recognize the Circle motion using a list containing arrays(difference[]).
+	 * @param differenceResultList
+	 * @param motionMap 
+	 */
 
 	@Override
 	public void gyroMotion(List<List> differenceResultList, Map<String, Integer> motionMap) {

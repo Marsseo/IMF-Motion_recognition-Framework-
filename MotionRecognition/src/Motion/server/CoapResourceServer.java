@@ -12,9 +12,16 @@ import org.eclipse.californium.scandium.ScandiumLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author CheolMin Kim
+ */
 public class CoapResourceServer {
 
 	private static final Logger logger = LoggerFactory.getLogger(CoapResourceServer.class);
+	/**
+	 * CoapServer
+	 */
 	public static CoapServer coapServer;
 
 	//static block(californium의 자체 로그 출력 금지
@@ -24,7 +31,10 @@ public class CoapResourceServer {
 		ScandiumLogger.initialize();
 		ScandiumLogger.setLevel(Level.OFF);
 	}
-
+/**
+ * registers the sensor resources with CoapServer.
+ * @throws Exception 
+ */
 	public CoapResourceServer() throws Exception {
 		coapServer = new CoapServer();
 		for (InetAddress addr : EndpointManager.getEndpointManager().getNetworkInterfaces()) {
@@ -40,10 +50,16 @@ public class CoapResourceServer {
 		coapServer.add(new MQTTResource());
 	}
 
+	/**
+	 * starts CoAP Server.
+	 */
 	public static void start() {
 		coapServer.start();
 	}
 
+	/**
+	 * stops CoAP Server.
+	 */
 	public static void stop() {
 		coapServer.stop();
 		coapServer.destroy();

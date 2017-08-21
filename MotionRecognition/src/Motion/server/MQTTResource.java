@@ -14,6 +14,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Hwasung Seo
+ */
+
 public class MQTTResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(MQTTResource.class);

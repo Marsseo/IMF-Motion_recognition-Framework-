@@ -7,6 +7,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author CheolMin Kim
+ */
 public class ButtonResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(ButtonResource.class);
@@ -14,7 +18,10 @@ public class ButtonResource extends CoapResource {
 	
 	private static ButtonResource instance;
 	public static String currStatus;
-	
+	/**
+	 * registers the resource name
+	 * @throws Exception 
+	 */
 	public ButtonResource() throws Exception {
 		super("button");
 		instance = this;
@@ -26,6 +33,12 @@ public class ButtonResource extends CoapResource {
 		return instance;
 	}
 
+	/**
+	 * Methods to get data by Get method.
+	 * It should have a query string type with two parameters for passing values in the get method.
+	 * The value of the first parameter is "button" and the value of the second parameter is "on" or "off".
+	 * @param exchange 
+	 */
 	@Override
 	public void handleGET(CoapExchange exchange) {
 
@@ -43,6 +56,14 @@ public class ButtonResource extends CoapResource {
 			exchange.respond("fail");
 		}
 	}
+	
+	/**
+	 * Methods to get data by Post method.
+	 * This should be a String of Json type with two Keys and Values.
+	 * The first key should be "sensor" and the Value should be "button".
+	 * The second key should be "status" and the Value should be "on" or "off".
+	 * @param exchange 
+	 */
 
 	@Override
 	public void handlePOST(CoapExchange exchange) {

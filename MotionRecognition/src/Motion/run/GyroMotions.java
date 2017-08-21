@@ -15,7 +15,7 @@ import java.util.Vector;
 public class GyroMotions implements TriggerMotionInterface {
 
 	/**
-	 * state that determines whether to collect sensor values for motion recognition.
+	 * Status that determines whether to collect sensor values for motion recognition.
 	 */
 	public static boolean MotionListCollecting = false;
 	/**
@@ -417,7 +417,7 @@ public class GyroMotions implements TriggerMotionInterface {
 	}
 
 	/**
-	 * 
+	 * It extracts the key and value from the parameter motionMap, compares the count, finds the motion with the highest count, and returns.
 	 * @param motionMap
 	 * Map with motion names of String type as Keys , counts of Integer type as Values.
 	 * @return
@@ -454,6 +454,17 @@ public class GyroMotions implements TriggerMotionInterface {
 		}
 	}
 
+	/**
+	 * This method is used when you want to use a motion trigger using a gyro sensor.
+	 * This method is a redefined method because the GyroMotions class implements TriggerMotionInterface.
+	 * When the yaw axis becomes 130 degrees or less and then returns to 170 degrees, the trigger is turned on or off according to the motion motion recognition step.
+	 * If the motion recognition step is 0, it is turned on. If it is 1, it is turned off.
+	 * If you do not want to use gyro sensor values with motion triggers, inherit the GyroMotions class and redefine those methods and leave them empty.
+	 * If you want to create a motion trigger with different conditions using the gyro sensor value by modifying the contents I wrote, inherit the GyroMotions class, redefine the method and write the code that you want.
+	 * 
+	 * @param status 
+	 * It indicates the current motion recognition step.
+	 */
 	@Override
 	public void triggerMotion(int status) {
 		boolean step1 = false;
@@ -511,6 +522,18 @@ public class GyroMotions implements TriggerMotionInterface {
 		}
 	}
 
+	/**
+	 * This method is used when you want to use a motion trigger using a button sensor.
+	 * This method is a redefined method because the GyroMotions class implements TriggerMotionInterface.
+	 * If motion recognition step is 0, motion trigger is turned on if buttonStatus is off, motion trigger is off when buttonStatus is on when motion recognition step is 1.
+	 * If you do not want to use button sensor values with motion triggers, inherit the GyroMotions class and redefine those methods and leave them empty.
+	 * If you want to create a motion trigger with different conditions using the button sensor by modifying the contents I wrote, inherit the GyroMotions class, redefine the method and write the code that you want.
+	 * 
+	 * @param step
+	 * It indicates the current motion recognition step.
+	 * @param buttonStatus
+	 * Current button's Status
+	 */
 	@Override
 	public void triggerButton(int step, String buttonStatus) {
 		/*
@@ -552,10 +575,21 @@ if(!listYawAngles.isEmpty()){
 		}
 
 	}
+	/**
+	* This method is used when you want to use a motion trigger using a InfraredRay sensor.
+	 * This method is a redefined method because the GyroMotions class implements TriggerMotionInterface.
+	 * If the motion recognition step is 0, the motion trigger is turned on when the distance value is less than 10. If the distance value is less than 10 when the motion recognition step is 1, the motion trigger is turned off.
+	 * If you do not want to use values measured from an infrared sensor with motion triggers, inherit the GyroMotions class and redefine those methods and leave them empty.
+	 * If you want to create a motion trigger with different conditions using the InfraredRay sensor by modifying the contents I wrote, inherit the GyroMotions class, redefine the method and write the code that you want.
+	 * 
+	 * @param step
+	 *  It indicates the current motion recognition step.
+	 * @param distance 
+	 * Current distance value measured from an infrared sensor
+	 */
 
 	@Override
 	public void triggerIR(int step, double distance) {
-		//System.out.println(distance); //삭제가가가가가각
 		if (step == 0) {
 			if (distance < 10) {
 				emptingCollectedList();
@@ -576,174 +610,4 @@ if(!listYawAngles.isEmpty()){
 
 	}
 
-	/*
-	
-	public synchronized static void pitchCircle() {
-		boolean step1 = false;
-		boolean step2 = false;
-		int count = 0;
-		if (listPitchAngle.size() >= 8) {
-			for (int i = 0; i < listPitchAngle.size(); i++) {
-				double prevalue = listPitchAngle.get(i);
-				if (MotionCheck.motionOn == false) {
-
-					if (prevalue < 130 && step1 == false) {
-						step1 = true;
-						System.out.println("Step1 On");
-					}
-					if (step1 == true) {
-						if (prevalue > 170) {
-							step2 = true;
-							System.out.println("Step2 On");
-						}
-					}
-
-					if (step1 == true && step2 == true) {
-						System.out.println("Motion On");
-						MotionCheck.MotionRecognitionStatus(true);
-						i = listPitchAngle.size();
-					}
-
-				}
-
-			}
-		}
-	}
-	
-		public static void yawLine(List<List> differenceResultList){
-		System.out.println(differenceResultList.size());
-		
-						
-						for(int i=0;i<differenceResultList.size();i++){
-							List<double[]> factorsInRange =differenceResultList.get(i);
-							for(int j=0;j<factorsInRange.size();j++){
-							
-							double[] count=factorsInRange.get(j);
-							if(j==0){
-							
-								if(count[1]>=0){
-									System.out.println(count[1]);
-									System.out.println("left");
-							}else{
-									System.out.println(count[1]);
-									System.out.println("right");
-								}
-							}else if(j==1){
-								if(count[2]>=0){
-									//System.out.println(count[2]);
-									//System.out.println("down");
-							}else{
-									//System.out.println("up");
-								}
-							}
-							}
-							
-							
-					}
-	}
-
-	public static int yawLeftRight() {
-		System.out.println("yawLeftRight실행");//삭제각
-		int leftCount = 0;
-		int rightCount = 0;
-		if (listYawAngle.size() >= 10) {
-			for (int i = 0; i < listYawAngle.size() - 1; i++) {
-				double rollPrevalue = listRollAngle.get(i + 1);
-				double yawPrevalue = listYawAngle.get(i);
-				double yawCurrvalue = listYawAngle.get(i + 1);
-				double yawGap = Math.abs(yawCurrvalue - yawPrevalue);
-				if (160 < rollPrevalue && rollPrevalue < 220) {
-					if (yawGap > 0.3) {
-
-						if (yawPrevalue < yawCurrvalue) {
-							leftCount++;
-						}
-
-						if (yawPrevalue > yawCurrvalue) {
-							rightCount++;
-						}
-					}
-				}
-
-			}
-			if (leftCount > 6) {
-				System.out.println("yaw Dirention :  <---");
-				MotionCheck.MotionRecognitionStatus(false);
-				System.out.println("Motion Off");
-				return leftCount;
-			} else if (rightCount > 6) {
-				System.out.println("yaw Dirention :  --->");
-				MotionCheck.MotionRecognitionStatus(false);
-				System.out.println("Motion Off");
-				return rightCount;
-			}
-		};
-		return 0;
-	}
-
-	public static int rollUpDown() {
-		System.out.println("rollUpDown실행");//삭제각
-		int upCount = 0;
-		int downCount = 0;
-		//int[] upCount={0,0};
-		//int[] downCount={1,0};
-
-		if (listRollAngle.size() >= 10) {
-			for (int i = 0; i < listRollAngle.size() - 1; i++) {
-				double yawValue = listYawAngle.get(i + 1);
-				double rollPrevalue = listRollAngle.get(i);
-				double rollCurrvalue = listRollAngle.get(i + 1);
-				double rollGap = Math.abs(rollCurrvalue - rollPrevalue);
-				if (300 < yawValue || yawValue < 40) {
-					if (rollGap > 0.3) {
-
-						if (rollPrevalue < rollCurrvalue) {
-							downCount++;
-						}
-
-						if (rollPrevalue > rollCurrvalue) {
-							upCount++;
-						}
-					}
-				}
-
-			}
-			if (downCount > 6) {
-				System.out.println("roll Dirention :  Down↓");
-				MotionCheck.MotionRecognitionStatus(false);
-				System.out.println("Motion Off");
-				return downCount;
-
-			} else if (upCount > 6) {
-				System.out.println("roll Dirention :  Up ↑");
-				MotionCheck.MotionRecognitionStatus(false);
-				System.out.println("Motion Off");
-				return upCount;
-			}
-		};
-		return 0;
-	}
-
-	public static void rollCircle() {
-		int count = 0;
-		if (listRollAngle.size() >= 8) {
-			for (int i = 0; i < listRollAngle.size() - 1; i++) {
-				double prevalue = listRollAngle.get(i);
-				double currvalue = listRollAngle.get(i + 1);
-
-				if (prevalue < currvalue) {
-					count++;
-				}
-
-			}
-			if (count == 9) {
-				System.out.println("o");
-				MotionCheck.MotionRecognitionStatus(false);
-				System.out.println("Motion Off");
-			}
-		};
-	}
-
-
-	 */
 }
