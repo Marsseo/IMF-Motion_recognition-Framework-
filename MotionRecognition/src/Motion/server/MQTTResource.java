@@ -42,6 +42,9 @@ public class MQTTResource extends CoapResource {
 		
 		//여기에 이름을 세팅
 		mqttId = "Hwasung Seo";
+		
+		mqtt  = new Distributor(mqttId);
+		
 		/**
 		*  Thread for mqtt publish <br/>
 		*  This thread will publish values from the other CoAP resourses to Broker. <br/>
@@ -50,11 +53,7 @@ public class MQTTResource extends CoapResource {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				try {
-					mqtt  = new Distributor(mqttId);
-				} catch (MqttException ex) {
-					java.util.logging.Logger.getLogger(MQTTResource.class.getName()).log(Level.SEVERE, null, ex);
-				}
+				
 				while (true) {
 					try {
 						JSONObject responseJsonObject = new JSONObject();

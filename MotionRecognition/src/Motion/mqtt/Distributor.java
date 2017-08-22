@@ -38,6 +38,7 @@ public class Distributor {
 	 */
 	private String sensor;
 	
+	private String mqttId;	
 	private int qos = 1;
 	
 	/**
@@ -86,7 +87,9 @@ public class Distributor {
 		
 		this.clientId =  MqttClient.generateClientId();
 		
-		mqttClient = new MqttClient(url, clientId);
+		this.mqttId = clientId;
+		
+		mqttClient = new MqttClient(url, this.clientId);
 		
 		mqttClient.setCallback(callback);
 		
@@ -111,7 +114,7 @@ public class Distributor {
 	 */
 	public void subscribe(String sensor) throws MqttException{
 		this.sensor = sensor;
-		this.request = "/"+clientId+"/"+sensor+"/request";
+		this.request = "/"+mqttId+"/"+sensor+"/request";
 		mqttClient.subscribe(request);
 	}
 	/**
@@ -122,7 +125,7 @@ public class Distributor {
 	 */
 	public void publish(String sensor, String json) throws MqttException{
 		this.sensor = sensor;
-		this.response ="/"+clientId+"/"+ sensor+"/response";
+		this.response ="/"+mqttId+"/"+ sensor+"/response";
 		MqttMessage mqttMessage = new MqttMessage(json.getBytes());
 		mqttMessage.setQos(qos);
 		mqttClient.publish(response, mqttMessage);
