@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import Motion.Action;
-import Motion.ActionInterface;
-import Motion.Main;
+import Motion.Recognizer;
+import Motion.run.MotionCheck;
 
 
 
@@ -27,14 +27,19 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	public static Motion.Main main;
+	public static Motion.Recognizer main;
 	
     
 	@RequestMapping("/")
 	public String home() throws Exception  {
-		main= new Main(new Action());
+		main= new Recognizer(new Action());
 		
 		main.start();
+//		MotionCheck.triggerOnMotionList.remove(0);
+//		//MotionCheck.triggerOnMotionList.remove(1);
+//		MotionCheck.triggerOffMotionList.remove(0);
+		MotionCheck.triggerOnMotionList.add(new Controllsss());
+		MotionCheck.triggerOffMotionList.add(new Controllsss());
 	
 		return "home";
 	}
