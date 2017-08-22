@@ -24,6 +24,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<!--Controller가 필요 없는 정적 리소스 폴더 설정 -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/static/**" location="/static/" />
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
