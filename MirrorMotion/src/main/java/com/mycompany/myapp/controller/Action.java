@@ -8,10 +8,8 @@ import com.mycompany.myapp.websocket.ActionHandler;
 
 import Motion.Interfaces.ActionInterface;
 
-
 @Component
-public class Action implements ActionInterface{
-
+public class Action implements ActionInterface  {
 	
 	@Override
 	public void action(String result) {
@@ -19,15 +17,16 @@ public class Action implements ActionInterface{
 		switch (result) {
 			case "left":
 				System.out.println("herasdf");
-				if(!ActionHandler.list.isEmpty()){
+				if (!ActionHandler.list.isEmpty()) {
 					try {
-						for(WebSocketSession session : ActionHandler.list) {
+						for (WebSocketSession session : ActionHandler.list) {
 							session.sendMessage(new TextMessage("left"));
+							
 							System.out.println("kk");
 						}
-				}catch(Exception e){
-					
-				}
+					} catch (Exception e) {
+						
+					}
 				}
 				break;
 			case "right":
@@ -35,17 +34,27 @@ public class Action implements ActionInterface{
 				break;
 			
 			default:
-				System.out.println("디폴트");
-				
-				
+				if (!ActionHandler.list.isEmpty()) {
+					try {
+						for (WebSocketSession session : ActionHandler.list) {
+							session.sendMessage(new TextMessage("left"));
+							System.out.println("---------------------------------------------------");
+							System.out.println("---------------------------------------------------");
+							System.out.println("---------------------------------------------------");
+							System.out.println("왼쪽이랍신다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+							System.out.println("---------------------------------------------------");
+							System.out.println("---------------------------------------------------");
+							System.out.println("---------------------------------------------------");
+							System.out.println("---------------------------------------------------");
+						}
+					} catch (Exception e) {
+						
+					}
+				}
 				
 				break;
 		}
 		
 	}
-
-
-
 	
-
 }

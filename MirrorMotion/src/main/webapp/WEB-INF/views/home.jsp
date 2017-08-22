@@ -50,19 +50,19 @@
 </script>
 
 <body>
-<h3>WebSocket-Echo</h3>
+ <h3>WebSocket-Echo</h3>
 		<hr/>
-		<div>
+<%-- 		<div>
 		<input type="button" id="btn" onclick="handleBtnConnect()" class="btn btn-warning" value="${session}">
-		</div>
+		</div> --%>
 		<div>
 			<button id="btnConnect" onclick="handleBtnConnect()" class="btn btn-warning">연결하기</button>
 			<button id="btnDisConnect" onclick="handleBtnDisConnect()" class="btn btn-danger">연결끊기</button>
 		</div>
-		<div>
+		<%--<div>
 			<input id="txtMessage" type="text"/>
 			<button id="btnSend" onclick="handleBtnSend()" class="btn btn-info">메시지 전송</button>
-		</div>
+		</div> --%>
 		<div>
 			<div id="divDisplay" style="width:500px; height:300px; padding:5px; overflow-y:scroll; border:1px solid black; margin-top: 5px;"></div>
 		</div>
@@ -73,6 +73,7 @@
 		</div>
 
 		<div class="row " style="position: absolute; top: 50%; width: 100%; z-index: 2; margin: 0;">
+			<%-- <div id="divDisplay" style="background-color: white; color: black" align="center" >direction:${session}</div> --%>
 			<div class="col-md-12">
 				<div id="Carousel" class="carousel slide">
 
