@@ -64,8 +64,8 @@ public class GyroscopeResource extends CoapResource {
 	}
 
 	/**
-	*  Dealing with get method from CoAP client <br/>
-	*  Send values to client which request obsevation from this sever.
+	*  Dealing with get method from CoAP client <br>
+	* Send values to client which request obsevation from this sever.
 	*/
 	@Override
 	public void handleGET(CoapExchange exchange) {

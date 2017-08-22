@@ -22,9 +22,8 @@ public class UltrasonicResource extends CoapResource {
 	public static double ultraDistance;
 	
 	/**
-	*  Constructor for this resource <br/>
-	*  After generating this class, observation function will start by thread in constructor.
-	* @throws Excetion
+	* Constructor for this resource <br>
+	* After generating this class, observation function will start by thread in constructor.
 	*/
 	public UltrasonicResource() throws Exception {
 		super("ultrasonic");
@@ -65,8 +64,8 @@ public class UltrasonicResource extends CoapResource {
 		return instance;
 	}
 	/**
-	*  Dealing with get method from CoAP client <br/>
-	*  Send values to client which request obsevation from this sever.
+	* Dealing with get method from CoAP client <br>
+	* Send values to client which request obsevation from this sever.
 	*/
 	@Override
 	public void handleGET(CoapExchange exchange) {

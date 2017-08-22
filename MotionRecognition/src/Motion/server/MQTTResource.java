@@ -35,7 +35,6 @@ public class MQTTResource extends CoapResource {
 	
 	/**
 	 *  Basic constructor, a thread in this class will be started by gerating this class
-	 * @throws Excetion
 	 */
 	public MQTTResource() throws Exception {
 		super("mqtt");
@@ -114,8 +113,8 @@ public class MQTTResource extends CoapResource {
 		
 	}
 	/**
-	*  Dealing with post method from CoAP client<br/>
-	*  You can check values you send by this method <br/>
+	*  Dealing with post method from CoAP client<br>
+	*  You can check values you send by this method <br>
 	*  <b>You have to send string json like "{ "sensor" : "status" }"</b>
 	*/
 	@Override

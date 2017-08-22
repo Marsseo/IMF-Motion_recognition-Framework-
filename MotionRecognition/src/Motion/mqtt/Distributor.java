@@ -94,7 +94,7 @@ public class Distributor {
 	}
 	
 	/**
-	 *  
+	 * Close mqtt client
 	 * @throws MqttException
 	 */
 	public void close() throws MqttException{
@@ -105,7 +105,8 @@ public class Distributor {
 		}
 	}
 	/**
-	 *  
+	 *  This method subscribe from broker by topic name
+	 * @param sensor sensor name for topic to subscribe
 	 * @throws MqttException
 	 */
 	public void subscribe(String sensor) throws MqttException{
@@ -114,7 +115,9 @@ public class Distributor {
 		mqttClient.subscribe(request);
 	}
 	/**
-	 *  
+	 * This method publish json to our broker as mqtt client.
+	 * @param sensor sensor name for topic to publish
+	 * @param json content for publish to broker
 	 * @throws MqttException
 	 */
 	public void publish(String sensor, String json) throws MqttException{
