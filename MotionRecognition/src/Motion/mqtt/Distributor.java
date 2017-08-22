@@ -47,26 +47,26 @@ public class Distributor {
 	private MqttClient mqttClient;
 	
 	/**
-	 *  MqttCallback is for handling after connection. <br/>
+	 *  MqttCallback is for handling after connection. <br>
 	 *  
 	 */
 	private MqttCallback callback = new MqttCallback(){
 		/**
-		*  
+		*  this method will be loaded when delivery completion
 		*/
 		@Override
 		public void deliveryComplete(IMqttDeliveryToken imdt) {
 			
 		}
 		/**
-		*  
+		*   this method will be loaded when mqtt connetion lost
 		*/
 		@Override
 		public void messageArrived(String string, MqttMessage mm) throws Exception {
 			publish(sensor, mm.toString());			
 		}
 		/**
-		*  
+		*  this method will be loaded when mqtt connetion lost
 		*/
 		@Override
 		public void connectionLost(Throwable thrwbl) {
