@@ -25,43 +25,48 @@ public class GyroscopeResource extends CoapResource {
 	public static double currRollAngle;
 	public static double currPitchAngle;
 	
-	public static Thread gyroObserverThread;
+	private Thread gyroObserverThread;
 	
 
 	public GyroscopeResource() throws Exception {
 		super("gyroscope");
-		instance = this;
+		instance = this;		
+
+	}
+	
+	@Override
+	public void setObservable(boolean observable) {
 		/**
 		*  set observalbe from CoAP client.
 		*/
-		setObservable(true);
+		super.setObservable(observable);
+		
 		getAttributes().setObservable();
 		/**
 		*  oberve type is NON message type.
 		*/
 		setObserveType(CoAP.Type.NON);
-			/**
-		*  This thread send message by hanleGet every 0.5 second.
-		*/
-
 		
-		gyroObserverThread = new Thread() {
+		/**
+		*  This thread send message by hanleGet every 0.5 second.<br>
+		*  You can use this thread if you check the values from this sever.
+		*/
+		Thread gyroObserverThread = new Thread(){
 			@Override
 			public void run() {
-				while (true) {
-					try {
+				while(true){
+					try{
 						changed();
 						Thread.sleep(500);
-					} catch (Exception e) {
+					}catch(Exception e){
 						LOGGER.info(e.toString());
 					}
 				}
 			}
-
+			
 		};
-		
-
-	}
+		if(observable) gyroObserverThread.start();
+	}	
 
 	public static GyroscopeResource getInstance() {
 

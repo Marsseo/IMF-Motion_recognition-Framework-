@@ -21,25 +21,34 @@ public class IRResource extends CoapResource {
 	private static IRResource instance;
 	public static double irDistance;
 	
+	
 	/**
 	*  
 	*/
 	public IRResource() throws Exception {
 		super("infraredray");
 		instance = this;
+		
+	}
+	
+	@Override
+	public void setObservable(boolean observable) {
 		/**
 		*  set observalbe from CoAP client.
 		*/
-		setObservable(true);
+		super.setObservable(observable);
+		
 		getAttributes().setObservable();
 		/**
 		*  oberve type is NON message type.
 		*/
 		setObserveType(CoAP.Type.NON);
+		
 		/**
-		*  This thread send message by hanleGet every 0.5 second.
+		*  This thread send message by hanleGet every 0.5 second.<br>
+		*  You can use this thread if you check the values from this sever.
 		*/
-		Thread thread = new Thread(){
+		Thread irObserverThread = new Thread(){
 			@Override
 			public void run() {
 				while(true){
@@ -52,9 +61,8 @@ public class IRResource extends CoapResource {
 				}
 			}
 			
-		}; 
-		thread.start();
-		
+		};
+		if(observable) irObserverThread.start();
 	}
 
 	public static IRResource getInstance() {

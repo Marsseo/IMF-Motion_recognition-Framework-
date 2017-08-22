@@ -46,13 +46,18 @@ public class MQTTResource extends CoapResource {
 //		mqttId = "Hwasung Seo";
 		
 		mqtt  = new Distributor(mqttId);
-		
+
+	}
+	
+	
+	@Override
+	public void setObservable(boolean observable) {
 		/**
 		*  Thread for mqtt publish <br/>
 		*  This thread will publish values from the other CoAP resourses to Broker. <br/>
 		*  In this case, we used three sensors (gyro, ultrasonic, infrared ray)
 		*/
-		Thread thread = new Thread() {
+		Thread mqttThread = new Thread() {
 			@Override
 			public void run() {
 				
@@ -97,9 +102,9 @@ public class MQTTResource extends CoapResource {
 			}
 
 		};
-		thread.start();
-
+		if(observable) mqttThread.start();
 	}
+	
 
 	public static MQTTResource getInstance() {
 
