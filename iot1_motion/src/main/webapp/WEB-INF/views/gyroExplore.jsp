@@ -129,18 +129,17 @@
 			}			
 			
 			function requestGyroSensorData(){
-				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor3D");
+				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor3D2");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
 					preyawAngle = data.yawAngle-180;
 					prepitchAngle = data.pitchAngle-180;
 					prerollAngle = data.rollAngle-180;
-					console.log("ddd   "+preyawAngle+"  "+prepitchAngle+"  "+prerollAngle);
+					console.log("ddd2   "+preyawAngle+"  "+prepitchAngle+"  "+prerollAngle);
 				};
 				yawAngle = preyawAngle;
 				pitchAngle = prepitchAngle;
-				rollAngle = prerollAngle;
-				
+				rollAngle = prerollAngle;				
 			}
 		</script>
 </body>
