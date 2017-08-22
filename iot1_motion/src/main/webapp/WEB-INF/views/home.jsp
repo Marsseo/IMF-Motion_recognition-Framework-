@@ -161,7 +161,7 @@
 											<a href="<%=application.getContextPath()%>/demo">Demo</a>
 										</li>
 										<li class="item-107">
-											<a href="/stock/demo">Highstock demos</a>
+											<a href="<%=application.getContextPath()%>/markdown">markdown</a>
 										</li>
 										<li class="item-205">
 											<a href="/maps/demo">Highmaps demo</a>
