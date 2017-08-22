@@ -21,14 +21,27 @@ public class UltrasonicResource extends CoapResource {
 	private static UltrasonicResource instance;
 	public static double ultraDistance;
 	
+	/**
+	*  Constructor for this resource <br/>
+	*  After generating this class, observation function will start by thread in constructor.
+	* @throws Excetion
+	*/
 	public UltrasonicResource() throws Exception {
 		super("ultrasonic");
 		instance = this;
 		
+		/**
+		*  set observalbe from CoAP client.
+		*/
 		setObservable(true);
 		getAttributes().setObservable();
+		/**
+		*  oberve type is NON message type.
+		*/
 		setObserveType(CoAP.Type.NON);
-		
+		/**
+		*  This thread send message by hanleGet every 0.5 second.
+		*/
 		Thread thread = new Thread(){
 			@Override
 			public void run() {
@@ -51,7 +64,10 @@ public class UltrasonicResource extends CoapResource {
 
 		return instance;
 	}
-
+	/**
+	*  Dealing with get method from CoAP client <br/>
+	*  Send values to client which request obsevation from this sever.
+	*/
 	@Override
 	public void handleGET(CoapExchange exchange) {
 		JSONObject responseJsonObject = new JSONObject();

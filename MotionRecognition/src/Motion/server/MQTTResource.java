@@ -22,25 +22,42 @@ import org.slf4j.LoggerFactory;
 public class MQTTResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(MQTTResource.class);
-
+	
 	private static MQTTResource instance;
-		
-	private Distributor mqtt;
+	/**
+	 *  mqtt client from Distributor class
+	 */	
+	public static Distributor mqtt;
+	/**
+	 *  topic 
+	 */
 	private String mqttId;
 	
+	/**
+	 *  Basic constructor, a thread in this class will be started by gerating this class
+	 * @throws Excetion
+	 */
 	public MQTTResource() throws Exception {
 		super("mqtt");
 		instance = this;
-
+		
 		//여기에 이름을 세팅
 		mqttId = "Hwasung Seo";
-		
+		/**
+		*  Thread for mqtt publish <br/>
+		*  This thread will publish values from the other CoAP resourses to Broker. <br/>
+		*  In this case, we used three sensors (gyro, ultrasonic, infrared ray)
+		*/
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
+				try {
+					mqtt  = new Distributor(mqttId);
+				} catch (MqttException ex) {
+					java.util.logging.Logger.getLogger(MQTTResource.class.getName()).log(Level.SEVERE, null, ex);
+				}
 				while (true) {
 					try {
-						mqtt  = new Distributor(mqttId, "gyro");
 						JSONObject responseJsonObject = new JSONObject();
 						responseJsonObject.put("yawAngle", String.valueOf(Math.round(currYawAngle*100)/100.));
 						responseJsonObject.put("pitchAngle", String.valueOf(Math.round(currPitchAngle*100)/100.));
@@ -48,33 +65,28 @@ public class MQTTResource extends CoapResource {
 
 						String responseJson = responseJsonObject.toString();
 						try {
-							mqtt.publish(responseJson);
+							mqtt.publish("gyro", responseJson);
 						} catch (MqttException ex) {
 							java.util.logging.Logger.getLogger(MQTTResource.class.getName()).log(Level.SEVERE, null, ex);
 						}
-						mqtt.close();
 						
-						mqtt = new Distributor(mqttId, "ultrasonic");
 						responseJsonObject = new JSONObject();
 						responseJsonObject.put("distance", String.valueOf(ultraDistance) );
 						responseJson = responseJsonObject.toString();
 						try {
-							mqtt.publish(responseJson);
+							mqtt.publish("ultrasonic",responseJson);
 						} catch (MqttException ex) {
 							java.util.logging.Logger.getLogger(GyroscopeResource.class.getName()).log(Level.SEVERE, null, ex);
 						}
-						mqtt.close();
 								
-						mqtt = new Distributor(mqttId, "ifraredray");
 						responseJsonObject = new JSONObject();
 						responseJsonObject.put("distance", String.valueOf(irDistance) );
 						responseJson = responseJsonObject.toString();
 						try {
-							mqtt.publish(responseJson);
+							mqtt.publish("ifraredray", responseJson);
 						} catch (MqttException ex) {
 							java.util.logging.Logger.getLogger(GyroscopeResource.class.getName()).log(Level.SEVERE, null, ex);
 						}
-						mqtt.close();
 
 						Thread.sleep(500);
 						
@@ -93,13 +105,19 @@ public class MQTTResource extends CoapResource {
 
 		return instance;
 	}
-
+	/**
+	*  Dealing with get method from CoAP client (empty)
+	*/
 	@Override
 	public void handleGET(CoapExchange exchange) {
 
 		
 	}
-
+	/**
+	*  Dealing with post method from CoAP client<br/>
+	*  You can check values you send by this method <br/>
+	*  <b>You have to send string json like "{ "sensor" : "status" }"</b>
+	*/
 	@Override
 	public void handlePOST(CoapExchange exchange) {
 		

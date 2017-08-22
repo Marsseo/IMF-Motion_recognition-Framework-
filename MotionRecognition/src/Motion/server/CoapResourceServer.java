@@ -9,6 +9,7 @@ import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.network.CoapEndpoint;
 import org.eclipse.californium.core.network.EndpointManager;
 import org.eclipse.californium.scandium.ScandiumLogger;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,10 +60,12 @@ public class CoapResourceServer {
 
 	/**
 	 * stops CoAP Server.
+	 * 
 	 */
-	public static void stop() {
+	public static void stop() throws MqttException {
 		coapServer.stop();
 		coapServer.destroy();
+		MQTTResource.mqtt.close();
 	}
 
 }
