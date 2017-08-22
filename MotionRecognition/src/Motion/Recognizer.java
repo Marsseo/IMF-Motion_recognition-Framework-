@@ -5,6 +5,7 @@ import Motion.run.MotionCheck;
 import Motion.Interfaces.ActionInterface;
 import Motion.server.CoapResourceServer;
 import java.util.Scanner;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -39,7 +40,7 @@ private static final Logger logger=LoggerFactory.getLogger(Recognizer.class);
 	/**
 	 * stops a CoApServer
 	 */
-	public static void stop(){
+	public static void stop() throws MqttException{
 		logger.info("실행");
 		coapResourceServer.stop();
 		System.out.println("stop");
