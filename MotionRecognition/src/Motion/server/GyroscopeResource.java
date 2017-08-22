@@ -24,6 +24,9 @@ public class GyroscopeResource extends CoapResource {
 	public static double currYawAngle;
 	public static double currRollAngle;
 	public static double currPitchAngle;
+	
+	public static Thread gyroObserverThread;
+	
 
 	public GyroscopeResource() throws Exception {
 		super("gyroscope");
@@ -37,10 +40,12 @@ public class GyroscopeResource extends CoapResource {
 		*  oberve type is NON message type.
 		*/
 		setObserveType(CoAP.Type.NON);
-		/**
+			/**
 		*  This thread send message by hanleGet every 0.5 second.
 		*/
-		Thread thread = new Thread() {
+
+		
+		gyroObserverThread = new Thread() {
 			@Override
 			public void run() {
 				while (true) {
@@ -54,7 +59,7 @@ public class GyroscopeResource extends CoapResource {
 			}
 
 		};
-		thread.start();
+		
 
 	}
 
