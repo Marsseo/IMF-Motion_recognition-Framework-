@@ -25,10 +25,10 @@ public class ActionHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		LOGGER.info("");
+		/*LOGGER.info("");
 		String strMessage = message.getPayload();
 		TextMessage textMessage = new TextMessage(strMessage);
-		session.sendMessage(textMessage);
+		session.sendMessage(textMessage);*/
 	}
 	
 	@Override

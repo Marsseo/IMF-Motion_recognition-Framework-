@@ -44,7 +44,7 @@ body {
 			<div class="row-fluid">
 				<div class="login-box">
 					<div class="icons">
-						<a href="http://localhost:8080/IoTWeb_Motion/">
+						<a href="<%=application.getContextPath()%>/iot1_motion/">
 							<i class="halflings-icon home"></i>
 						</a>
 					</div>

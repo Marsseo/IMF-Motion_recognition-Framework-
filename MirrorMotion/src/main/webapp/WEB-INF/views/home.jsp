@@ -14,59 +14,35 @@
 <script type="text/javascript">
 	var ws = null;
 
-	function handleBtnConnect() {
-		ws = new WebSocket("ws://" + window.location.host
+	$(function() {
+		var ws = new WebSocket("ws://" + window.location.host
 				+ "/MirrorMotion/websocket/action");
-		ws.onopen = handleOnOpen;
-		ws.onmessage = handleOnMessage;
-		ws.onclose = handleOnClose;
-	}
 
-	function handleOnOpen() {
-		display("[연결 성공]");
-	}
+		ws.onmessage = handleOnMessage;
+	});
+
+
 	function handleOnMessage(event) {
 		var strMessage = event.data;
-		display("[에코] " + strMessage);
-	}
-	function handleOnClose() {
-		display("[연결 끊김]");
-	}
-	
-	function handleBtnSend() {
-		var strMessage=$("#txtMessage").val();
-		ws.send(strMessage);
+		control(strMessage);
+		
 	}
 
-	function display(message) {
+	function control(message) {
 		var message;
-		$("#divDisplay").append(
-				"<span style='display:block;'>" + message + "</span>");
-		if ($("#divDisplay span").length > 20) {
-			$("#divDisplay span").first().remove();
+		if(message=="left"){
+			$('#Carousel').carousel('next');
+			
 		}
-		$("#divDisplay").scrollTop($("#divDisplay").height());
+		if(message=="right"){
+			$('#Carousel').carousel('prev');
+		}
 	}
 </script>
 
 <body>
- <h3>WebSocket-Echo</h3>
-		<hr/>
-<%-- 		<div>
-		<input type="button" id="btn" onclick="handleBtnConnect()" class="btn btn-warning" value="${session}">
-		</div> --%>
-		<div>
-			<button id="btnConnect" onclick="handleBtnConnect()" class="btn btn-warning">연결하기</button>
-			<button id="btnDisConnect" onclick="handleBtnDisConnect()" class="btn btn-danger">연결끊기</button>
-		</div>
-		<%--<div>
-			<input id="txtMessage" type="text"/>
-			<button id="btnSend" onclick="handleBtnSend()" class="btn btn-info">메시지 전송</button>
-		</div> --%>
-		<div>
-			<div id="divDisplay" style="width:500px; height:300px; padding:5px; overflow-y:scroll; border:1px solid black; margin-top: 5px;"></div>
-		</div>
-		
+	
+
 	<div class="container" style="width: 100%; height: 100%; padding: 0;">
 		<div style="width: 100%; height: 100%; position: absolute; z-index: 1">
 			<img style="width: 100%; height: 100%;" alt="Image" src="<%=application.getContextPath()%>/resources/image/cafeBackground.jpg">
@@ -133,14 +109,7 @@
 	<!--.container-->
 	</div>
 </body>
-<script>
-	$(document).ready(function() {
-		$('#Carousel').carousel({
-			/* 	 interval : 5000  */
-			interval : 0
-		})
-	});
-</script>
+
 <style>
 body {
 	/* padding-top: 20px; */
