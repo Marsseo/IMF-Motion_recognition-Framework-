@@ -1,7 +1,7 @@
 package com.mycompany.myapp.websocket;
 
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -19,11 +19,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component
-public class IfraredraySensorHandler extends TextWebSocketHandler implements ApplicationListener {
+public class GyroSensor3D2Handler extends TextWebSocketHandler implements ApplicationListener {
 
-	private static final Logger logger = LoggerFactory.getLogger(IfraredraySensorHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GyroSensor3D2Handler.class);
 
-	private Map<String, WebSocketSession> map = new HashMap<>();
+	private Map<String, WebSocketSession> map = new Hashtable<>();
 
 	@PostConstruct
 	public void init() {
@@ -59,9 +59,14 @@ public class IfraredraySensorHandler extends TextWebSocketHandler implements App
 			WebSocketSession session = map.get(mid);
 			JSONObject jsonObject = new JSONObject(json);
 
-			double distance = Double.parseDouble(jsonObject.getString("distance"));
+			double yawAngle = Double.parseDouble(jsonObject.getString("yawAngle"));
+			double pitchAngle = Double.parseDouble(jsonObject.getString("pitchAngle"));
+			double rollAngle = Double.parseDouble(jsonObject.getString("rollAngle"));
+			
 			jsonObject.put("time", getUTCTime(new Date().getTime()));
-			jsonObject.put("distance", distance);
+			jsonObject.put("yawAngle", yawAngle);
+			jsonObject.put("pitchAngle", pitchAngle);
+			jsonObject.put("rollAngle", rollAngle);
 			
 			json = jsonObject.toString();
 			session.sendMessage(new TextMessage(json));

@@ -210,7 +210,7 @@ body {
 			}
 			
 			function requestGyroSensorData(){
-				var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
+				var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor3D");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
 					yawAngle = Math.abs(data.yawAngle-180)< 8 ? 0 : (data.yawAngle-180);

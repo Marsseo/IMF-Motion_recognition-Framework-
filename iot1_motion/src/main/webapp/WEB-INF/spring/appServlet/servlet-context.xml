@@ -49,10 +49,13 @@
 	<!-- WebSocket URL Mapping -->
 	<websocket:handlers>
 		<websocket:mapping handler="gyroSensorHandler" path="websocket/GyroSensor"></websocket:mapping>
-		<websocket:mapping handler="ultrasonicSensorHandler"
-			path="websocket/Ultrasonic"></websocket:mapping>
-		<websocket:mapping handler="ifraredraySensorHandler"
-			path="websocket/Ifraredray"></websocket:mapping>
+		<websocket:mapping handler="gyroSensor3DHandler" path="websocket/GyroSensor3D"></websocket:mapping>
+		<websocket:mapping handler="gyroSensor3D2Handler" path="websocket/GyroSensor3D2"></websocket:mapping>
+ 		<websocket:mapping handler="ultrasonicSensorHandler" path="websocket/Ultrasonic"></websocket:mapping>
+		<websocket:mapping handler="ifraredraySensorHandler" path="websocket/Ifraredray"></websocket:mapping> 
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
 	</websocket:handlers>
 
 </beans:beans>

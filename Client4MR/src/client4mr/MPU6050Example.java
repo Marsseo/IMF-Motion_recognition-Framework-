@@ -2,21 +2,17 @@ package client4mr;
 
 import com.raspoid.sensors.TouchSwitch;
 import com.pi4j.io.gpio.RaspiPin;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.i2c.I2CFactory;
 import com.raspoid.sensors.IRSensor;
 import com.raspoid.sensors.UltrasonicSensor;
 import converter.PCF8591;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.json.JSONObject;
 public class MPU6050Example {
 
-	public static String ipAdress = "192.168.3.164";
+	public static String ipAdress = "192.168.3.113";
 	public static CoapClient coapClient;
 	public static CoapResponse coapResponse;
 	public static JSONObject jsonObject;
