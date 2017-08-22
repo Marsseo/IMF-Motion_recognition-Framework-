@@ -19,6 +19,4 @@ public class Likecount {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-
-
 }

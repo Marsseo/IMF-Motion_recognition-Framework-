@@ -14,7 +14,7 @@ import com.mycompany.myapp.service.AdminService;
 import com.mycompany.myapp.service.MemberService;
 
 @Controller
-public class AdminController {	
+public class AdminController {
 
 	@Resource(name = "adminServiceImpl")
 	private AdminService service;
@@ -57,12 +57,14 @@ public class AdminController {
 		// view 이름 리턴
 		return "admin/memberList";
 	}
+
 	@RequestMapping("/admin/memberGradeUpdate")
 	public String memberGradeUpdate(String mid, String mlevel) {
 		service.memberGrade(mid, mlevel);
 		System.out.println("mlevel: " + mlevel);
 		return "redirect:/admin/memberList";
 	}
+
 	@RequestMapping("/admin/memberDelete")
 	public String member(String mid) {
 		mservice.memberDelete(mid);

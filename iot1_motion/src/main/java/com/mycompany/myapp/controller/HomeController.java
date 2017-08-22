@@ -29,14 +29,14 @@ import com.mycompany.myapp.service.MemberService;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes({ "member" ,"log", "id"})
+@SessionAttributes({ "member", "log", "id" })
 public class HomeController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	String log="log";
-	
-	private static String mqttId="";
-	
+	String log = "log";
+
+	private static String mqttId = "";
+
 	@Resource(name = "memberServiceImpl")
 	private MemberService service;
 
@@ -71,52 +71,30 @@ public class HomeController {
 	public String fb(HttpServletRequest request, Model model) throws IOException {
 		String accessToken = (String) request.getSession().getAttribute("facebookToken");
 		Facebook facebook = new FacebookTemplate(accessToken);
-	
-		if (facebook.isAuthorized()) {
 
+		if (facebook.isAuthorized()) {
 			// 페이스북에서 프로필을 읽어온다.
 			User profile = facebook.fetchObject("me", User.class, "name,email,cover,picture");
-			
-			
+
 			// 프로필을 모델로 전송
 			model.addAttribute("profile", profile);
-			
+
 			// 멤버객체 생성
 			Member member = new Member();
 
 			// 필드에 저장
-			if (profile.getEmail()==null) {
+			if (profile.getEmail() == null) {
 				member.setMemail("");
-			}else{
+			} else {
 				member.setMemail(profile.getEmail());
 			}
 			member.setMname(profile.getName());
 			member.setMlevel("1");
-			
 			member.setMid(profile.getId());
 			mqttId = profile.getName();
-/*			
-			System.out.println(profile.getName());
-			System.out.println(profile.getId());*/
-			
 
 			// 전송
 			model.addAttribute("member", member);
-			
-			
-//			logger.info("Home");
-//			System.out.println("------------------------------------------");
-//			System.out.println("프로필출력");
-//			System.out.println(profile.getEmail());
-//			System.out.println(profile.getName());
-//			System.out.println(profile.getId());
-//			System.out.println("------------------------------------------");
-//			System.out.println("멤버출력");
-//			System.out.println(member.getMemail());
-//			System.out.println(member.getMname());
-//			System.out.println(member.getMid());
-			// 회원인지 확인
-			
 			member = service.getMember(member.getMid());
 
 			// 1. 회원가입이 안되있는 경우
@@ -125,30 +103,25 @@ public class HomeController {
 			}
 			// 2. 회원가입이 되어있는 경우
 			else {
-				log="login";
-				model.addAttribute("log",log);
+				log = "login";
+				model.addAttribute("log", log);
 				model.addAttribute("member", member);
-				
+
 				return "main";
 			}
-
 		} else {
 			return "redirect:/fb/login";
 		}
-
 	}
 
 	@RequestMapping("/")
 	public String homeGet(Model model) {
-		/*model.addAttribute("log",log);*/
 		return "main";
 	}
-	
-	
+
 	public static String getMqttId() {
-		
 		return mqttId;
 	}
-
 	
+
 }

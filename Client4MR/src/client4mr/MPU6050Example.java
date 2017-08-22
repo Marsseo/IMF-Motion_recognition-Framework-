@@ -88,7 +88,7 @@ public class MPU6050Example {
 			
 			try {
 				distance("ultrasonic");
-				distance("ifraredray");
+				distance("infraredray");
 			} catch (Exception ex) {	ex.printStackTrace();}
 			
 			Tools.sleepMilliseconds(100);
@@ -142,7 +142,7 @@ public class MPU6050Example {
 			jsonObject.put("distance", String.valueOf(ultrasonic.getDistance()));
 			json = jsonObject.toString();
 
-		} else if (sensor.equals("ifraredray")) {
+		} else if (sensor.equals("infraredray")) {
 
 			jsonObject.put("distance", String.valueOf(iRSensor.getValue()));
 			json = jsonObject.toString();

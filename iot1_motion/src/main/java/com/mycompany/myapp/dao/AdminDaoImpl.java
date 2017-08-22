@@ -39,8 +39,8 @@ public class AdminDaoImpl implements AdminDao {
 		Map<String, String> map = new HashMap<>();
 		map.put("mid", mid);
 		map.put("mlevel", mlevel);
-		int result  = sqlSessionTemplate.update("member.updateGrade", map);
-		
+		int result = sqlSessionTemplate.update("member.updateGrade", map);
+
 		System.out.println("result: " + result);
 		System.out.println("mid: " + mid);
 		System.out.println("mlevel: " + mlevel);

@@ -9,26 +9,20 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
-@SessionAttributes({ "member" ,"log"})
+@SessionAttributes({ "member", "log" })
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-
 	@RequestMapping("/login")
 	public String login() {
-		
 		return "login";
-		
 	}
+
 	@RequestMapping("/logout")
 	public String logout(SessionStatus sessionStatus, Model model) {
 		sessionStatus.setComplete();
-		
-		String log="logout";
-		model.addAttribute("log",log);
+		String log = "logout";
+		model.addAttribute("log", log);
 		return "main";
-		
 	}
-	
-	
 }

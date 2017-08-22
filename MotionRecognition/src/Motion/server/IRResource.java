@@ -1,16 +1,18 @@
 package Motion.server;
 
-import Motion.MotionCheck;
-import Motion.mqtt.Distributor;
-import java.util.logging.Level;
+import Motion.run.MotionCheck;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.server.resources.CoapExchange;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author CheolMin Kim
+ * @author Hwasung Seo
+ */
 public class IRResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(IRResource.class);
@@ -20,7 +22,7 @@ public class IRResource extends CoapResource {
 	public static double irDistance;
 	
 	public IRResource() throws Exception {
-		super("ifraredray");
+		super("infraredray");
 		instance = this;
 		
 		setObservable(true);
@@ -32,7 +34,6 @@ public class IRResource extends CoapResource {
 			public void run() {
 				while(true){
 					try{
-						
 						changed();
 						Thread.sleep(500);
 					}catch(Exception e){
@@ -42,7 +43,7 @@ public class IRResource extends CoapResource {
 			}
 			
 		}; 
-		//thread.start();
+		thread.start();
 		
 	}
 
@@ -61,6 +62,13 @@ public class IRResource extends CoapResource {
 		exchange.respond(responseJson);
 	}
 
+	/**
+	 * Methods to get data by Post method.
+	 * This should be a String of Json type with two Keys and Values.
+	 * The first key should be "sensor" and the Value should be "infraredray".
+	 * The second key should be "distance" and Value should be the value of the distance measured by the InfraredRay Sensor..
+	 * @param exchange 
+	 */
 	@Override
 	public void handlePOST(CoapExchange exchange) {
 		//{"sensor":"infraredray","distance":"100"} 이런식으로
@@ -70,7 +78,7 @@ public class IRResource extends CoapResource {
 		String requestJson = exchange.getRequestText();
 		JSONObject requestJsonObject = new JSONObject(requestJson);
 		String sensor = requestJsonObject.getString("sensor");
-		if (sensor.equals("ifraredray")) {
+		if (sensor.equals("infraredray")) {
 			double distance= Double.parseDouble(requestJsonObject.getString("distance"));
 			irDistance=distance;
 			MotionCheck.irAddData(irDistance);
