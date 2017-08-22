@@ -170,7 +170,7 @@
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li class="item-128">
-											<a href="<%=application.getContextPath()%>/docs">General Documentation</a>
+											<a href="static/index.html">General Documentation</a>
 										</li>
 										<li class="item-124">
 											<a href="http://api.highcharts.com/highcharts">Highcharts API Reference</a>

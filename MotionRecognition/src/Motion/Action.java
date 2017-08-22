@@ -8,8 +8,11 @@ import Motion.Interfaces.ActionInterface;
 
 public class Action implements ActionInterface {
 	
-	
-
+	/**
+	 * It is overrided method that matches the final motion and the event you want to execute
+	 * @param finalMotion 
+	 * The name of the last determined motion. It Indicates the name of the motion with the highest count value
+	 */
 	@Override
 	public void action(String finalMotion) {
 		switch (finalMotion) {

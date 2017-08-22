@@ -5,8 +5,11 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.json.JSONObject;
 
+/**
+ * 
+ * @author HwaSung Seo
+ */
 
 public class Distributor {
 	private String url = "tcp://106.253.56.122:1883";

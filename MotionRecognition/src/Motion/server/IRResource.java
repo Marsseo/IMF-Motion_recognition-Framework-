@@ -8,6 +8,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author CheolMin Kim
+ * @author Hwasung Seo
+ */
 public class IRResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(IRResource.class);
@@ -57,6 +62,13 @@ public class IRResource extends CoapResource {
 		exchange.respond(responseJson);
 	}
 
+	/**
+	 * Methods to get data by Post method.
+	 * This should be a String of Json type with two Keys and Values.
+	 * The first key should be "sensor" and the Value should be "infraredray".
+	 * The second key should be "distance" and Value should be the value of the distance measured by the InfraredRay Sensor..
+	 * @param exchange 
+	 */
 	@Override
 	public void handlePOST(CoapExchange exchange) {
 		//{"sensor":"infraredray","distance":"100"} 이런식으로

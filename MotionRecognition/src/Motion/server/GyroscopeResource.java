@@ -10,6 +10,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author CheolMin Kim
+ * @author Hwasung Seo
+ */
+
 public class GyroscopeResource extends CoapResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(GyroscopeResource.class);
@@ -50,6 +56,7 @@ public class GyroscopeResource extends CoapResource {
 		return instance;
 	}
 
+	
 	@Override
 	public void handleGET(CoapExchange exchange) {
 		//System.out.println("Get방식");
@@ -63,6 +70,20 @@ public class GyroscopeResource extends CoapResource {
 		exchange.respond(responseJson);
 	}
 
+	/**
+	 * Methods to get data by Post method.
+	 * This should be a String of Json type with four Keys and Values.
+	 * the first key should be "sensor" and the Value should be "gyroscope".
+	 * the second key should be "yawAngle" and the Value should be the value of the yaw axis measured by the gyroscope sensor.
+	 * the third key is "pitchAngle" and the Value must be the value of the pitch axis measured by the gyroscope sensor.
+	 * the fourth key should be "rollAngle" and the Value should be the value of the roll axis measured by the gyroscope sensor.
+	 * It can also receive data in the form of a query string.
+	 * The first key should be "sensor" and the Value should be "gyroscope".
+	 * the second key should be "yawAngle" and the Value should be the value of the yaw axis measured by the gyroscope sensor.
+	 * the third key is "pitchAngle" and the Value must be the value of the pitch axis measured by the gyroscope sensor.
+	 * the fourth key should be "rollAngle" and the Value should be the value of the roll axis measured by the gyroscope sensor.
+	 * @param exchange 
+	 */
 	@Override
 	public void handlePOST(CoapExchange exchange) {
 		//System.out.println("post 방식");
