@@ -12,6 +12,9 @@
 		<script src="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 	</head>
 <body>
+
+<jsp:include page="home.jsp"></jsp:include>
+
 <h2 id="motion-recognition-gyro"> <strong>Motion Recognition (Gyro)</strong></h2>
 
 <hr>
