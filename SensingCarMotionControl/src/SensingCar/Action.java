@@ -1,6 +1,6 @@
 package SensingCar;
 
-import Motion.ActionInterface;
+import Motion.Interfaces.ActionInterface;
 
 public class Action implements ActionInterface {
 	private Buzzer buzzer;

@@ -69,6 +69,10 @@ public class GyroSensor3D2Handler extends TextWebSocketHandler implements Applic
 			jsonObject.put("rollAngle", rollAngle);
 			
 			json = jsonObject.toString();
+			System.out.println("mid:::"+mid);
+			System.out.println("json:::"+json);
+			System.out.println("session:::"+session);
+			
 			session.sendMessage(new TextMessage(json));
 
 		} catch (Exception e) {

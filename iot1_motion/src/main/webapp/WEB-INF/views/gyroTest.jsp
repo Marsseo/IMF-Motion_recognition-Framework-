@@ -197,7 +197,7 @@ body {
 				requestAnimationFrame( animate );
 				group.rotation.x = pitchAngle; // 빨강 y값 
 				group.rotation.y = yawAngle; //초록 z값
-				//group.rotation.z = rollAngle; //파랑 x값
+				group.rotation.z = -rollAngle; //파랑 x값
 				
 				var time = Date.now() * 0.001;
 				//group.rotation.z = time * 1;

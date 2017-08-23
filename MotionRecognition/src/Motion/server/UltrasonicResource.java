@@ -29,19 +29,26 @@ public class UltrasonicResource extends CoapResource {
 		super("ultrasonic");
 		instance = this;
 		
+	}
+
+	@Override
+	public void setObservable(boolean observable) {
 		/**
 		*  set observalbe from CoAP client.
 		*/
-		setObservable(true);
+		super.setObservable(observable);
+		
 		getAttributes().setObservable();
 		/**
 		*  oberve type is NON message type.
 		*/
 		setObserveType(CoAP.Type.NON);
+		
 		/**
-		*  This thread send message by hanleGet every 0.5 second.
+		*  This thread send message by hanleGet every 0.5 second.<br>
+		*  You can use this thread if you check the values from this sever.
 		*/
-		Thread thread = new Thread(){
+		Thread ulatrsonicObserverThread = new Thread(){
 			@Override
 			public void run() {
 				while(true){
@@ -54,10 +61,9 @@ public class UltrasonicResource extends CoapResource {
 				}
 			}
 			
-		}; 
-		thread.start();
-		
-	}
+		};
+		if(observable) ulatrsonicObserverThread.start();
+	}	
 
 	public static UltrasonicResource getInstance() {
 

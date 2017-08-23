@@ -2,8 +2,11 @@ package Motion.server;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.logging.Level;
 import org.eclipse.californium.core.CaliforniumLogger;
+import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.californium.core.coap.CoAP;
 import org.eclipse.californium.core.network.CoapEndpoint;
@@ -24,6 +27,8 @@ public class CoapResourceServer {
 	 * CoapServer
 	 */
 	public static CoapServer coapServer;
+	
+	public Map<String, CoapResource> resources = new Hashtable<>();
 
 	//static block(californium의 자체 로그 출력 금지
 	static {
@@ -43,12 +48,29 @@ public class CoapResourceServer {
 				coapServer.addEndpoint(new CoapEndpoint(new InetSocketAddress(addr, CoAP.DEFAULT_COAP_PORT)));
 			}
 		}
+		
+		resources.put("gyro", new GyroscopeResource());
+		resources.put("ultrasonic", new UltrasonicResource());
+		resources.put("ir", new IRResource());
+		resources.put("button", new ButtonResource());
+		resources.put("mqtt", new MQTTResource());
+		
 
-		coapServer.add(new GyroscopeResource());
-		coapServer.add(new UltrasonicResource());
-		coapServer.add(new IRResource());
-		coapServer.add(new ButtonResource());
-		coapServer.add(new MQTTResource());
+		coapServer.add(resources.get("gyro"));
+		coapServer.add(resources.get("ultrasonic"));
+		coapServer.add(resources.get("ir"));
+		coapServer.add(resources.get("button"));
+		coapServer.add(resources.get("mqtt"));
+		
+		
+		
+		/**
+		 * 
+		 */
+		resources.get("gyro").setObservable(false);
+		resources.get("ultrasonic").setObservable(false);
+		resources.get("ir").setObservable(false);
+		resources.get("mqtt").setObservable(true);
 	}
 
 	/**

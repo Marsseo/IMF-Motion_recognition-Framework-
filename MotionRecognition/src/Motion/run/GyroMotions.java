@@ -423,6 +423,7 @@ public class GyroMotions implements TriggerMotionInterface {
 	 * @return
 	 * finalMotion - The name of the last determined motion. It Indicates the name of the motion with the highest count value.
 	 */
+	
 	public static String motionDecision(Map<String, Integer> motionMap) {
 
 		Set<String> keySet = motionMap.keySet();

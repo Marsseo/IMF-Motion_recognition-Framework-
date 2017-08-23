@@ -128,7 +128,7 @@
 				renderer.render( scene, camera );
 			}			
 			
-			function requestGyroSensorData(){
+		/* 	function requestGyroSensorData(){
 				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor3D2");
 				ws.onmessage = function(event){
 					var data = JSON.parse(event.data);
@@ -140,7 +140,7 @@
 				yawAngle = preyawAngle;
 				pitchAngle = prepitchAngle;
 				rollAngle = prerollAngle;				
-			}
+			} */
 		</script>
 </body>
 </html>

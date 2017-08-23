@@ -224,7 +224,7 @@ public class MotionCheck {
 						
 						System.out.println("모션준비 1단계"); //나중에 삭제각
 						for(TriggerMotionInterface trigger: triggerOnMotionList){
-						//	trigger.triggerMotion(0);
+							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
 							trigger.triggerIR(0,irDistance);
 						}
