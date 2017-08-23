@@ -33,7 +33,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/MotionRecognition.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/MotionRecognition.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/californium-core-1.0.5.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/californium-osgi-1.0.5.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/californium-proxy-1.0.5.jar"/>

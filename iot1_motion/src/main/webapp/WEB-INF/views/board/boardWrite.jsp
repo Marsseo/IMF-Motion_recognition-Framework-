@@ -98,7 +98,7 @@
 				<div class="form-control" style="height: 47px;">
 					<span id="spanFileName"></span>
 					<label for="battach" class="btn btn-default">파일 선택</label>	 
-					<input type="file"  style="visibility: hidden;" class="form-control" placeholder="선택" name="battach" id="battach" onclick="fileChange()" />
+					<input type="file"  style="visibility: hidden;" class="form-control" placeholder="선택" name="battach" id="battach" onchange="fileChange()" />
 				</div>
 			</div>
 		</div>
