@@ -40,10 +40,12 @@ public class MQTTResource extends CoapResource {
 		super("mqtt");
 		instance = this;
 		
-		//여기에 이름을 세팅
+		/**
+		*  If you want to check your data in our website, you would change this ID from account.
+		*/
+		//여기에 아이디를 수정
 		mqttId = "2004323883124516";
-//		mqttId = "Hwasung Seo";
-//		mqttId = "Hwasung Seo";
+
 		
 		mqtt  = new Distributor(mqttId);
 
