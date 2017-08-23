@@ -120,42 +120,6 @@ public class HomeController {
 				model.addAttribute("member", member);
 				model.addAttribute("mid", member.getMid());
 				
-				// Mqtt
-				String url = "tcp://106.253.56.122:1883";
-				String myClientId = MqttClient.generateClientId();
-				MqttClient mqttClient = new MqttClient(url, myClientId);
-				String mid =  member.getMid();
-				mqttClient.setCallback(new MqttCallback() {
-					@Override
-					public void deliveryComplete(IMqttDeliveryToken token) {
-						logger.info("");
-					}
-					@Override
-					public void messageArrived(String topic, MqttMessage mm) throws Exception {	
-						logger.info("");						
-						String mid = (String) session.getAttribute("mid");					
-						String json = new String(mm.getPayload());					
-						
-						
-					}
-					
-					@Override
-					public void connectionLost(Throwable cause) {
-						logger.info("");
-						try {
-							if(mqttClient != null) {
-								mqttClient.disconnect();
-								mqttClient.close();
-							}
-						} catch (MqttException ex) {
-							ex.printStackTrace();
-						}
-					}
-				});
-				mqttClient.connect();
-				mqttClient.subscribe("/" + mid + "/#");
-				session.setAttribute("mqttClient", mqttClient);
-				
 				return "main";
 			}
 		} else {
