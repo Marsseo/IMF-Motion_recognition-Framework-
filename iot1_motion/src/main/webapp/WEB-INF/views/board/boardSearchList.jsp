@@ -119,7 +119,7 @@
 		</div>		
 		
 		<div  class="input-group"  style="margin-top: 20px; width: 1000px">
-			<select id="category" style="background-color: white; width:80px; height: 33px">
+			<select id="category" style="background-color: white; width:100px; height: 33px">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="titlecontent">제목+내용</option>

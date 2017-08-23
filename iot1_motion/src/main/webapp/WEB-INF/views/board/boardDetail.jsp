@@ -199,10 +199,10 @@
 				<fmt:formatDate var="bcdateTime" value="${comment.bcdate}" pattern="HH:mm:ss"/>	
 					<c:if test="${comment.mid == member.mid}">
 						<tr >				
-							<td style="width: 15%; ">
+							<td style="width: 25%; ">
 								<img src="http://graph.facebook.com/${member.mid }/picture" class="img-circle"/>&nbsp; ${comment.bcwriter}
 							</td>
-							<td style="width: 65%; border-right: 0px"><p>${comment.bccomment}</p></td>
+							<td style="width: 60%; border-right: 0px"><p>${comment.bccomment}</p></td>
 							<td style="width: 5%; border-left: 0px" >
 								<input type="hidden" class="form-control"  name="bcno" id="bcno" value="${comment.bcno }"/>
 								<input type="button" class="btn btn-danger btn-xs" value="삭제"  onclick="handleBtnCommentUD(${comment.bcno },'delete')"/>
@@ -212,15 +212,15 @@
 									</div>	
 								</c:if>				
 							</td>
-							<td style="width: 15%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
+							<td style="width: 10%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
 						</tr>		
 					</c:if>
 					<c:if test="${comment.mid != member.mid}">
 						<tr >		
-							<td style="width: 15%; ">
+							<td style="width: 25%; ">
 							<img src="http://graph.facebook.com/${comment.mid }/picture" class="img-circle"/>&nbsp; ${comment.bcwriter}
 							</td>
-							<td style="width: 70%" colspan=2><p>${comment.bccomment}</p>
+							<td style="width: 65%" colspan=2><p>${comment.bccomment}</p>
 								<input type="hidden" class="form-control"  name="bcno"  id="bcno" value="${comment.bcno }"/>
 								<c:if test="${member.mlevel == 5}">
 									<div class="form-group" align="right">
@@ -228,7 +228,7 @@
 									</div>	
 								</c:if>								
 							</td>							
-							<td style="width: 15%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
+							<td style="width: 10%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
 						</tr>		
 					</c:if>						
 			</c:forEach>

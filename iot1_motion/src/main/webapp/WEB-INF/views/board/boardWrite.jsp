@@ -44,6 +44,13 @@
 		}
 		return $("#form1").submit();
 	}
+	
+	function fileChange() {
+		if($("#battach")[0].files.length != 0) {
+			var originalfilename = $("#battach")[0].files[0].name;
+			$("#spanFileName").text(originalfilename);
+		}
+	}
 	</script>
 </head>
 <body>
@@ -85,12 +92,14 @@
 					name="bcontent" id="bcontent"></textArea></p>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group" style="height: 50px;">
 			<div class="input-group">
-				<span class="input-group-addon"> <span
-					class="glyphicon glyphicon-picture"></span>
-				</span> <input type="file" class="form-control" placeholder="선택"
-					name="battach" id="battach"/>
+				<span class="input-group-addon"> <span 	class="glyphicon glyphicon-picture"></span></span>
+				<div class="form-control" style="height: 47px;">
+					<span id="spanFileName"></span>
+					<label for="battach" class="btn btn-default">파일 선택</label>	 
+					<input type="file"  style="visibility: hidden;" class="form-control" placeholder="선택" name="battach" id="battach" onclick="fileChange()" />
+				</div>
 			</div>
 		</div>
 		<div align="right">
