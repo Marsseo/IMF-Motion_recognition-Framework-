@@ -1,9 +1,8 @@
 package SensingCar;
 
-
 import Motion.run.MotionCheck;
 import static Motion.run.MotionCheck.yawRollPitchRangeList;
-import java.util.Scanner;
+
 
 public class Main {
 
