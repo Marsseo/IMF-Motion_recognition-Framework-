@@ -20,16 +20,7 @@
 	<script type="text/javascript">
 	var videocontrol = document.getElementById("video");
 	var motion;
-	function motionControl(){
-		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
-		ws.onmessage = function(event){
-			var data = JSON.parse(event.data);
-			motion = data.motion;
-			console.log("ddd   "+motion);	
-		};
-		if(motion=="zigzag") videocontrol.play();
-		else if(motion=="pitchRightRotation") videocontrol.pause();
-	}
+	
 	
 	</script>
 </body>
