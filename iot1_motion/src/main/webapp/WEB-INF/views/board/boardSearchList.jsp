@@ -15,6 +15,7 @@
 	<style>
 	a {
 		color: gray;
+		text-decoration: none;
 	}
 	a:HOVER {
 		color: skyblue;
@@ -57,9 +58,7 @@
 	<jsp:include page="../home.jsp"/>
 	<div style="width: 1000px; margin: auto; margin-top: 50px; text-align: center">
 		<h4>게시물 목록</h4>
-		<div style="width: 1000px; margin: auto; text-align: right">
-
-		</div>
+		<div style="width: 1000px; margin: auto; text-align: right"></div>
 		<input type="hidden"  name="type" value="1"/>
 		<table class="table table-bordered table-hover" 
 			style="width: 1000px; text-align: center; border: 0px;">
@@ -75,7 +74,7 @@
 				<tr>
 					<td style=" border-left: 0px; border-right: 0px">${b.bno}</td>
 					<td style="text-align: left;  border-left: 0px; border-right: 0px">
-						<a href="hitcount?bno=${b.bno}&pageNo=${pageNo}&mid=${member.mid}" >
+						<a href="hitcount?bno=${b.bno}&pageNo=${pageNo}&mid=${member.mid}" style="color: gray; text-decoration: none">
 							${b.btitle}&nbsp;
 							<c:if test="${b.boriginalfilename != null}" >
 								<span class="glyphicon glyphicon-picture" aria-hidden="true"  style="color: #BDBDBD"></span>&nbsp;

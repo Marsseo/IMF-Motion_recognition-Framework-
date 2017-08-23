@@ -85,7 +85,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public List<Board> boardSearchBySearch(int pageNo, int rowsPerPage, String category, String bsearch) {
-
 		Map<String, String> map = new HashMap<>();
 		map.put("endNum", String.valueOf(pageNo * rowsPerPage));
 		map.put("startNum", String.valueOf((pageNo - 1) * rowsPerPage));

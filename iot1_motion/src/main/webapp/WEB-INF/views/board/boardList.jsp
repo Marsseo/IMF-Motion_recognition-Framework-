@@ -69,7 +69,7 @@
 				<td style="width: 6%;  border-left: 0px; border-right: 0px">조회수</td>
 				<td style="width: 6%;  border-left: 0px; border-right: 0px">추천수</td>
 			</tr>
-			<c:forEach var="b" items="${list}">
+			<c:forEach var="b" items="${list}">		
 				<tr>
 					<td style=" border-left: 0px; border-right: 0px">${b.bno}</td>
 					<td style="text-align: left;  border-left: 0px; border-right: 0px">						
@@ -83,7 +83,11 @@
 							<fmt:formatDate var="bdate" value="${b.bdate}" pattern="yyyy-MM-dd"/>
 							<c:if test="${bdate == today}"><em style="color: red">new</em>&nbsp;</c:if>
 							<c:if test="${b.count > 0}" >
-								<span class="glyphicon glyphicon-comment" aria-hidden="true"  style="color: #BDBDBD"></span>&nbsp; ${b.count}
+								<span class="glyphicon glyphicon-comment" 
+										  aria-hidden="true" 
+										  style="color: #BDBDBD">
+								</span>
+								&nbsp; ${b.count}
 							</c:if>
 							<c:if test="${b.blikecount >= 2}">
 								<span class="glyphicon glyphicon-star" aria-hidden="true" style="color: orange"></span>&nbsp;

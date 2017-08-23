@@ -208,9 +208,12 @@
 								<input type="button" class="btn btn-danger btn-xs" value="삭제"  onclick="handleBtnCommentUD(${comment.bcno },'delete')"/>
 								<c:if test="${member.mlevel == 5}">
 									<div class="form-group" align="right">
-										<input type="button" class="btn btn-warning btn-xs" value="삭제(관리자)"  style="float: left"  onclick="handleBtnCommentDeleteAdmin(${comment.bcno },'delete')"/>	
+										<input type="button" class="btn btn-warning btn-xs" 
+										value="삭제(관리자)"  
+										style="float: left"  
+										onclick="handleBtnCommentDeleteAdmin(${comment.bcno },'delete')"/>	
 									</div>	
-								</c:if>				
+								</c:if>
 							</td>
 							<td style="width: 10%; text-align: right">${bcdateDay}<br/>${bcdateTime}</td>
 						</tr>		
