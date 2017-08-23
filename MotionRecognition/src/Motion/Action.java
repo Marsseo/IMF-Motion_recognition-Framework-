@@ -31,9 +31,6 @@ public class Action implements ActionInterface {
 			case "zigzag":
 				System.out.println("----------------------ZigZag 모션 인식");
 				break;
-			case "circle":
-				System.out.println("----------------------Circle 모션 인식");
-				break;
 				case "n":
 				System.out.println("----------------------N 모션 인식");
 				break;

@@ -1,29 +1,38 @@
 package SensingCar;
 
-import Motion.GyroMotions;
-import Motion.MotionCheck;
-import Motion.TriggerMotionInterface;
-import java.util.List;
+
+import Motion.run.MotionCheck;
+import static Motion.run.MotionCheck.yawRollPitchRangeList;
 import java.util.Scanner;
 
 public class Main {
-	public static Motion.Main main;
 
 	public static void main(String[] args) throws Exception {
 		
-		main=new Motion.Main(new Action());
+		Motion.Recognizer main=new Motion.Recognizer(new Action());
+		main.start();
+		
+		
 		MotionCheck.triggerOnMotionList.add(new Controller());
 		
-		System.out.print("시작스");
+		MotionCheck.triggerOnMotionList.remove(0);
 		
-		main.start();
+		MotionCheck.triggerOffMotionList.remove(0);
+		MotionCheck.triggerOffMotionList.add(new Controller());
+		
+		
+		double[] left={180,270,165,195,0,0,4,80,0,0.8,0,0};
+		yawRollPitchRangeList.add(left);
+		
+		System.out.print("시작스");
+		/*
 		System.out.println("input command(Press q to quit)");
 		Scanner scanner=new Scanner(System.in);
 		String command=scanner.nextLine();
 		if(command.equals("q")){
 			main.stop();
 		}
-		
+		*/
 		
 		
 		

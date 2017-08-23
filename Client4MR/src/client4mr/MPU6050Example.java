@@ -77,7 +77,7 @@ public class MPU6050Example {
 			Tools.log("\t" + MPU6050.xyzValuesToString(MPU6050.angleToString(filteredAngles[0]),
 							MPU6050.angleToString(filteredAngles[1]), MPU6050.angleToString(filteredAngles[2])));
 			
-			mouseMove(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
+			axisTrasmission(filteredAngles[0], filteredAngles[1], filteredAngles[2]);
 			
 
 			button();
@@ -93,15 +93,11 @@ public class MPU6050Example {
 
 	}
 
-	public static void mouseMove(double x, double y, double z) {
+	public static void axisTrasmission(double x, double y, double z) {
 		double roll = x;
 		double pitch = y;
 		double yaw = z;
-//		
-//		if(yaw<0){
-//			yaw=360+yaw;
-//		}
-//        
+
 		jsonObject = new JSONObject();
 		jsonObject.put("sensor", "gyroscope");
 		jsonObject.put("yawAngle", String.valueOf(yaw));

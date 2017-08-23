@@ -1,7 +1,7 @@
 
 package SensingCar;
 
-import Motion.GyroMotions;
+import Motion.run.GyroMotions;
 import java.util.List;
 
 public class Controller extends GyroMotions{
