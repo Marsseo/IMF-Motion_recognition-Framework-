@@ -74,6 +74,7 @@
 			console.log($("#mid").val());
 			if($("#mid").val()==""){		
 				alert("로그인 후 이용 가능합니다");
+				$("#list").focus();
 				return;
 			}
 			location.href="boardLike?bno=${board.bno}&pageNo=${pageNo}&mid=${member.mid}";		
@@ -95,7 +96,9 @@
 		
 		function handleLoginCheck() {
 			if($("#mid").val()==""){
-				alert("로그인 후 이용하세요~");				
+				alert("로그인 후 이용하세요~");		
+				$("#list").focus();
+				return ;
 			} 
 		}
 		
