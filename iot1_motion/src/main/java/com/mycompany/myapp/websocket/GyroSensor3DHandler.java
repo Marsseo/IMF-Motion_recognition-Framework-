@@ -34,6 +34,7 @@ public class GyroSensor3DHandler extends TextWebSocketHandler implements Applica
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("");
 		String mid = (String) session.getAttributes().get("mid");
+		System.out.println("session3d: " + session);
 		map.put(mid, session);
 	}
 
