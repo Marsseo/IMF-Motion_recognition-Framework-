@@ -7,6 +7,7 @@ public class GyroCotroller {
 	
 	@RequestMapping("/gyroTest")
 	public String gyroTest(){
+		
 		return "gyroTest";
 	}
 

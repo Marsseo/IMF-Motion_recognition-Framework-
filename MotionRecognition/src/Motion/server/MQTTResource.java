@@ -44,7 +44,7 @@ public class MQTTResource extends CoapResource {
 		*  If you want to check your data in our website, you would change this ID from account.
 		*/
 		//여기에 아이디를 수정
-		mqttId = "2004323883124516";
+		mqttId = "1003619136445774";
 
 		
 		mqtt  = new Distributor(mqttId);

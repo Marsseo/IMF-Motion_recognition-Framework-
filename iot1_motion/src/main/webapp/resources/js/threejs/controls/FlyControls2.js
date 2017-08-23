@@ -38,7 +38,7 @@ THREE.FlyControls = function ( object, domElement ) {
 		if ( typeof this[ event.type ] == 'function' ) {
 
 			this[ event.type ]( event );
-
+			this.updateMovementVector();
 		}
 
 	};
@@ -68,7 +68,7 @@ THREE.FlyControls = function ( object, domElement ) {
 
 			}
 
-			this.updateMovementVector();
+			
 
 		}
 
@@ -100,7 +100,6 @@ THREE.FlyControls = function ( object, domElement ) {
 
 		}
 
-		this.updateRotationVector();
 
 	};
 
@@ -181,7 +180,7 @@ THREE.FlyControls = function ( object, domElement ) {
 	}
 	
 	function requestGyroSensorData(){
-		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor");
+		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor3D2");
 		ws.onmessage = function(event){
 			var data = JSON.parse(event.data);
 			yawAngle = Math.abs(data.yawAngle-180)< 8 ? 0 : (data.yawAngle-180);

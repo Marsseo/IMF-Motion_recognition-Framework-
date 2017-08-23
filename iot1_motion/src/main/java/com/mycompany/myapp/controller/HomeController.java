@@ -136,21 +136,7 @@ public class HomeController {
 						String mid = (String) session.getAttribute("mid");					
 						String json = new String(mm.getPayload());					
 						
-						GyroSensorHandler gyroSensorHandler = (GyroSensorHandler) applicationContext.getBean("gyroSensorHandler");
-						GyroSensor3DHandler gyroSensor3DHandler = (GyroSensor3DHandler) applicationContext.getBean("gyroSensor3DHandler");
-						GyroSensor3D2Handler gyroSensor3D2Handler = (GyroSensor3D2Handler) applicationContext.getBean("gyroSensor3D2Handler");
-						IfraredraySensorHandler ifraredraySensorHandler = (IfraredraySensorHandler) applicationContext.getBean("ifraredraySensorHandler");
-						UltrasonicSensorHandler ultrasonicSensorHandler = (UltrasonicSensorHandler) applicationContext.getBean("ultrasonicSensorHandler");
-
-						if(topic.indexOf("gyro")>0){
-							gyroSensorHandler.sendMessage(mid, json);
-							gyroSensor3DHandler.sendMessage(mid, json);
-							gyroSensor3D2Handler.sendMessage(mid, json);
-						} else if(topic.indexOf("ifraredray")>0){
-							ifraredraySensorHandler.sendMessage(mid, json);
-						}else if(topic.indexOf("ultrasonic")>0){
-							ultrasonicSensorHandler.sendMessage(mid, json);
-						}
+						
 					}
 					
 					@Override
