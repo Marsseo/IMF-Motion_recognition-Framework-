@@ -179,8 +179,8 @@
 			</video>
 			<div class="master-overlay"></div>
 			<div class="master-body col-md-12 col-sm-11 col-xs-12" style="position: fixed;">
-				<div class="master-title">Make your data come alive</div>
-				<div class="master-sub-title">Highcharts makes it easy for developers to set up interactive charts in their web pages</div>
+				<div class="master-title">Motion Recognition Control</div>
+				<div class="master-sub-title">Makes your motion interactive with IoT devices</div>
 				<p class="button-row">
 					<a class="button" href="<%=application.getContextPath()%>/demo">View demo</a>
 					<a class="secondary-link" href="https://github.com/Marsseo/IoTFinalProject">View on Github</a>
