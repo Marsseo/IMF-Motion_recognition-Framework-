@@ -7,16 +7,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>JSP Page</title>
-		<!-- start: CSS -->
-			<link id="bootstrap-style" href="<%=application.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
-			<link href="<%=application.getContextPath()%>/resources/css/bootstrap-responsive.min.css" rel="stylesheet">
-			<link id="base-style" href="<%=application.getContextPath()%>/resources/css/style.css" rel="stylesheet">
-			<link id="base-style-responsive" href="<%=application.getContextPath()%>/resources/css/style-responsive.css" rel="stylesheet">
-			<link
-				href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
-				rel='stylesheet' type='text/css'
-			>
-		<!-- end: CSS -->
+		
 		
 		<link href="<%= application.getContextPath() %>/resources/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<script src="<%= application.getContextPath() %>/resources/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -40,7 +31,7 @@
 		<div id="info"></div>
 		
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/three.js"></script>
-		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/FlyControls2.js"></script>
+		<script src="<%= application.getContextPath() %>/resources/js/threejs/controls/FlyControls.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/Detector.js"></script>
 		<script src="<%= application.getContextPath() %>/resources/js/threejs/libs/stats.min.js"></script>
 
@@ -52,7 +43,6 @@
 			var geometry, objects;
 			var controls, clock = new THREE.Clock();
 			
-			//var yawAngle=0, pitchAngle=0, rollAngle=0, preyawAngle=0, prepitchAngle=0, prerollAngle=0;
 			
 			init();
 			animate();
@@ -128,19 +118,7 @@
 				renderer.render( scene, camera );
 			}			
 			
-		/* 	function requestGyroSensorData(){
-				var ws = new WebSocket("ws://"+location.host+"/MpuWebProject/websocket/GyroSensor3D2");
-				ws.onmessage = function(event){
-					var data = JSON.parse(event.data);
-					preyawAngle = data.yawAngle-180;
-					prepitchAngle = data.pitchAngle-180;
-					prerollAngle = data.rollAngle-180;
-					console.log("ddd2   "+preyawAngle+"  "+prepitchAngle+"  "+prerollAngle);
-				};
-				yawAngle = preyawAngle;
-				pitchAngle = prepitchAngle;
-				rollAngle = prerollAngle;				
-			} */
+		
 		</script>
 </body>
 </html>

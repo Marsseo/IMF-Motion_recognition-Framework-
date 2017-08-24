@@ -1,8 +1,8 @@
-/**
- * @author James Baicoianu / http://www.baicoianu.com/
- */
+
 
 THREE.FlyControls = function ( object, domElement ) {
+	
+	var yawAngle=0, pitchAngle=0, rollAngle=0;
 
 	this.object = object;
 
@@ -20,6 +20,8 @@ THREE.FlyControls = function ( object, domElement ) {
 	// disable default target object behavior
 
 	// internals
+	
+	requestGyroSensorData();
 
 	this.tmpQuaternion = new THREE.Quaternion();
 
@@ -39,76 +41,7 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	};
 
-	this.keydown = function( event ) {
-
-		if ( event.altKey ) {
-
-			return;
-
-		}
-
-		//event.preventDefault();
-
-		switch ( event.keyCode ) {
-
-			case 16: /* shift */ this.movementSpeedMultiplier = .1; break;
-
-			case 87: /*W*/ this.moveState.forward = 1; break;
-			case 83: /*S*/ this.moveState.back = 1; break;
-
-			case 65: /*A*/ this.moveState.left = 1; break;
-			case 68: /*D*/ this.moveState.right = 1; break;
-
-			case 82: /*R*/ this.moveState.up = 1; break;
-			case 70: /*F*/ this.moveState.down = 1; break;
-
-			case 38: /*up*/ this.moveState.pitchUp = 1; break;
-			case 40: /*down*/ this.moveState.pitchDown = 1; break;
-
-			case 37: /*left*/ this.moveState.yawLeft = 1; break;
-			case 39: /*right*/ this.moveState.yawRight = 1; break;
-
-			case 81: /*Q*/ this.moveState.rollLeft = 1; break;
-			case 69: /*E*/ this.moveState.rollRight = 1; break;
-
-		}
-
-		this.updateMovementVector();
-		this.updateRotationVector();
-
-	};
-
-	this.keyup = function( event ) {
-
-		switch ( event.keyCode ) {
-
-			case 16: /* shift */ this.movementSpeedMultiplier = 1; break;
-
-			case 87: /*W*/ this.moveState.forward = 0; break;
-			case 83: /*S*/ this.moveState.back = 0; break;
-
-			case 65: /*A*/ this.moveState.left = 0; break;
-			case 68: /*D*/ this.moveState.right = 0; break;
-
-			case 82: /*R*/ this.moveState.up = 0; break;
-			case 70: /*F*/ this.moveState.down = 0; break;
-
-			case 38: /*up*/ this.moveState.pitchUp = 0; break;
-			case 40: /*down*/ this.moveState.pitchDown = 0; break;
-
-			case 37: /*left*/ this.moveState.yawLeft = 0; break;
-			case 39: /*right*/ this.moveState.yawRight = 0; break;
-
-			case 81: /*Q*/ this.moveState.rollLeft = 0; break;
-			case 69: /*E*/ this.moveState.rollRight = 0; break;
-
-		}
-
-		this.updateMovementVector();
-		this.updateRotationVector();
-
-	};
-
+	
 	this.mousedown = function( event ) {
 
 		if ( this.domElement !== document ) {
@@ -150,7 +83,7 @@ THREE.FlyControls = function ( object, domElement ) {
 			this.moveState.yawLeft   = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth  ) / halfWidth;
 			this.moveState.pitchDown =   ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
 
-			this.updateRotationVector();
+			//this.updateRotationVector();
 
 		}
 
@@ -206,8 +139,8 @@ THREE.FlyControls = function ( object, domElement ) {
 
 		var forward = ( this.moveState.forward || ( this.autoForward && ! this.moveState.back ) ) ? 1 : 0;
 
-		this.moveVector.x = ( - this.moveState.left    + this.moveState.right );
-		this.moveVector.y = ( - this.moveState.down    + this.moveState.up );
+//		this.moveVector.x = ( - this.moveState.left    + this.moveState.right );
+//		this.moveVector.y = ( - this.moveState.down    + this.moveState.up );
 		this.moveVector.z = ( - forward + this.moveState.back );
 
 		//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
@@ -216,9 +149,9 @@ THREE.FlyControls = function ( object, domElement ) {
 
 	this.updateRotationVector = function() {
 
-		this.rotationVector.x = ( - this.moveState.pitchDown + this.moveState.pitchUp );
-		this.rotationVector.y = ( - this.moveState.yawRight  + this.moveState.yawLeft );
-		this.rotationVector.z = ( - this.moveState.rollRight + this.moveState.rollLeft );
+		this.rotationVector.x = ( -(rollAngle)/200 );
+		this.rotationVector.y = ( (pitchAngle)/200 );
+		//this.rotationVector.z = ( - this.moveState.rollRight + this.moveState.rollLeft );
 
 		//console.log( 'rotate:', [ this.rotationVector.x, this.rotationVector.y, this.rotationVector.z ] );
 
@@ -243,6 +176,22 @@ THREE.FlyControls = function ( object, domElement ) {
 		}
 
 	};
+	
+	function requestGyroSensorData(){
+		var ws = new WebSocket("ws://"+location.host+"/iot1_motion/websocket/GyroSensor3D2");
+		ws.onmessage = function(event){
+			var data = JSON.parse(event.data);
+			yawAngle = Math.abs(data.yawAngle-180)< 8 ? 0 : (data.yawAngle-180);
+			pitchAngle = Math.abs(data.pitchAngle-180)< 8 ? 0 : (data.pitchAngle-180);
+			rollAngle = Math.abs(data.rollAngle-180)< 8 ? 0 : (data.rollAngle-180);
+			
+			console.log("ddd3   "+yawAngle+"  "+pitchAngle+"  "+rollAngle);
+			
+		};
+		this.updateMovementVector();
+		this.updateRotationVector();
+	}
+	
 
 	function bind( scope, fn ) {
 
@@ -267,16 +216,14 @@ THREE.FlyControls = function ( object, domElement ) {
 		this.domElement.removeEventListener( 'mousemove', _mousemove, false );
 		this.domElement.removeEventListener( 'mouseup', _mouseup, false );
 
-		window.removeEventListener( 'keydown', _keydown, false );
-		window.removeEventListener( 'keyup', _keyup, false );
+		
 
 	};
 
 	var _mousemove = bind( this, this.mousemove );
 	var _mousedown = bind( this, this.mousedown );
 	var _mouseup = bind( this, this.mouseup );
-	var _keydown = bind( this, this.keydown );
-	var _keyup = bind( this, this.keyup );
+	
 
 	this.domElement.addEventListener( 'contextmenu', contextmenu, false );
 
@@ -284,8 +231,6 @@ THREE.FlyControls = function ( object, domElement ) {
 	this.domElement.addEventListener( 'mousedown', _mousedown, false );
 	this.domElement.addEventListener( 'mouseup',   _mouseup, false );
 
-	window.addEventListener( 'keydown', _keydown, false );
-	window.addEventListener( 'keyup',   _keyup, false );
 
 	this.updateMovementVector();
 	this.updateRotationVector();

@@ -24,6 +24,7 @@ public class GyroExploreCotroller {
 
 	@RequestMapping("/gyroExplore")
 	public String gyroTest(HttpSession session) throws MqttException {
+		
 		// Mqtt
 		String url = "tcp://106.253.56.122:1883";
 		String myClientId = MqttClient.generateClientId();
@@ -41,8 +42,7 @@ public class GyroExploreCotroller {
 				String mid = (String) session.getAttribute("mid");
 				String json = new String(mm.getPayload());
 
-				GyroSensor3D2Handler gyroSensor3D2Handler = (GyroSensor3D2Handler) applicationContext
-						.getBean("gyroSensor3D2Handler");
+				GyroSensor3D2Handler gyroSensor3D2Handler = (GyroSensor3D2Handler) applicationContext.getBean("gyroSensor3D2Handler");
 				if (topic.indexOf("gyro") > 0) {
 					gyroSensor3D2Handler.sendMessage(mid, json);
 				}
