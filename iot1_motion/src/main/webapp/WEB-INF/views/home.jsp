@@ -41,7 +41,6 @@
 <script type="text/javascript" src="<%=application.getContextPath()%>/resources/js/myjs.js"></script>
 
 <script type="text/javascript">
-
 	function leave() {
 		if (confirm("정말 탈퇴하시겠습니까?") == true) { // 확인
 			$.ajax({
@@ -58,7 +57,6 @@
 			return;
 		}
 	}
-	
 </script>
 </head>
 
@@ -94,11 +92,11 @@
 											</c:if>
 										</li>
 										<li>
-										<c:if test="${log=='login'}">
-											<a class="btn-leave" onclick="javascript:leave();">
-												<i class="halflings-icon off"></i>
-												회원탈퇴
-											</a>
+											<c:if test="${log=='login'}">
+												<a class="btn-leave" onclick="javascript:leave();">
+													<i class="halflings-icon off"></i>
+													회원탈퇴
+												</a>
 											</c:if>
 										</li>
 									</ul>
@@ -115,11 +113,12 @@
 
 							</ul>
 							<c:if test="${member.mid==null}">
-							<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
-								style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)">							
-								<!-- <i class="fa fa-user fa-fw"></i> -->
-								회원가입
-							</a>
+								<a class="btn btn-primary" href="<%=application.getContextPath()%>/fb/login"
+									style="background: transparent; border: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 2px rgba(0, 0, 0, 0)"
+								>
+									<!-- <i class="fa fa-user fa-fw"></i> -->
+									회원가입
+								</a>
 							</c:if>
 							<c:if test="${log!='login'}">
 								<a class="btn btn-primary" href="<%=application.getContextPath()%>/login"
@@ -144,50 +143,14 @@
 						<div id="menu-main">
 							<ul class="nav navbar-nav">
 								<li class="item-103 deeper dropdown">
-									<a href="#" class="dropdown-toggle " data-toggle="dropdown">
-										Demo
-										<span class="toggle-arrow"></span>
+									<a href="<%=application.getContextPath()%>/demo">
+										<span class="hidden-tablet">Demo</span>
 									</a>
-									<ul class="dropdown-menu" role="menu">
-										<li class="item-106">
-											<a href="<%=application.getContextPath()%>/demo">Demo</a>
-										</li>
-										<li class="item-107">
-											<a href="<%=application.getContextPath()%>/markdown">markdown</a>
-										</li>
-										<li class="item-205">
-											<a href="/maps/demo">Highmaps demo</a>
-										</li>
-										<li class="item-267">
-											<a href="/use-cases">Customer showcase</a>
-										</li>
-									</ul>
 								</li>
 								<li class="item-108 deeper dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										Docs
-										<span class="toggle-arrow"></span>
+									<a href="static/index.html">
+										<span class="hidden-tablet">Document</span>
 									</a>
-									<ul class="dropdown-menu" role="menu">
-										<li class="item-128">
-											<a href="static/index.html">General Documentation</a>
-										</li>
-										<li class="item-124">
-											<a href="http://api.highcharts.com/highcharts">Highcharts API Reference</a>
-										</li>
-										<li class="item-125">
-											<a href="http://api.highcharts.com/highstock">Highstock API Reference</a>
-										</li>
-										<li class="item-211">
-											<a href="http://api.highcharts.com/highmaps">Highmaps API Reference</a>
-										</li>
-										<li class="item-126">
-											<a href="/documentation/compatibility">Compatibility</a>
-										</li>
-										<li class="item-127">
-											<a href="/documentation/changelog">Changelog</a>
-										</li>
-									</ul>
 								</li>
 								<li class="item-254 deeper dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -207,18 +170,12 @@
 												<span class="hidden-tablet">Gyro Explore</span>
 											</a>
 										</li>
-										<li class="item-256">
-											<a href="<%=application.getContextPath()%>/video">
-												<i class="icon-tasks"></i>
-												<span class="hidden-tablet">video control</span>
-											</a>
-										</li>
 									</ul>
 								</li>
 								<li class="item-282 deeper dropdown">
 									<a href="<%=application.getContextPath()%>/board/boardList">
 										<span class="hidden-tablet">Question Board</span>
-									</a>							
+									</a>
 								</li>
 								<c:if test="${member.mlevel >= 4}">
 									<li class="item-282 deeper dropdown">
@@ -226,7 +183,7 @@
 											<span class="hidden-tablet">Member Board</span>
 										</a>
 									</li>
-								</c:if>								
+								</c:if>
 							</ul>
 							<div class="clearfix"></div>
 						</div>
@@ -267,7 +224,7 @@
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.masonry.min.js"></script>
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.knob.modified.js"></script>
 	<script src="<%=application.getContextPath()%>/resources/js/jquery.sparkline.min.js"></script>
-	
+
 	<script src="<%=application.getContextPath()%>/resources/js/counter.js"></script>
 	<script src="<%=application.getContextPath()%>/resources/js/retina.js"></script>
 	<script src="<%=application.getContextPath()%>/resources/js/custom.js"></script>

@@ -48,9 +48,9 @@ body {
 	</div>
 	<div  style="width: 100%;">
 		<div style="width: 30%; float: right">
-			<div style="height:250px" id="gyroChartContainer" ></div>
-			<div style="height:250px" id="ultrasonicChartContainer"></div>
-			<div style="height:250px" id="ifraredrayChartContainer"></div>
+			<div style="height:305px" id="gyroChartContainer" ></div>
+			<div style="height:305px" id="ultrasonicChartContainer"></div>
+			<div style="height:305px" id="ifraredrayChartContainer"></div>
 		</div>
 		<div style="width: 70%; float: left;" id="container"></div>
 		
