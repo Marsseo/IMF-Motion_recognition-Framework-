@@ -39,6 +39,8 @@ public class ButtonResource extends CoapResource {
 	 * The value of the first parameter is "button" and the value of the second parameter is "on" or "off".
 	 * @param exchange 
 	 */
+	
+	
 	@Override
 	public void handleGET(CoapExchange exchange) {
 
