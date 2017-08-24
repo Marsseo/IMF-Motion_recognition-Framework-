@@ -153,11 +153,10 @@
 									</a>
 								</li>
 								<li class="item-254 deeper dropdown">
-									<a href="href="<%=application.getContextPath()%>/gyroTest" class="dropdown-toggle" data-toggle="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 										Simulation
 										<span class="toggle-arrow"></span>
 									</a>
-									<!-- 
 									<ul class="dropdown-menu" role="menu">
 										<li>
 											<a href="<%=application.getContextPath()%>/gyroTest">
@@ -173,7 +172,6 @@
 										</li>
 									</ul>
 								</li>
-								-->
 								<li class="item-282 deeper dropdown">
 									<a href="<%=application.getContextPath()%>/board/boardList">
 										<span class="hidden-tablet">Question Board</span>

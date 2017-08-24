@@ -21,8 +21,7 @@ import com.mycompany.myapp.websocket.UltrasonicSensorHandler;
 @Controller
 public class GyroCotroller {
 	private static final Logger logger = LoggerFactory.getLogger(GyroCotroller.class);
-	
-	
+
 	@Autowired
 	private ApplicationContext applicationContext;
 	

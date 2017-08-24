@@ -1,4 +1,6 @@
-
+/**
+ * @author James Baicoianu / http://www.baicoianu.com/
+ */
 
 THREE.FlyControls = function ( object, domElement ) {
 	
@@ -36,7 +38,7 @@ THREE.FlyControls = function ( object, domElement ) {
 		if ( typeof this[ event.type ] == 'function' ) {
 
 			this[ event.type ]( event );
-			
+			this.updateMovementVector();
 		}
 
 	};
@@ -66,28 +68,13 @@ THREE.FlyControls = function ( object, domElement ) {
 
 			}
 
-			this.updateMovementVector();
 			
+
 		}
 
 	};
+
 	
-	this.mousemove = function( event ) {
-
-		if ( ! this.dragToLook || this.mouseStatus > 0 ) {
-
-			var container = this.getContainerDimensions();
-			var halfWidth  = container.size[ 0 ] / 2;
-			var halfHeight = container.size[ 1 ] / 2;
-
-			this.moveState.yawLeft   = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth  ) / halfWidth;
-			this.moveState.pitchDown =   ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
-
-			this.updateRotationVector();
-		}
-
-	};
-		
 
 	this.mouseup = function( event ) {
 
@@ -112,7 +99,7 @@ THREE.FlyControls = function ( object, domElement ) {
 			this.updateMovementVector();
 
 		}
-		this.updateRotationVector();
+
 
 	};
 
@@ -133,20 +120,18 @@ THREE.FlyControls = function ( object, domElement ) {
 
 
 	};
-	
+
 	this.updateMovementVector = function() {
 
 		var forward = ( this.moveState.forward || ( this.autoForward && ! this.moveState.back ) ) ? 1 : 0;
 
-//		this.moveVector.x = ( - this.moveState.left    + this.moveState.right );
-//		this.moveVector.y = ( - this.moveState.down    + this.moveState.up );
+		//this.moveVector.x = ( - (pitchAngle-prepitchAngle)/200 );
+		//this.moveVector.y = ( - (rollAngle-prerollAngle)/200 );
 		this.moveVector.z = ( - forward + this.moveState.back );
 
 		//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
 
 	};
-
-
 
 	this.updateRotationVector = function() {
 
@@ -201,8 +186,6 @@ THREE.FlyControls = function ( object, domElement ) {
 			yawAngle = Math.abs(data.yawAngle-180)< 8 ? 0 : (data.yawAngle-180);
 			pitchAngle = Math.abs(data.pitchAngle-180)< 8 ? 0 : (data.pitchAngle-180);
 			rollAngle = Math.abs(data.rollAngle-180)< 8 ? 0 : (data.rollAngle-180);
-			
-			console.log("ddd3   "+yawAngle+"  "+pitchAngle+"  "+rollAngle);
 		};
 		
 	}
@@ -227,7 +210,8 @@ THREE.FlyControls = function ( object, domElement ) {
 	this.domElement.addEventListener( 'mousedown', _mousedown, false );
 	this.domElement.addEventListener( 'mouseup',   _mouseup, false );
 
-	this.update();
+
+	this.updateMovementVector();
 	this.updateRotationVector();
 	
 	
