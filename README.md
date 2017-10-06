@@ -187,3 +187,18 @@ difference 배열은 0번 인덱스에 해당 각도가 들어온 순서가 입�
 
 링크클릭-&gt;  해당 블로그로 이동 -&gt;  첨부파일을 다운로드
 
+## 7. github 설명
+
+위에 있는 github를 다운로드 후, 
+각각의 맞는 IDE로 프로젝트를 열면 된다.
+
+* Client4MR - 모션인식을 위한 자바 or 임베디드 장치 클라이언트 프로젝트
+* CoapClient_Android - 모션인식을 위한 안드로이드 클라이언트 프로젝트
+* MirrorMotion - 모션인식을 사용하여 웹페이지를 움직이는 프로젝트
+* MotionRecognition - 모션인식의 서버 역할과 인식을 담당하는 프로젝트
+* iot_motion - 모션인식을 위한 웹페이지 프로젝트
+* PCSever - PC의 마우스를 움직이기 위한 프로젝트
+* SensingCarMotionControl - 센싱카를 움직이기 위한 프로젝트
+
+** 그 외의 프로젝트들은 본을 받기위해 참조한 프로젝트입니다.
+
