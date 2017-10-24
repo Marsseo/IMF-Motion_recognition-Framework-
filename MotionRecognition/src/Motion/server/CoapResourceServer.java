@@ -53,14 +53,14 @@ public class CoapResourceServer {
 		resources.put("ultrasonic", new UltrasonicResource());
 		resources.put("ir", new IRResource());
 		resources.put("button", new ButtonResource());
-		resources.put("mqtt", new MQTTResource());
+		//resources.put("mqtt", new MQTTResource());
 		
 
 		coapServer.add(resources.get("gyro"));
 		coapServer.add(resources.get("ultrasonic"));
 		coapServer.add(resources.get("ir"));
 		coapServer.add(resources.get("button"));
-		coapServer.add(resources.get("mqtt"));
+		//coapServer.add(resources.get("mqtt"));
 		
 		
 		
@@ -70,7 +70,7 @@ public class CoapResourceServer {
 		resources.get("gyro").setObservable(false);
 		resources.get("ultrasonic").setObservable(false);
 		resources.get("ir").setObservable(false);
-		resources.get("mqtt").setObservable(true);
+		//resources.get("mqtt").setObservable(true);
 	}
 
 	/**

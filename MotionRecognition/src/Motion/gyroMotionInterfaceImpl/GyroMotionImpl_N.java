@@ -30,7 +30,7 @@ public class GyroMotionImpl_N implements GyroMotionInterface{
 		boolean step2=false;
 		boolean step3=false;
 		boolean check = false;
-		List<double[]> factorsInRange = differenceResultList.get(7);
+		List<double[]> factorsInRange = differenceResultList.get(6);
 		for (int j = 0; j < factorsInRange.size(); j++) {
 
 			double[] count = factorsInRange.get(j);

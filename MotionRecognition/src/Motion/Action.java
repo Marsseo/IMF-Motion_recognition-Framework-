@@ -40,9 +40,6 @@ public class Action implements ActionInterface {
 				case "pitchLeftRotation":
 				System.out.println("----------------------pitchLeftRotation 모션 인식");
 				break;
-				case "v":
-				System.out.println("----------------------V 모션 인식");
-				break;
 			default:
 				System.out.println("----------------------모션 매칭 실패");
 				break;

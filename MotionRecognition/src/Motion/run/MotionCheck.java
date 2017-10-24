@@ -3,7 +3,6 @@ package Motion.run;
 import Motion.Interfaces.ActionInterface;
 import Motion.Interfaces.GyroMotionInterface;
 import Motion.gyroMotionInterfaceImpl.GyroMotionImpl_PitchRotation;
-import Motion.gyroMotionInterfaceImpl.GyroMotionImpl_V;
 import Motion.gyroMotionInterfaceImpl.GyroMotionImpl_ZigZag;
 import Motion.gyroMotionInterfaceImpl.GyroMotionImpl_Left;
 import Motion.gyroMotionInterfaceImpl.GyroMotionImpl_Down;
@@ -135,7 +134,6 @@ public class MotionCheck {
 		double[] down={140,220,90,270,0,0,0,3,2,80,0,0};
 		double[] zigzag={90,190,150,270,0,0,4,80,0.5,80,0,0};
 		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,3,80};
-		double[] v={160,270,90,270,0,0,4,80,2,80,0,0};
 		double[] n={90,190,90,190,0,0,4,80,0.8,80,0,0};
 		//double[] n;
 	//	double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
@@ -147,20 +145,15 @@ public class MotionCheck {
 		yawRollPitchRangeList.add(down); //3번
 		yawRollPitchRangeList.add(zigzag); //4번
 		yawRollPitchRangeList.add(pitchRotation); //5번
-		yawRollPitchRangeList.add(v); //6번
-		yawRollPitchRangeList.add(n); //7번
+		yawRollPitchRangeList.add(n); //6번
 		
 		gyroMotionList.add(new GyroMotionImpl_Up());
 		gyroMotionList.add(new GyroMotionImpl_Left());
 		gyroMotionList.add(new GyroMotionImpl_Right());
 		gyroMotionList.add(new GyroMotionImpl_Down());
 		gyroMotionList.add(new GyroMotionImpl_ZigZag());
-		//gyroMotionList.add(new GyroMotionImpl_Circle());
 		gyroMotionList.add(new GyroMotionImpl_N());
-	//	gyroMotionList.add(new GyroMotionImpl_LeftDown());
 		gyroMotionList.add(new GyroMotionImpl_PitchRotation());
-	//	gyroMotionList.add(new GyroMotionImpl_LeftUp());
-		gyroMotionList.add(new GyroMotionImpl_V());
 		
 		triggerOnMotionList.add(gyroMotions);
 		triggerOffMotionList.add(gyroMotions);

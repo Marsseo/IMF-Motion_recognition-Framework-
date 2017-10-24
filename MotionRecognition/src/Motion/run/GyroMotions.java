@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author CheolMin Kim
  */
 public class GyroMotions implements TriggerMotionInterface {
-
+                
 	/**
 	 * Status that determines whether to collect sensor values for motion recognition.
 	 */

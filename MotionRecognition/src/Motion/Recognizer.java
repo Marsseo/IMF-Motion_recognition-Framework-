@@ -51,14 +51,6 @@ private static final Logger logger=LoggerFactory.getLogger(Recognizer.class);
 		Recognizer main=new Recognizer(new Action()); // 사용자가 action 인터페이스를 구현해서 넣어줌
 		main.start();
 		
-		/*
-		System.out.println("input command(Press q to quit)");
-		Scanner scanner=new Scanner(System.in);
-		String command=scanner.nextLine();
-		if(command.equals("q")){
-			main.stop();
-		}
-*/
 
 	}
 	

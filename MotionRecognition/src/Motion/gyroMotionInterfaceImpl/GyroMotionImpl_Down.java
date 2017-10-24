@@ -30,8 +30,7 @@ public class GyroMotionImpl_Down implements GyroMotionInterface{
 
 			double[] count = factorsInRange.get(j);
 			if (count[2] > 0&&count[1]!=0) {
-						//System.out.println(count[2]);
-						//System.out.println("down");
+                            
 						downCount++;
 					} 
 		}

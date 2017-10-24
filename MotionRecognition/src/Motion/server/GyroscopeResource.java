@@ -118,7 +118,6 @@ public class GyroscopeResource extends CoapResource {
 				String yawAngle1="";
 				String pitchAngle1="";
 				String rollAngle1="";
-				//System.out.println("개이득    :"+exchange.getRequestOptions().getURIQueryCount()); //삭제각
 				
 				if(exchange.getRequestOptions().getURIQueryCount()>1){
 					yawAngle1 = exchange.getRequestOptions().getUriQuery().get(1).split("=")[1];
@@ -126,9 +125,6 @@ public class GyroscopeResource extends CoapResource {
 				 rollAngle1 = exchange.getRequestOptions().getUriQuery().get(3).split("=")[1];
 				}
 				
-				//System.out.println("key1 :" + key1);
-				//System.out.println("key2 :" + key2);
-
 				if (sensor1.equals("gyroscope")) {
 					currYawAngle = Double.parseDouble(yawAngle1);
 					currPitchAngle = Double.parseDouble(pitchAngle1);
@@ -138,7 +134,6 @@ public class GyroscopeResource extends CoapResource {
 					exchange.respond(String.valueOf(MotionCheck.finalMotion));
 				} else if (sensor1.equals("status")) {
 					
-					//exchange.respond(String.valueOf(Action.motionResult));
 
 				} else {
 					exchange.respond("fail");
