@@ -43,7 +43,6 @@ public class GyroMotionImpl_ZigZag implements GyroMotionInterface {
 					if (rightCheck) {
 						step1 = false;
 						step2 = true;
-						System.out.println("zigzag - Step1");
 						zigzagCount++;
 						zigzagCount++;
 						
@@ -57,14 +56,13 @@ public class GyroMotionImpl_ZigZag implements GyroMotionInterface {
 				if (count[1] > 0 && count[2] > 0) {
 					step2 = false;
 					step3 = true;
-					System.out.println("zigzag - Step2");
+                                        
 					zigzagCount++;
 				}
 
 			} else if (step3 == true) {
 				if (count[1] < 0 && count[2] == 0) {
 					zigzagCount++;
-					System.out.println("zigzag - Step3");
 				}
 			}
 

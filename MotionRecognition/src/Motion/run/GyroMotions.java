@@ -214,7 +214,6 @@ public class GyroMotions implements TriggerMotionInterface {
 				listPitchAngle.add(pitch);
 
 				if (YawAxisValueForAdjusting < 0) {
-				//	System.out.println("1번 1번 1번");  ///////////////////////삭제각
 					if (yaw <= Math.abs(YawAxisValueForAdjusting)) {
 						listYawAngle.add(360 + YawAxisValueForAdjusting + yaw);
 
@@ -223,7 +222,6 @@ public class GyroMotions implements TriggerMotionInterface {
 					}
 
 				} else if (YawAxisValueForAdjusting > 0) {
-				//	System.out.println("2번 2번 2번");  ///////////////////////삭제각
 					if (yaw> 360-YawAxisValueForAdjusting) {
 						listYawAngle.add(YawAxisValueForAdjusting + yaw-360);
 
@@ -232,7 +230,6 @@ public class GyroMotions implements TriggerMotionInterface {
 					}
 
 				}
-			//	System.out.println(listYawAngle.get(listYawAngle.size()-1));  ///////////////////////삭제각
 
 				if (listYawAngle.size() >= 2) {
 					double nextValue = listYawAngle.get(listYawAngle.size() - 1);
@@ -436,7 +433,7 @@ public class GyroMotions implements TriggerMotionInterface {
 		while (keys.hasNext()) {
 			String key = keys.next(); // Set의 key 값을 하나씩 key에 대입
 			int count = motionMap.get(key); // 해당 key에 해당하는 value 대입 / 오토 언박싱
-			System.out.println(key + " : " + count);
+			//System.out.println(key + " : " + count);
 
 			if (prevalue < count) {
 				prevalue = count;
@@ -468,59 +465,59 @@ public class GyroMotions implements TriggerMotionInterface {
 	 */
 	@Override
 	public void triggerMotion(int status) {
-		boolean step1 = false;
-		boolean step2 = false;
-		int count = 0;
-		if (listPitchAngles.size() >= 5) {
-			for (int i = 0; i < listPitchAngles.size(); i++) {
-				double prevalue = listPitchAngles.get(i);
-				if (status == 0) {
-
-					if (prevalue < 130 && step1 == false) {
-						step1 = true;
-						System.out.println("Step1 On");
-					}
-					if (step1 == true) {
-						if (prevalue > 170) {
-							step2 = true;
-							System.out.println("Step2 On");
-						}
-					}
-
-					if (step1 == true && step2 == true) {
-						emptingContinuedList();
-						System.out.println("Motion On");
-						MotionCheck.MotionRecognitionStatus(1);
-						emptingCollectedList();
-						MotionListCollecting = true;
-						i = listPitchAngles.size();
-
-					}
-
-				} else if (status == 1) {
-					if (prevalue < 130 && step1 == false) {
-						step1 = true;
-						System.out.println("Step1 On");
-					}
-					if (step1 == true) {
-						if (prevalue > 170) {
-							step2 = true;
-							System.out.println("Step2 On");
-						}
-					}
-
-					if (step1 == true && step2 == true) {
-						emptingContinuedList();
-						System.out.println("Motion Recognition");
-						MotionCheck.MotionRecognitionStatus(2);
-						MotionListCollecting = false;
-						i = listPitchAngles.size();
-						buttonAddData("ready");  //다른 인터페이스도 이건꼭 해줘야함
-					}
-				}
-
-			}
-		}
+//		boolean step1 = false;
+//		boolean step2 = false;
+//		int count = 0;
+//		if (listPitchAngles.size() >= 5) {
+//			for (int i = 0; i < listPitchAngles.size(); i++) {
+//				double prevalue = listPitchAngles.get(i);
+//				if (status == 0) {
+//
+//					if (prevalue < 130 && step1 == false) {
+//						step1 = true;
+//						System.out.println("Step1 On");
+//					}
+//					if (step1 == true) {
+//						if (prevalue > 170) {
+//							step2 = true;
+//							System.out.println("Step2 On");
+//						}
+//					}
+//
+//					if (step1 == true && step2 == true) {
+//						emptingContinuedList();
+//						System.out.println("Motion On");
+//						MotionCheck.MotionRecognitionStatus(1);
+//						emptingCollectedList();
+//						MotionListCollecting = true;
+//						i = listPitchAngles.size();
+//
+//					}
+//
+//				} else if (status == 1) {
+//					if (prevalue < 130 && step1 == false) {
+//						step1 = true;
+//						System.out.println("Step1 On");
+//					}
+//					if (step1 == true) {
+//						if (prevalue > 170) {
+//							step2 = true;
+//							System.out.println("Step2 On");
+//						}
+//					}
+//
+//					if (step1 == true && step2 == true) {
+//						emptingContinuedList();
+//						System.out.println("Motion Recognition");
+//						MotionCheck.MotionRecognitionStatus(2);
+//						MotionListCollecting = false;
+//						i = listPitchAngles.size();
+//						buttonAddData("ready");  //다른 인터페이스도 이건꼭 해줘야함
+//					}
+//				}
+//
+//			}
+//		}
 	}
 
 	/**
@@ -537,16 +534,7 @@ public class GyroMotions implements TriggerMotionInterface {
 	 */
 	@Override
 	public void triggerButton(int step, String buttonStatus) {
-		/*
-if(!listYawAngles.isEmpty()){
-			System.out.println("YawAngle:  "+listYawAngles.get(listYawAngles.size()-1));
-	
-			System.out.println("PitchAngle:  "+listPitchAngles.get(listPitchAngles.size()-1));
-		
-			System.out.println("RollAngle:  "+listRollAngles.get(listRollAngles.size()-1));
-}
-		*/		
-				
+			
 		//모션이 취해지지 않았을경우
 		if (step == 0) {
 			if (buttonStatus.equals("on")) {
@@ -558,11 +546,11 @@ if(!listYawAngles.isEmpty()){
 			} 
 		} else if (step == 1) {
 			if(!listYawDifference.isEmpty()){
-			System.out.println("YawAngle:  "+listYawDifference.get(listYawDifference.size()-1));
-	
-			System.out.println("PitchAngle:  "+listPitchDifference.get(listPitchDifference.size()-1));
-		
-			System.out.println("RollAngle:  "+listRollDifference.get(listRollDifference.size()-1));
+//			System.out.println("YawAngle:  "+listYawDifference.get(listYawDifference.size()-1));
+//	
+//			System.out.println("PitchAngle:  "+listPitchDifference.get(listPitchDifference.size()-1));
+//		
+//			System.out.println("RollAngle:  "+listRollDifference.get(listRollDifference.size()-1));
 }
 			
 			if (buttonStatus.equals("off")) {
@@ -591,23 +579,23 @@ if(!listYawAngles.isEmpty()){
 
 	@Override
 	public void triggerIR(int step, double distance) {
-		if (step == 0) {
-			if (distance < 10) {
-				emptingCollectedList();
-				emptingContinuedList();
-				System.out.println("Motion On");
-				MotionCheck.MotionRecognitionStatus(1);
-				MotionListCollecting = true;
-
-			}
-		} else if (step == 1) {
-			if (distance < 10) {
-				emptingContinuedList();
-				System.out.println("Motion Recognition");
-				MotionCheck.MotionRecognitionStatus(2);
-				MotionListCollecting = false;
-			}
-		}
+//		if (step == 0) {
+//			if (distance < 10) {
+//				emptingCollectedList();
+//				emptingContinuedList();
+//				System.out.println("Motion On");
+//				MotionCheck.MotionRecognitionStatus(1);
+//				MotionListCollecting = true;
+//
+//			}
+//		} else if (step == 1) {
+//			if (distance < 10) {
+//				emptingContinuedList();
+//				System.out.println("Motion Recognition");
+//				MotionCheck.MotionRecognitionStatus(2);
+//				MotionListCollecting = false;
+//			}
+//		}
 
 	}
 

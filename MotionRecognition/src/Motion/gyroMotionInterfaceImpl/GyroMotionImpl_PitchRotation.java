@@ -31,13 +31,9 @@ public class GyroMotionImpl_PitchRotation implements GyroMotionInterface{
 
 			double[] count = factorsInRangeRight.get(j);
 			if (count[3] > 0&&count[2]!=0&&count[1]!=0) {
-						//System.out.println(count[2]);
-						//System.out.println("down");
 						pitchLeftRotationCount++;
 					} 
 				if (count[3] < 0&&count[2]!=0&&count[1]!=0) {
-						//System.out.println(count[2]);
-						//System.out.println("down");
 						pitchRightRotationCount++;
 					} 
 		}

@@ -25,18 +25,18 @@ public class MotionCheck {
 	 * Gyroscope Sensor와 관련된 작업을 하는 Thread
 	 */
 	private static Thread gyroCheckThread;
-	/**
-	 *@deprecated 
-	 */
-	private static Thread ultraCheckThread;
-	/**
-	 *@deprecated 
-	 */
-	private static Thread irCheckThread;
-	/**
-	 * @deprecated 
-	 */
-	private static Thread buttonCheckThread;
+//	/**
+//	 *@deprecated 
+//	 */
+//	public static Thread ultraCheckThread;
+//	/**
+//	 *@deprecated 
+//	 */
+//	public static Thread irCheckThread;
+//	/**
+//	 * @deprecated 
+//	 */
+//	public static Thread buttonCheckThread;
 	
 	/**
 	 * Current Status of Button.  
@@ -121,11 +121,11 @@ public class MotionCheck {
 		actionInterfaceImpl=action;
 
 		gyroCheckThreadStart();
-		/*
-		ultraCheckThreadStart();
-		irCheckThreadStart();
-		buttonCheckThreadStart();
-*/
+		
+//		ultraCheckThreadStart();
+//		irCheckThreadStart();
+//		buttonCheckThreadStart();
+
 		gyroMotions= new GyroMotions();
 		
 		double[] left={180,270,165,195,0,0,4,80,0,0.8,0,0};
@@ -135,9 +135,6 @@ public class MotionCheck {
 		double[] zigzag={90,190,150,270,0,0,4,80,0.5,80,0,0};
 		double[] pitchRotation={140,220,140,220,80,360,0,3,0,3,3,80};
 		double[] n={90,190,90,190,0,0,4,80,0.8,80,0,0};
-		//double[] n;
-	//	double[] plusYawMinusRoll={180,360,90,180,0,0,1,80,1,80,0,0};
-		
 	
 		yawRollPitchRangeList.add(left); //0번
 		yawRollPitchRangeList.add(right);//1번
@@ -215,7 +212,7 @@ public class MotionCheck {
 				while (true) {
 					if (motionOn == 0) {
 						
-						System.out.println("모션준비 1단계"); //나중에 삭제각
+						System.out.println("모션준비 1단계"); //나중에 삭제
 						for(TriggerMotionInterface trigger: triggerOnMotionList){
 							trigger.triggerMotion(0);
 							trigger.triggerButton(0,buttonStatus);
@@ -234,15 +231,15 @@ public class MotionCheck {
 							Thread.sleep(500);
 						} catch (Exception e) {
 						}
-					System.out.println("모션을 취하는중 2단계"); //나중에 삭제각
+					System.out.println("모션을 취하는중 2단계"); //나중에 삭제
 						for(TriggerMotionInterface trigger: triggerOffMotionList){
-						//	trigger.triggerMotion(1);
+							trigger.triggerMotion(1);
 							trigger.triggerButton(1,buttonStatus);
 							trigger.triggerIR(1, irDistance);
 						}
 						
 					}else {
-						System.out.println("모션분석중........."); //나중에 삭제각
+						System.out.println("모션분석중........."); //나중에 삭제
 						motionMap.clear();
 						
 						//범위안의 변화요소 뽑아내는 부분
@@ -274,26 +271,26 @@ public class MotionCheck {
 		gyroCheckThread.start();
 
 	}
-/*
-	private void ultraCheckThreadStart() {
-		ultraCheckThread = new Thread() {
 
-		};
-		ultraCheckThread.start();
-	}
+//	public static void ultraCheckThreadStart() {
+//		ultraCheckThread = new Thread() {
+//                                    
+//		};
+//		ultraCheckThread.start();
+//	}
+//
+//	public static void irCheckThreadStart() {
+//		irCheckThread = new Thread() {
+//
+//		};
+//		irCheckThread.start();
+//	}
+//
+//	public static void buttonCheckThreadStart() {
+//		buttonCheckThread = new Thread() {
+//
+//		};
+//		buttonCheckThread.start();
+//	}
 
-	private void irCheckThreadStart() {
-		irCheckThread = new Thread() {
-
-		};
-		irCheckThread.start();
-	}
-
-	private void buttonCheckThreadStart() {
-		buttonCheckThread = new Thread() {
-
-		};
-		buttonCheckThread.start();
-	}
-*/
 }

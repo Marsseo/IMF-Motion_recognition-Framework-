@@ -31,13 +31,11 @@ public class GyroMotionImpl_Right implements GyroMotionInterface{
 
 			double[] count = factorsInRange.get(j);
 			if (count[1] <0&&count[2]!=0) {
-						//System.out.println(count[1]);
-						//System.out.println("right   "+count[1]);
 						rightCount++;
 						totalRightDifference+=count[1];
 					} 
 		}
-		System.out.println("totalRightDifference :  "+totalRightDifference);
+		//System.out.println("totalRightDifference :  "+totalRightDifference);
 		motionMap.put("right", rightCount);
 	}
 
