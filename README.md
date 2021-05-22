@@ -4,7 +4,7 @@
 
 the following is a list of developers.
 
-1. [**Hwasung - Seo**](https://github.com/Marsseo)  **\( ghktjddl3@naver.com \)**
+1. [**Hwasung (Mars) - Seo**](https://github.com/Marsseo)  **\( ghktjddl3@naver.com \)**
 
 2. [**Jimin - Kim**](https://github.com/SmileJM)  **\( lovelyeu@naver.com \)**
 
