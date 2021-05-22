@@ -4,11 +4,11 @@
 
 the following is a list of developers.
 
-1. [**Chelmin - Kim**](https://github.com/cheolmin-Kim)  **\( kcm7582@naver.com \)**
+1. [**Hwasung - Seo**](https://github.com/Marsseo)  **\( ghktjddl3@naver.com \)**
 
 2. [**Jimin - Kim**](https://github.com/SmileJM)  **\( lovelyeu@naver.com \)**
 
-3. [**Hwasung - Seo**](https://github.com/Marsseo)  **\( ghktjddl3@naver.com \)**
+3. [**Chelmin - Kim**](https://github.com/cheolmin-Kim)  **\( kcm7582@naver.com \)**
 
 4. [**Dongju - Jang**](https://github.com/Jdongju)  **\( dj9110@naver.com\)**
 
